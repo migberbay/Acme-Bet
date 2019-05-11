@@ -8,22 +8,23 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import security.UserAccount;
-
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(indexes = {@Index(columnList = "sender,recipient")})
 public class Message extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
@@ -31,7 +32,6 @@ public class Message extends DomainEntity {
 	private Date				moment;
 	private String				body;
 	private String				subject;
-	private String				priority;
 	private Collection<String>	tags;
 	private Boolean				flagSpam;
 
@@ -74,16 +74,6 @@ public class Message extends DomainEntity {
 		this.body = body;
 	}
 
-	@NotBlank
-	@Pattern(regexp = "^HIGH|NEUTRAL|LOW$")
-	public String getPriority() {
-		return this.priority;
-	}
-
-	public void setPriority(final String priority) {
-		this.priority = priority;
-	}
-
 	@ElementCollection
 	public Collection<String> getTags() {
 		return this.tags;
@@ -104,29 +94,28 @@ public class Message extends DomainEntity {
 
 	// Relationships ----------------------------------------------------------
 
-	private UserAccount				sender;
-	private Collection<UserAccount>	recipients;
-
+	private Actor sender;
+	private Actor recipient;
 
 	@Valid
-	@ManyToOne(optional = false)
-	public UserAccount getSender() {
+	@ManyToOne(optional = true)
+	public Actor getSender() {
 		return this.sender;
 	}
 
-	public void setSender(final UserAccount sender) {
+	public void setSender(final Actor sender) {
 		this.sender = sender;
 	}
 
 	@Valid
-	@ManyToMany
+	@ManyToOne
 	@NotNull
-	public Collection<UserAccount> getRecipients() {
-		return this.recipients;
+	public Actor getRecipient() {
+		return this.recipient;
 	}
 
-	public void setRecipients(final Collection<UserAccount> recipients) {
-		this.recipients = recipients;
+	public void setRecipient(final Actor recipient) {
+		this.recipient = recipient;
 	}
 
 }

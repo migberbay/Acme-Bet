@@ -1,24 +1,26 @@
 package forms;
 
+import java.util.Date;
+
+import javax.validation.constraints.Past;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 
 public class MessageForm {
 
-	private String priority;
 	private String recipients;
 	private String subject;
 	private String body;
 	private String tags;
-	
-	@NotBlank
-	public String getPriority() {
-		return priority;
+	private Boolean isBroadcast;
+
+	public Boolean getIsBroadcast() {
+		return isBroadcast;
 	}
-	public void setPriority(String priority) {
-		this.priority = priority;
+	public void setIsBroadcast(Boolean isBroadcast) {
+		this.isBroadcast = isBroadcast;
 	}
-	
 	@NotBlank
 	public String getRecipients() {
 		return recipients;
