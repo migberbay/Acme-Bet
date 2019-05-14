@@ -1,20 +1,3 @@
 #./src/main/resources/Entities.map
-#Sat May 11 19:56:18 CEST 2019
-box11=32
-box10=31
-userAccount3=21
-userAccount2=20
-userAccount1=19
-box9=30
-box8=29
-box7=28
-box6=27
-box5=26
-box4=25
-box3=24
-box2=23
-box1=22
-box15=36
-box14=35
-box13=34
-box12=33
+#Tue May 14 17:14:50 CEST 2019
+userAccount1=2

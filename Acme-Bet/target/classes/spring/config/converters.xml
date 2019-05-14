@@ -19,11 +19,9 @@
 
 	<util:list id="converters">
 			<bean class="converters.AuthorityToStringConverter" />
-			<bean class="converters.BoxToStringConverter" />
 			<bean class="converters.MessageToStringConverter" />
 			
 			<bean class="converters.StringToAuthorityConverter" />
-			<bean class="converters.StringToBoxConverter" />
 			<bean class="converters.StringToMessageConverter" />			
 	</util:list>
 	

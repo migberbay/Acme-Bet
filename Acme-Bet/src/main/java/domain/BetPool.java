@@ -2,7 +2,7 @@ package domain;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -34,8 +34,8 @@ public class BetPool extends DomainEntity {
 	private String title;
 	private Date moment;
 	private String description;
-	private List<String> participants;
-	private List<String> winners;
+	private Collection<String> participants;
+	private Collection<String> winners;
 	private Double minRange;
 	private Double maxRange;
 	private Date startDate;
@@ -78,17 +78,19 @@ public class BetPool extends DomainEntity {
 		this.description = description;
 	}
 	@Size(min = 2)//con 1 solo no es una apuesta no?
-	public List<String> getParticipants() {
+	@ElementCollection
+	public Collection<String> getParticipants() {
 		return participants;
 	}
-	public void setParticipants(List<String> participants) {
+	public void setParticipants(Collection<String> participants) {
 		this.participants = participants;
 	}
 	@NotEmpty
-	public List<String> getWinners() {
+	@ElementCollection
+	public Collection<String> getWinners() {
 		return winners;
 	}
-	public void setWinners(List<String> winners) {
+	public void setWinners(Collection<String> winners) {
 		this.winners = winners;
 	}
 	@NotNull
