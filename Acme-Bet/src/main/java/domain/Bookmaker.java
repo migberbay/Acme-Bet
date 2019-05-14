@@ -7,7 +7,6 @@ import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.validation.Valid;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -17,6 +16,8 @@ public class Bookmaker extends Actor {
 	//Relationships
 	Collection<BetPool> betPools;
 
+	@ElementCollection
+	@OneToMany(mappedBy = "bookmaker")
 	public Collection<BetPool> getBetPools() {
 		return betPools;
 	}

@@ -78,7 +78,6 @@ public class Configuration extends DomainEntity {
 		this.finderQueryResults = finderQueryResults;
 	}
 
-	//TODO: might need to be revised.
 	@NotBlank
 	public String getSystemName() {
 		return systemName;
@@ -127,7 +126,6 @@ public class Configuration extends DomainEntity {
 		this.sponsorshipFare = sponsorshipFare;
 	}
 	
-	//TODO: might need to be associated with the classes.
 	//Relationships--------------------------------------------------------------------
 	
 	private List<Word> spamWords; 

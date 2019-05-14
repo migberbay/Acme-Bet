@@ -11,8 +11,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.Position;
-import domain.Provider;
+import domain.Sponsor;
 import domain.Sponsorship;
 
 import repositories.SponsorshipRepository;
@@ -28,8 +27,8 @@ public class SponsorshipService {
 	
 	//Supporting services
 	
-	@Autowired
-	private ProviderService providerService;
+//	@Autowired
+//	private SponsorService sponsorService;
 	
 	@Autowired
 	private Validator validator;
@@ -40,7 +39,7 @@ public class SponsorshipService {
 		Assert.isTrue(LoginService.hasRole("PROVIDER"));
 		Sponsorship res = new Sponsorship();
 		
-		res.setProvider(providerService.findByPrincipal());
+//		res.setSponsor(sponsorService.findByPrincipal());
 
 		return res;
 	}
@@ -70,67 +69,67 @@ public class SponsorshipService {
 	
 	//OTHER BUSINESS METHODS
 	
-	public Collection<Sponsorship> findByProvider(Provider provider) {
-		Collection<Sponsorship> sponsorships;
-		
-		sponsorships = this.sponsorshipRepository.findByProviderId(provider.getId());
-		
-		return sponsorships;
-	}
-	
-	public Collection<Sponsorship> findByPosition(Position position) {
-		Collection<Sponsorship> sponsorships;
-		
-		sponsorships = this.sponsorshipRepository.findByPositionId(position.getId());
-		
-		return sponsorships;
-	}
-	
-	public Sponsorship reconstruct(Sponsorship sponsorship, BindingResult binding) {
-		Sponsorship result;
-		
-		if(sponsorship.getId()==0) {
-			result = sponsorship;
-			result.setProvider(this.providerService.findByPrincipal());
-
-		} else {
-			result = this.sponsorshipRepository.findOne(sponsorship.getId());
-			result.setBanner(sponsorship.getBanner());
-			result.setTarget(sponsorship.getTarget());
-			result.setPosition(sponsorship.getPosition());
-		}
-		validator.validate(result, binding);
-		if(binding.hasErrors()) {
-			throw new ValidationException();
-		}
-		
-		return result;
-		
-	}
-	
-	public Double getAvgSponsorshipsPerProvider(){
-		Double res = sponsorshipRepository.getAvgSponsorshipsPerProvider();
-		if(res==null)res=0d;
-		return res;
-	}
-	
-	public Integer getMinSponsorshipsPerProvider(){
-		Integer res = sponsorshipRepository.getMinSponsorshipsPerProvider();
-		if(res==null)res=0;
-		return res;
-	}
-	
-	public Integer getMaxSponsorshipsPerProvider(){
-		Integer res = sponsorshipRepository.getMaxSponsorshipsPerProvider();
-		if(res==null)res=0;
-		return res;
-	}
-
-	public Double getStdevSponsorshipsPerProvider(){
-		Double res = sponsorshipRepository.getStdevSponsorshipsPerProvider();
-		if(res==null)res=0d;
-		return res;
-	}
+//	public Collection<Sponsorship> findBySponsor(Sponsor sponsor) {
+//		Collection<Sponsorship> sponsorships;
+//		
+//		sponsorships = this.sponsorshipRepository.findBySponsorId(sponsor.getId());
+//		
+//		return sponsorships;
+//	}
+//	
+//	public Collection<Sponsorship> findByPosition(Position position) {
+//		Collection<Sponsorship> sponsorships;
+//		
+//		sponsorships = this.sponsorshipRepository.findByPositionId(position.getId());
+//		
+//		return sponsorships;
+//	}
+//	
+//	public Sponsorship reconstruct(Sponsorship sponsorship, BindingResult binding) {
+//		Sponsorship result;
+//		
+//		if(sponsorship.getId()==0) {
+//			result = sponsorship;
+//			result.setSponsor(this.sponsorService.findByPrincipal());
+//
+//		} else {
+//			result = this.sponsorshipRepository.findOne(sponsorship.getId());
+//			result.setBanner(sponsorship.getBanner());
+//			result.setTarget(sponsorship.getTarget());
+//			result.setPosition(sponsorship.getPosition());
+//		}
+//		validator.validate(result, binding);
+//		if(binding.hasErrors()) {
+//			throw new ValidationException();
+//		}
+//		
+//		return result;
+//		
+//	}
+//	
+//	public Double getAvgSponsorshipsPerSponsor(){
+//		Double res = sponsorshipRepository.getAvgSponsorshipsPerSponsor();
+//		if(res==null)res=0d;
+//		return res;
+//	}
+//	
+//	public Integer getMinSponsorshipsPerSponsor(){
+//		Integer res = sponsorshipRepository.getMinSponsorshipsPerSponsor();
+//		if(res==null)res=0;
+//		return res;
+//	}
+//	
+//	public Integer getMaxSponsorshipsPerSponsor(){
+//		Integer res = sponsorshipRepository.getMaxSponsorshipsPerSponsor();
+//		if(res==null)res=0;
+//		return res;
+//	}
+//
+//	public Double getStdevSponsorshipsPerSponsor(){
+//		Double res = sponsorshipRepository.getStdevSponsorshipsPerSponsor();
+//		if(res==null)res=0d;
+//		return res;
+//	}
 	
 	
 	

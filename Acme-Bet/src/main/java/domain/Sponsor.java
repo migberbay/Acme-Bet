@@ -7,7 +7,6 @@ import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.validation.Valid;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -26,6 +25,8 @@ public class Sponsor extends Actor {
 	//relationships
 	Collection<Sponsorship> sponsorships;
 
+	@ElementCollection
+	@OneToMany(mappedBy = "sponsor")
 	public Collection<Sponsorship> getSponsorships() {
 		return sponsorships;
 	}

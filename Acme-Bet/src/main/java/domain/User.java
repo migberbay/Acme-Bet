@@ -4,10 +4,8 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.validation.Valid;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -24,19 +22,20 @@ public class User extends Actor {
 	}
 	
 	//Relationships
-	Collection<Counselor> blockedCounserlors;
+	Collection<Counselor> blockedCounselors;
 	Collection<Bet> bets;
 	Collection<Review> reviews;
 	Collection<HelpRequest> helpRequests;
 	
-	public Collection<Counselor> getBlockedCounserlors() {
-		return blockedCounserlors;
+	@OneToMany
+	public Collection<Counselor> getBlockedCounselors() {
+		return blockedCounselors;
 	}
 
-	public void setBlockedCounserlors(Collection<Counselor> blockedCounserlors) {
-		this.blockedCounserlors = blockedCounserlors;
+	public void setBlockedCounselors(Collection<Counselor> blockedCounselors) {
+		this.blockedCounselors = blockedCounselors;
 	}
-
+	@OneToMany
 	public Collection<Bet> getBets() {
 		return bets;
 	}
@@ -44,7 +43,7 @@ public class User extends Actor {
 	public void setBets(Collection<Bet> bets) {
 		this.bets = bets;
 	}
-
+	@OneToMany
 	public Collection<Review> getReviews() {
 		return reviews;
 	}
@@ -53,6 +52,7 @@ public class User extends Actor {
 		this.reviews = reviews;
 	}
 
+	@OneToMany
 	public Collection<HelpRequest> getHelpRequests() {
 		return helpRequests;
 	}
