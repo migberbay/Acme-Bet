@@ -18,7 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Review extends Actor {
+public class Review extends DomainEntity {
 	
 	private String description;
 	private Collection<String> attachements;
