@@ -40,6 +40,7 @@ public class Sponsorship extends DomainEntity {
 		this.link = link;
 	}
 
+	
 	// Relationships ----------------------------------------------------------
 
 	private Sponsor sponsor;
