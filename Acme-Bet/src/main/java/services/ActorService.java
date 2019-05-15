@@ -540,6 +540,6 @@ public class ActorService {
 	}
 	
 	public Collection<Actor> findBySpammer (Boolean a){
-		return actorRepository.findByIsSpammer(a);
+		return actorRepository.findBySuspicous(a);
 	}
 }

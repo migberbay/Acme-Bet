@@ -9,6 +9,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -46,7 +47,6 @@ public class BetPool extends DomainEntity {
 	
 	// Getters and Setters ---------------------------------------------------
 	
-	@Column(unique = true)
 	@Pattern(regexp="^([0]{1}[0-9]{1}|[1]{1}[0-8]{1})([0]{1}[1-9]{1}|[1]{1}[0-2]{1})([0-2]{1}[1-9]{1}|[3]{1}[0-1]{1})[-][A-Z0-9]{6}$")
 	public String getTicker() {
 		return ticker;
@@ -85,7 +85,7 @@ public class BetPool extends DomainEntity {
 	public void setParticipants(Collection<String> participants) {
 		this.participants = participants;
 	}
-	@NotEmpty
+	
 	@ElementCollection
 	public Collection<String> getWinners() {
 		return winners;
@@ -148,7 +148,7 @@ public class BetPool extends DomainEntity {
 	private Bookmaker bookmaker;
 	private Warranty warranty;
 	private Category category;
-	private Finder finder;
+	private Collection<Finder> finders;
 	private Collection<HelpRequest> helpRequests;
 	private Collection<Bet> bets;
 
@@ -175,12 +175,12 @@ public class BetPool extends DomainEntity {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	@ManyToOne(optional = false)
-	public Finder getFinder() {
-		return finder;
+	@ManyToMany
+	public Collection<Finder> getFinders() {
+		return finders;
 	}
-	public void setFinder(Finder finder) {
-		this.finder = finder;
+	public void setFinders(Collection<Finder> finders) {
+		this.finders = finders;
 	}
 	@ElementCollection
 	@OneToMany(mappedBy = "betPool")

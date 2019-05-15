@@ -2,20 +2,15 @@ package services;
 
 import java.util.Collection;
 
-import javax.validation.ValidationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-
-import domain.Sponsor;
-import domain.Sponsorship;
 
 import repositories.SponsorshipRepository;
 import security.LoginService;
+import domain.Sponsorship;
 
 @Service
 @Transactional
@@ -133,27 +128,27 @@ public class SponsorshipService {
 	
 	
 	
-	public Double getAvgSponsorshipsPerPosition(){
-		Double res = sponsorshipRepository.getAvgSponsorshipsPerPosition();
-		if(res==null)res=0d;
-		return res;
-	}
-	
-	public Integer getMinSponsorshipsPerPosition(){
-		Integer res = sponsorshipRepository.getMinSponsorshipsPerPosition();
-		if(res==null)res=0;
-		return res;
-	}
-	
-	public Integer getMaxSponsorshipsPerPosition(){
-		Integer res = sponsorshipRepository.getMaxSponsorshipsPerPosition();
-		if(res==null)res=0;
-		return res;
-	}
-
-	public Double getStdevSponsorshipsPerPosition(){
-		Double res = sponsorshipRepository.getStdevSponsorshipsPerPosition();
-		if(res==null)res=0d;
-		return res;
-	}
+//	public Double getAvgSponsorshipsPerPosition(){
+//		Double res = sponsorshipRepository.getAvgSponsorshipsPerPosition();
+//		if(res==null)res=0d;
+//		return res;
+//	}
+//	
+//	public Integer getMinSponsorshipsPerPosition(){
+//		Integer res = sponsorshipRepository.getMinSponsorshipsPerPosition();
+//		if(res==null)res=0;
+//		return res;
+//	}
+//	
+//	public Integer getMaxSponsorshipsPerPosition(){
+//		Integer res = sponsorshipRepository.getMaxSponsorshipsPerPosition();
+//		if(res==null)res=0;
+//		return res;
+//	}
+//
+//	public Double getStdevSponsorshipsPerPosition(){
+//		Double res = sponsorshipRepository.getStdevSponsorshipsPerPosition();
+//		if(res==null)res=0d;
+//		return res;
+//	}
 }

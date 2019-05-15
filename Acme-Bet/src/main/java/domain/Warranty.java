@@ -19,7 +19,7 @@ public class Warranty extends DomainEntity {
 	private String title;
 	private String terms;
 	private Collection<String> laws;
-	private Boolean isDraft;
+	private Boolean isFinal;
 
 	// Constructors -----------------------------------------------------------
 
@@ -57,11 +57,11 @@ public class Warranty extends DomainEntity {
 		this.laws = laws;
 	}
 
-	public Boolean getIsDraft() {
-		return this.isDraft;
+	public Boolean getIsFinal() {
+		return this.isFinal;
 	}
 
-	public void setIsDraft(final Boolean isDraft) {
-		this.isDraft = isDraft;
+	public void setIsFinal(final Boolean isFinal) {
+		this.isFinal= isFinal;
 	}
 }

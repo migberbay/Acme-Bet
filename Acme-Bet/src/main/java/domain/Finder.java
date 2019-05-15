@@ -91,7 +91,7 @@ public class Finder extends DomainEntity {
 	}
 
 	@Valid
-	@ManyToMany
+	@ManyToMany(mappedBy = "finders")
 	public Collection<BetPool> getBetPools() {
 		return betPools;
 	}

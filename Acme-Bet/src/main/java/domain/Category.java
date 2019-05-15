@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Category extends Actor {
+public class Category extends DomainEntity {
 	
 	private String spanishName;
 	private String englishName;
