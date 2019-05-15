@@ -77,6 +77,7 @@ public class BetPool extends DomainEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
 	@Size(min = 2)//con 1 solo no es una apuesta no?
 	@ElementCollection
 	public Collection<String> getParticipants() {
@@ -107,7 +108,9 @@ public class BetPool extends DomainEntity {
 	public void setMaxRange(Double maxRange) {
 		this.maxRange = maxRange;
 	}
+	
 	@Future
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getStartDate() {
@@ -116,6 +119,8 @@ public class BetPool extends DomainEntity {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
+	
+	@NotNull
 	@Future
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -125,6 +130,8 @@ public class BetPool extends DomainEntity {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+	
+	@NotNull
 	@Future
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -134,6 +141,7 @@ public class BetPool extends DomainEntity {
 	public void setResultDate(Date resultDate) {
 		this.resultDate = resultDate;
 	}
+	
 	@NotNull
 	public Boolean getIsFinal() {
 		return isFinal;
@@ -152,7 +160,7 @@ public class BetPool extends DomainEntity {
 	private Collection<HelpRequest> helpRequests;
 	private Collection<Bet> bets;
 
-	@ManyToOne(optional= true)
+	@ManyToOne(optional= false)
 	@Valid
 	public Bookmaker getBookmaker() {
 		return bookmaker;
@@ -168,30 +176,38 @@ public class BetPool extends DomainEntity {
 	public void setWarranty(Warranty warranty) {
 		this.warranty = warranty;
 	}
+	
 	@ManyToOne(optional = false)
+	@Valid
 	public Category getCategory() {
 		return category;
 	}
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+	
 	@ManyToMany
+	@Valid
 	public Collection<Finder> getFinders() {
 		return finders;
 	}
 	public void setFinders(Collection<Finder> finders) {
 		this.finders = finders;
 	}
+	
 	@ElementCollection
 	@OneToMany(mappedBy = "betPool")
+	@Valid
 	public Collection<HelpRequest> getHelpRequests() {
 		return helpRequests;
 	}
 	public void setHelpRequests(Collection<HelpRequest> helpRequests) {
 		this.helpRequests = helpRequests;
 	}
+	
 	@ElementCollection
 	@OneToMany(mappedBy = "betPool")
+	@Valid
 	public Collection<Bet> getBets() {
 		return bets;
 	}

@@ -8,7 +8,14 @@ import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -19,18 +26,23 @@ public class HelpRequest extends Actor {
 	private Collection<String> attachements;
 	private Date moment;
 	
+	@NotBlank
+	@Pattern(regexp="^OPEN|PENDING|SOLVED$")
 	public String getStatus() {
 		return status;
 	}
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	@NotBlank
 	public String getDescription() {
 		return description;
 	}
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
 	@ElementCollection
 	public Collection<String> getAttachements() {
 		return attachements;
@@ -38,6 +50,10 @@ public class HelpRequest extends Actor {
 	public void setAttachements(Collection<String> attachements) {
 		this.attachements = attachements;
 	}
+	
+	@Past
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getMoment() {
 		return moment;
 	}

@@ -32,6 +32,8 @@ public class Bet extends Actor {
 	public void setTicker(String ticker) {
 		this.ticker = ticker;
 	}
+	
+	@NotNull
 	public Double getAmount() {
 		return amount;
 	}
@@ -49,18 +51,21 @@ public class Bet extends Actor {
 	public void setMoment(Date moment) {
 		this.moment = moment;
 	}
+	
+	
 	//Relationships
-	User owner;
-	BetPool betPool;
+	
+	private User user;
+	private BetPool betPool;
 	
 	@NotNull
 	@ManyToOne (optional = false)
 	@Valid
-	public User getOwner() {
-		return owner;
+	public User getUser() {
+		return user;
 	}
-	public void setOwner(User owner) {
-		this.owner = owner;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	@NotNull

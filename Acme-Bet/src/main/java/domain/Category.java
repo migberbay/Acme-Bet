@@ -4,6 +4,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -16,6 +18,7 @@ public class Category extends DomainEntity {
 	private String type;
 	
 	@Column(unique=true)
+	@NotNull
 	public String getSpanishName() {
 		return spanishName;
 	}
@@ -23,13 +26,16 @@ public class Category extends DomainEntity {
 		this.spanishName = spanishName;
 	}
 	@Column(unique=true)
+	@NotNull
 	public String getEnglishName() {
 		return englishName;
 	}
 	public void setEnglishName(String englishName) {
 		this.englishName = englishName;
 	}
+	
 	@NotBlank
+	@Pattern(regexp="^REQUEST|POOL$")
 	public String getType() {
 		return type;
 	}

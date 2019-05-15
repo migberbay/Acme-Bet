@@ -20,7 +20,7 @@ public class Finder extends DomainEntity {
 	private Double minimumBet;
 	private Date openingDate;
 	private Date endDate;
-	private String category;//this should be a select
+	private Integer category;//this should be a select
 
 
 	// Getters and Setters ---------------------------------------------------
@@ -65,11 +65,11 @@ public class Finder extends DomainEntity {
 		this.endDate = endDate;
 	}
 
-	public String getCategory() {
+	public Integer getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Integer category) {
 		this.category = category;
 	}
 

@@ -751,6 +751,48 @@
 		<property name="CVV" value="499" />
 	</bean>
 
+	<!-- FINDER -->
+
+	<bean id="finder1" class="domain.Finder">
+		<property name="user" ref="user1" />
+		<property name="betPools">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="finder2" class="domain.Finder">
+		<property name="user" ref="user2" />
+		<property name="betPools">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="finder3" class="domain.Finder">
+		<property name="user" ref="user3" />
+		<property name="betPools">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="finder4" class="domain.Finder">
+		<property name="user" ref="user4" />
+		<property name="betPools">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="finder5" class="domain.Finder">
+		<property name="user" ref="user5" />
+		<property name="betPools">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
 	<!-- BET POOLS -->
 	<bean id="betPool1" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
@@ -1083,20 +1125,50 @@
 		
 	<!-- CATEGORY -->
 	<bean id="category1" class="domain.Category">
-		<property name="spanishName" value="fútbol" />
-		<property name="englishName" value="football" />
+		<property name="spanishName" value="Fútbol" />
+		<property name="englishName" value="Football" />
 		<property name="type" value="POOL" />
 	</bean>
 	
 	<bean id="category2" class="domain.Category">
-		<property name="spanishName" value="Lucha" />
-		<property name="englishName" value="Fighting" />
+		<property name="spanishName" value="Tenis" />
+		<property name="englishName" value="Tennis" />
 		<property name="type" value="POOL" />
 	</bean>
 	
 	<bean id="category3" class="domain.Category">
-		<property name="spanishName" value="deportes de ratón" />
-		<property name="englishName" value="e-sports" />
+		<property name="spanishName" value="Deportes de ratón" />
+		<property name="englishName" value="E-sports" />
+		<property name="type" value="POOL" />
+	</bean>
+	
+	<bean id="category4" class="domain.Category">
+		<property name="spanishName" value="Baloncesto" />
+		<property name="englishName" value="Basketball" />
+		<property name="type" value="POOL" />
+	</bean>
+	
+	<bean id="category5" class="domain.Category">
+		<property name="spanishName" value="Formula 1" />
+		<property name="englishName" value="Formula 1" />
+		<property name="type" value="POOL" />
+	</bean>
+	
+	<bean id="category6" class="domain.Category">
+		<property name="spanishName" value="Problema con las fechas" />
+		<property name="englishName" value="Date issue" />
+		<property name="type" value="POOL" />
+	</bean>
+	
+	<bean id="category7" class="domain.Category">
+		<property name="spanishName" value="Problema con los ganadores" />
+		<property name="englishName" value="Winners issue" />
+		<property name="type" value="POOL" />
+	</bean>
+	
+	<bean id="category8" class="domain.Category">
+		<property name="spanishName" value="Problema con mi apuesta" />
+		<property name="englishName" value="Bet issue" />
 		<property name="type" value="POOL" />
 	</bean>
 	

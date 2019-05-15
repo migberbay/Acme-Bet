@@ -14,7 +14,7 @@ public class Bookmaker extends Actor {
 	
 	
 	//Relationships
-	Collection<BetPool> betPools;
+	private Collection<BetPool> betPools;
 
 	@ElementCollection
 	@OneToMany(mappedBy = "bookmaker")
