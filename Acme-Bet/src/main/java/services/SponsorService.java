@@ -7,28 +7,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import repositories.AdminRepository;
+import repositories.SponsorRepository;
 import security.LoginService;
 import security.UserAccount;
-import domain.Admin;
+import domain.Sponsor;
 import domain.SocialProfile;
 
 
 @Service
 @Transactional
-public class AdminService {
+public class SponsorService {
 
 	//Managed Repository -----
 	
 	@Autowired
-	private AdminRepository adminRepository;
+	private SponsorRepository sponsorRepository;
 	
 	//Supporting Services -----
 	
 	//Simple CRUD methods -----
 	
-	public Admin create(UserAccount ua){
-		Admin res = new Admin();
+	public Sponsor create(UserAccount ua){
+		Sponsor res = new Sponsor();
 
 		res.setIsBanned(false);
 		res.setIsSuspicious(false);
@@ -38,28 +38,28 @@ public class AdminService {
 		return res;
 	}
 	
-	public Collection<Admin> findAll(){
-		return adminRepository.findAll();
+	public Collection<Sponsor> findAll(){
+		return sponsorRepository.findAll();
 	}
 	
-	public Admin findOne(int Id){
-		return adminRepository.findOne(Id);
+	public Sponsor findOne(int Id){
+		return sponsorRepository.findOne(Id);
 	}
 	
-	public Admin save(Admin a){
+	public Sponsor save(Sponsor a){
 		
-		Admin saved = adminRepository.saveAndFlush(a);
+		Sponsor saved = sponsorRepository.saveAndFlush(a);
 		return saved;
 	}
 	
-	public void delete(Admin a){
-		adminRepository.delete(a);
+	public void delete(Sponsor a){
+		sponsorRepository.delete(a);
 	}
 	
 	//Other business methods -----
 	
-	public Admin findByPrincipal(){
-		return this.adminRepository.findByUserAccount(LoginService.getPrincipal());
+	public Sponsor findByPrincipal(){
+		return this.sponsorRepository.findByUserAccount(LoginService.getPrincipal());
 	}
 
 }

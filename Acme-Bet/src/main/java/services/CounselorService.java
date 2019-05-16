@@ -7,28 +7,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import repositories.AdminRepository;
+import repositories.CounselorRepository;
 import security.LoginService;
 import security.UserAccount;
-import domain.Admin;
+import domain.Counselor;
 import domain.SocialProfile;
 
 
 @Service
 @Transactional
-public class AdminService {
+public class CounselorService {
 
 	//Managed Repository -----
 	
 	@Autowired
-	private AdminRepository adminRepository;
+	private CounselorRepository counselorRepository;
 	
 	//Supporting Services -----
 	
 	//Simple CRUD methods -----
 	
-	public Admin create(UserAccount ua){
-		Admin res = new Admin();
+	public Counselor create(UserAccount ua){
+		Counselor res = new Counselor();
 
 		res.setIsBanned(false);
 		res.setIsSuspicious(false);
@@ -38,28 +38,28 @@ public class AdminService {
 		return res;
 	}
 	
-	public Collection<Admin> findAll(){
-		return adminRepository.findAll();
+	public Collection<Counselor> findAll(){
+		return counselorRepository.findAll();
 	}
 	
-	public Admin findOne(int Id){
-		return adminRepository.findOne(Id);
+	public Counselor findOne(int Id){
+		return counselorRepository.findOne(Id);
 	}
 	
-	public Admin save(Admin a){
+	public Counselor save(Counselor a){
 		
-		Admin saved = adminRepository.saveAndFlush(a);
+		Counselor saved = counselorRepository.saveAndFlush(a);
 		return saved;
 	}
 	
-	public void delete(Admin a){
-		adminRepository.delete(a);
+	public void delete(Counselor a){
+		counselorRepository.delete(a);
 	}
 	
 	//Other business methods -----
 	
-	public Admin findByPrincipal(){
-		return this.adminRepository.findByUserAccount(LoginService.getPrincipal());
+	public Counselor findByPrincipal(){
+		return this.counselorRepository.findByUserAccount(LoginService.getPrincipal());
 	}
 
 }

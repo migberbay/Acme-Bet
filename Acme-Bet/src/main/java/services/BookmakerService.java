@@ -7,28 +7,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import repositories.AdminRepository;
+import repositories.BookmakerRepository;
 import security.LoginService;
 import security.UserAccount;
-import domain.Admin;
+import domain.Bookmaker;
 import domain.SocialProfile;
 
 
 @Service
 @Transactional
-public class AdminService {
+public class BookmakerService {
 
 	//Managed Repository -----
 	
 	@Autowired
-	private AdminRepository adminRepository;
+	private BookmakerRepository bookmakerRepository;
 	
 	//Supporting Services -----
 	
 	//Simple CRUD methods -----
 	
-	public Admin create(UserAccount ua){
-		Admin res = new Admin();
+	public Bookmaker create(UserAccount ua){
+		Bookmaker res = new Bookmaker();
 
 		res.setIsBanned(false);
 		res.setIsSuspicious(false);
@@ -38,28 +38,28 @@ public class AdminService {
 		return res;
 	}
 	
-	public Collection<Admin> findAll(){
-		return adminRepository.findAll();
+	public Collection<Bookmaker> findAll(){
+		return bookmakerRepository.findAll();
 	}
 	
-	public Admin findOne(int Id){
-		return adminRepository.findOne(Id);
+	public Bookmaker findOne(int Id){
+		return bookmakerRepository.findOne(Id);
 	}
 	
-	public Admin save(Admin a){
+	public Bookmaker save(Bookmaker a){
 		
-		Admin saved = adminRepository.saveAndFlush(a);
+		Bookmaker saved = bookmakerRepository.saveAndFlush(a);
 		return saved;
 	}
 	
-	public void delete(Admin a){
-		adminRepository.delete(a);
+	public void delete(Bookmaker a){
+		bookmakerRepository.delete(a);
 	}
 	
 	//Other business methods -----
 	
-	public Admin findByPrincipal(){
-		return this.adminRepository.findByUserAccount(LoginService.getPrincipal());
+	public Bookmaker findByPrincipal(){
+		return this.bookmakerRepository.findByUserAccount(LoginService.getPrincipal());
 	}
 
 }

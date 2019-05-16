@@ -16,19 +16,14 @@
       
 <tiles-definitions>
 
-		<definition name="box/list" extends="master.page">	
-		<put-attribute name="title" value="Lista de Cajas" />
-		<put-attribute name="body" value="/views/box/list.jsp" />
-	</definition>
-
-	<definition name="box/listChildren" extends="master.page">	
-		<put-attribute name="title" value="Lista de Cajas" />
-		<put-attribute name="body" value="/views/box/listChildren.jsp" />
+	<definition name="error/access" extends="master.page">	
+		<put-attribute name="title" value="Error de acceso" />
+		<put-attribute name="body" value="/views/error/access.jsp" />
 	</definition>
 	
-	<definition name="box/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar Caja" />
-		<put-attribute name="body" value="/views/box/edit.jsp" />
+	<definition name="error/application" extends="master.page">	
+		<put-attribute name="title" value="Error al aplicar" />
+		<put-attribute name="body" value="/views/error/application.jsp" />
 	</definition>
 	
 </tiles-definitions>

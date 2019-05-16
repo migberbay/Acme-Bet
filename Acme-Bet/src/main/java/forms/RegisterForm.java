@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
 
 public class RegisterForm {
+	private String type;
 	
 	private String	username;
 	private String	password;
@@ -24,7 +25,6 @@ public class RegisterForm {
 	private String	email;
 	private String	phone;
 	private String	address;
-	
 	
 	//Credit card:
 	
@@ -93,11 +93,21 @@ public class RegisterForm {
 	}
 	
 	// end CreditCard------------------------------
+	@NotNull
+	public String getType() {
+		return type;
+	}
 
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	
 	@NotEmpty
 	public String getUsername() {
 		return this.username;
 	}
+
 
 	public void setUsername(final String username) {
 		this.username = username;

@@ -23,7 +23,7 @@ import security.UserAccount;
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(indexes = {@Index(columnList = "user_account")})
-public abstract class Actor extends DomainEntity {
+public class Actor extends DomainEntity {
 
 	// Attributes -----------------------------------------------------------
 
