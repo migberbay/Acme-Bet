@@ -1172,5 +1172,62 @@
 		<property name="type" value="POOL" />
 	</bean>
 	
+		<bean id="configuration1" class="domain.Configuration">
+		<property name="banner" value="https://i.ibb.co/0QL5wjf/test1.jpg" />
+		<property name="finderCacheTime" value="1" />
+		<property name="defaultPhoneCode" value="+34" />
+		<property name="finderQueryResults" value="10" />
+		<property name="systemName" value="Acme Bet" />
+		<property name="vatPercentage" value="0.21" />
+		<property name="sponsorshipFare" value="0.01" />
+		<property name="welcomeTextEnglish"
+			value="Welcome to Acme Bet!" />
+		<property name="welcomeTextSpanish"
+			value="¡Bienvenidos a Acme Bet!" />
+		<property name="spamWords">
+			<list>
+				<ref bean="word1" />
+				<ref bean="word2" />
+				<ref bean="word3" />
+				<ref bean="word4" />
+				<ref bean="word5" />
+				<ref bean="word6" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- WORDS -->
+	<!-- SPAM WORDS -->
+
+	<bean id="word1" class="domain.Word">
+		<property name="englishName" value="sex" />
+		<property name="spanishName" value="sexo" />
+	</bean>
+
+	<bean id="word2" class="domain.Word">
+		<property name="englishName" value="viagra" />
+		<property name="spanishName" value="viagra" />
+	</bean>
+
+	<bean id="word3" class="domain.Word">
+		<property name="englishName" value="cialis" />
+		<property name="spanishName" value="cialis" />
+	</bean>
+
+	<bean id="word4" class="domain.Word">
+		<property name="englishName" value="one million" />
+		<property name="spanishName" value="un millÃ³n" />
+	</bean>
+
+	<bean id="word5" class="domain.Word">
+		<property name="englishName" value="you've been selected" />
+		<property name="spanishName" value="ha sido seleccionado" />
+	</bean>
+
+	<bean id="word6" class="domain.Word">
+		<property name="englishName" value="Nigeria" />
+		<property name="spanishName" value="Nigeria" />
+	</bean>
+	
 	
 </beans>
