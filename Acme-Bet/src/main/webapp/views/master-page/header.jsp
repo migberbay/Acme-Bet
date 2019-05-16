@@ -13,8 +13,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-<div>
-	<a href="#"><img src="images/logo.png" alt="Sample Co., Inc." /></a>
+<div class="page-header" style="background: url(${banner}) center no-repeat; background-size: cover"  onclick="location.href=''">
 </div>
 
 <div>
