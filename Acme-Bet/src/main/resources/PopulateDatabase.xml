@@ -291,7 +291,6 @@
 				<ref bean="betPool4" />
 				<ref bean="betPool5" />
 				<ref bean="betPool6" />
-				<ref bean="betPool7" />
 			</list>
 		</property>
 	</bean>
@@ -798,8 +797,8 @@
 		<property name="ticker" value="180707-67GIJE" />
 		<property name="title" value="title bet pool 1" />
 		<property name="description" value="description bet pool 1" />
-		<property name="minRange" value="0" />
-		<property name="maxRange" value="9.99" />
+		<property name="minRange" value="10" />
+		<property name="maxRange" value="49.99" />
 		<property name="moment" value="2018/07/07 18:00" />
 		<property name="startDate" value="2023/07/07 18:00" />
 		<property name="endDate" value="2023/07/21 18:00" />
@@ -840,8 +839,8 @@
 		<property name="ticker" value="180707-67GIJE" />
 		<property name="title" value="title bet pool 2" />
 		<property name="description" value="description bet pool 2" />
-		<property name="minRange" value="0" />
-		<property name="maxRange" value="9.99" />
+		<property name="minRange" value="10" />
+		<property name="maxRange" value="49.99" />
 		<property name="moment" value="2018/07/07 18:00" />
 		<property name="startDate" value="2023/07/07 18:00" />
 		<property name="endDate" value="2023/07/21 18:00" />
@@ -879,48 +878,6 @@
 	</bean>
 	
 	<bean id="betPool3" class="domain.BetPool">
-		<property name="ticker" value="180707-67GIJE" />
-		<property name="title" value="title bet pool 3" />
-		<property name="description" value="description bet pool 3" />
-		<property name="minRange" value="0" />
-		<property name="maxRange" value="9.99" />
-		<property name="moment" value="2018/07/07 18:00" />
-		<property name="startDate" value="2023/07/07 18:00" />
-		<property name="endDate" value="2023/07/21 18:00" />
-		<property name="resultDate" value="2023/08/07 18:00" />
-		<property name="isFinal" value="true" />
-		<property name="bookmaker" ref="bookmaker3" />
-		<property name="warranty" ref="warranty1" />
-		<property name="category" ref="category3" />
-		<property name="participants">
-			<list>
-				<value>participant1</value>
-				<value>participant2</value>
-				<value>participant3</value>
-				<value>participant4</value>
-				<value>participant5</value>
-				<value>participant6</value>
-			</list>
-		</property>
-		<property name="winners">
-			<list>
-			</list>
-		</property>
-		<property name="bets">
-			<list>
-			</list>
-		</property>
-		<property name="helpRequests">
-			<list>
-			</list>
-		</property>
-				<property name="finders">
-			<list>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="betPool4" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
 		<property name="title" value="title bet pool 3" />
 		<property name="description" value="description bet pool 3" />
@@ -962,7 +919,7 @@
 		</property>
 	</bean>
 	
-	<bean id="betPool5" class="domain.BetPool">
+	<bean id="betPool4" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
 		<property name="title" value="title bet pool 3" />
 		<property name="description" value="description bet pool 3" />
@@ -1004,7 +961,7 @@
 		</property>
 	</bean>
 	
-	<bean id="betPool6" class="domain.BetPool">
+	<bean id="betPool5" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
 		<property name="title" value="title bet pool 3" />
 		<property name="description" value="description bet pool 3" />
@@ -1046,12 +1003,12 @@
 		</property>
 	</bean>
 	
-	<bean id="betPool7" class="domain.BetPool">
+	<bean id="betPool6" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
 		<property name="title" value="title bet pool 3" />
 		<property name="description" value="description bet pool 3" />
-		<property name="minRange" value="100" />
-		<property name="maxRange" value="499.99" />
+		<property name="minRange" value="499.99" />
+		<property name="maxRange" value="10000" />
 		<property name="moment" value="2018/07/07 18:00" />
 		<property name="startDate" value="2023/07/07 18:00" />
 		<property name="endDate" value="2023/07/21 18:00" />

@@ -72,15 +72,14 @@
 					<li><a href="actor/register.do?type=COUNSELOR"><spring:message code="master.page.registerCounselor" /></a></li>
 					<li><a href="actor/register.do?type=BOOKMAKER"><spring:message code="master.page.registerBookmaker" /></a></li>
 				</ul>
+			<li><a class="fNiv" href="betPool/list.do"><spring:message code="master.page.listPools" /></a></li>
 			</li>
 		</security:authorize>
 		
 		
 		<security:authorize access="isAuthenticated()">
-			<li>
-				<a class="fNiv"> 
-					<spring:message code="master.page.profile" />(<security:authentication property="principal.username" />)
-				</a>
+			<li><a class="fNiv" href="betPool/list.do"><spring:message code="master.page.listPools" /></a></li>
+			<li><a class="fNiv"><spring:message code="master.page.profile" />(<security:authentication property="principal.username" />)</a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="message/list.do"><spring:message code="master.page.mailbox" /></a></li>			
