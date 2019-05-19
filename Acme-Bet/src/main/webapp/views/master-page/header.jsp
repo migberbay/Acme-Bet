@@ -20,12 +20,11 @@
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<security:authorize access="hasRole('ADMIN')">
-			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
+			<li><a class="fNiv"><spring:message	code="master.page.system" /></a>
 				<ul>
-					<li class="arrow"></li>	
-					<li><a href="message/createBroadcast.do"><spring:message code="master.page.broadcast" /></a></li>
-					<li><a href="actor/register.do?type=ADMIN"><spring:message code="master.page.registerAdmin" /></a></li>
-								
+					<li class="arrow"></li>
+					<li><a href="admin/configuration.do"><spring:message code="master.page.configuration" /></a></li>
+					<li><a href="admin/dashboard.do"><spring:message code="master.page.dashboard" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

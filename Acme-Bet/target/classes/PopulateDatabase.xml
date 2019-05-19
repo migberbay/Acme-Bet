@@ -1180,6 +1180,7 @@
 		<property name="systemName" value="Acme Bet" />
 		<property name="vatPercentage" value="0.21" />
 		<property name="sponsorshipFare" value="0.01" />
+		<property name="freeFunds" value="10" />
 		<property name="welcomeTextEnglish"
 			value="Welcome to Acme Bet!" />
 		<property name="welcomeTextSpanish"
