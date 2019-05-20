@@ -13,12 +13,32 @@
 <!-- 
 
 -->
+	<jstl:out value="${betPool.ticker}"/><br>
 	<jstl:out value="${betPool.title}"/><br>
-	<jstl:out value="${betPool.minRange}"/><br>
-	<jstl:out value="${betPool.title}"/><br>
-	<jstl:out value="${betPool.title}"/><br>
-	<jstl:out value="${betPool.title}"/><br>
-	<jstl:out value="${betPool.title}"/><br>
+	<jstl:out value="${betPool.minRange}"/><jstl:out value="${betPool.maxRange}"/><br>
+	<jstl:out value="${betPool.description}"/><br>
+	<jstl:out value="${betPool.startDate}"/><br>
+	<jstl:out value="${betPool.endDate}"/><br>
+	<jstl:out value="${betPool.resultDate}"/><br>
+	
+	<display:table name="betPool.participants" id="row" requestURI="betPool/show.do" pagesize="5">
+		<display:column>
+			<jstl:out value="${row}"></jstl:out>
+		</display:column>
+	</display:table>
+	
+	<display:table name="betPool.winners" id="row" requestURI="betPool/show.do" pagesize="5">
+		<display:column>
+			<jstl:out value="${row}"></jstl:out>
+		</display:column>
+	</display:table>
+	
+	<display:table name="betPool.bets" id="row" requestURI="betPool/show.do" pagesize="5">
+		<display:column titleKey="user" property="user.username"/>
+		<display:column titleKey="amount" property="amount"/>
+		<display:column titleKey="moment" property="moment"/>
+		
+	</display:table>
 
 	
 	
