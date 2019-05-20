@@ -26,7 +26,8 @@ public class ConfigurationForm {
 	private String systemName;
 	private Double vatPercentage;
 	private Double sponsorshipFare;
-
+	private Double freeFunds;
+	
 	private String welcomeTextEnglish;
 	private String welcomeTextSpanish;
 	
@@ -102,6 +103,16 @@ public class ConfigurationForm {
 
 	public void setSponsorshipFare(Double sponsorshipFare) {
 		this.sponsorshipFare = sponsorshipFare;
+	}
+	
+	@NotNull
+	@Range(min = 0, max = 20)
+	public Double getFreeFunds() {
+		return freeFunds;
+	}
+
+	public void setFreeFunds(Double freeFunds) {
+		this.freeFunds = freeFunds;
 	}
 
 	@NotBlank

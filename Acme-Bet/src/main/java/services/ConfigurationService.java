@@ -84,6 +84,7 @@ public class ConfigurationService {
 		result.setSystemName(configurationForm.getSystemName());
 		result.setVatPercentage(configurationForm.getVatPercentage());
 		result.setSponsorshipFare(configurationForm.getSponsorshipFare());
+		result.setFreeFunds(configurationForm.getFreeFunds());
 		if(!(configurationForm.getWordEnglishName().isEmpty()) && !(configurationForm.getWordSpanishName().isEmpty())){
 			a.setEnglishName(configurationForm.getWordEnglishName());
 			a.setSpanishName(configurationForm.getWordSpanishName());
@@ -106,6 +107,7 @@ public class ConfigurationService {
 
 		result.setVatPercentage(conf.getVatPercentage());
 		result.setSponsorshipFare(conf.getSponsorshipFare());
+		result.setFreeFunds(conf.getFreeFunds());
 		result.setSystemName(conf.getSystemName());
 		result.setWelcomeTextEnglish(conf.getWelcomeTextEnglish());
 		result.setWelcomeTextSpanish(conf.getWelcomeTextSpanish());

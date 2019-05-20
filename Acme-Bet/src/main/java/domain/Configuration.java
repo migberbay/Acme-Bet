@@ -35,6 +35,7 @@ public class Configuration extends DomainEntity {
 	
 	private Double vatPercentage;
 	private Double sponsorshipFare;
+	private Double freeFunds;
 	
 
 
@@ -126,8 +127,20 @@ public class Configuration extends DomainEntity {
 		this.sponsorshipFare = sponsorshipFare;
 	}
 	
+	
 	//Relationships--------------------------------------------------------------------
 	
+	@NotNull
+	@Range(min = 0, max = 20)
+	public Double getFreeFunds() {
+		return freeFunds;
+	}
+
+	public void setFreeFunds(Double freeFunds) {
+		this.freeFunds = freeFunds;
+	}
+
+
 	private List<Word> spamWords; 
 
 	@Valid
