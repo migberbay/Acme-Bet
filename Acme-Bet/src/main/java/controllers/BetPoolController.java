@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -29,19 +30,17 @@ public class BetPoolController extends AbstractController {
 		return result;
 	}
 
-	// Create-----------------------------------------------------------
+	// Show -----------------------------------------------------------
 
-//	@RequestMapping(value = "/create", method = RequestMethod.GET)
-//	public ModelAndView create() {
-//		ModelAndView result;
-//
-//		SocialProfile socialProfile = socialProfileService.create();
-//
-//		result = this.createEditModelAndView(socialProfile);
-//
-//		return result;
-//
-//	}
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam int betPoolId) {
+		ModelAndView result;
+
+		result = new ModelAndView("betPool/show");
+		result.addObject("betPool",betPoolService.findOne(betPoolId));
+		return result;
+
+	}
 
 	// Edit -----------------------------------------------------------------
 

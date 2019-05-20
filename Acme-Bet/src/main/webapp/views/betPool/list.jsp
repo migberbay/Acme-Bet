@@ -17,7 +17,9 @@
 
 
 	<display:table name="betPools" id="row" requestURI="betPool/list.do" pagesize="5">
-	
+		<display:column titleKey="pool.action" >
+			<a href="betPool/show.do?betPoolId=${row.id}">show</a>
+		</display:column>
 		<display:column property="title" titleKey="pool.title" />
 		<display:column property="ticker" titleKey="pool.ticker" />
 		<display:column titleKey="pool.range">

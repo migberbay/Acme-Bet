@@ -43,16 +43,12 @@
 		<security:intercept-url pattern="/welcome/**" access="permitAll" /> 
 		<security:intercept-url pattern="/message/**" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/actor/register.do" access="permitAll"/>
-		
-<<<<<<< HEAD
-		<security:intercept-url pattern="/betPool/list.do" access="permitAll" /> 
-=======
+	
+		<security:intercept-url pattern="/betPool/list.do" access="permitAll" />
+		<security:intercept-url pattern="/betPool/show.do" access="permitAll" />
 		<security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
 
 
-		<security:intercept-url pattern="/customer/action-1.do" access="hasRole('CUSTOMER')" /> 
-		<security:intercept-url pattern="/customer/action-2.do" access="hasRole('CUSTOMER')" /> 
->>>>>>> a8db775a7571d8a257c43239282a932b83255361
 
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

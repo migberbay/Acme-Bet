@@ -1,9 +1,88 @@
 #./src/main/resources/Entities.map
 <<<<<<< HEAD
-#Thu May 16 15:30:54 CEST 2019
+#Fri May 17 18:02:19 CEST 2019
+user5=613
+user4=612
+user3=610
+user2=608
+user1=606
+creditCard15=634
+creditCard14=633
+creditCard13=632
+creditCard12=631
+creditCard11=630
+creditCard10=629
+finder5=639
+finder4=638
+finder3=637
+bookmaker3=605
+finder2=636
+bookmaker2=604
+finder1=635
+bookmaker1=602
+userAccount15=599
+userAccount14=598
+userAccount13=597
+admin=600
+userAccount12=596
+userAccount11=595
+userAccount10=594
+betPool6=661
+betPool5=660
+word6=655
+socialProfile5=611
+betPool4=659
+word5=654
+socialProfile4=609
+betPool3=658
+word4=653
+socialProfile3=607
+betPool2=657
+word3=652
+socialProfile2=603
+betPool1=656
+word2=651
+socialProfile1=601
+word1=650
+configuration1=649
+warranty1=640
+creditCard9=628
+creditCard8=627
+creditCard7=626
+creditCard6=625
+creditCard5=624
+creditCard4=623
+creditCard3=622
+creditCard2=621
+creditCard1=620
+category8=648
+category7=647
+category6=646
+category5=645
+category4=644
+category3=643
+category2=642
+category1=641
+counselor3=619
+counselor2=618
+counselor1=617
+sponsorship3=664
+sponsorship2=663
+sponsorship1=662
+userAccount9=593
+userAccount8=592
+userAccount7=591
+userAccount6=590
+userAccount5=589
+userAccount4=588
+userAccount3=587
+userAccount2=586
+userAccount1=585
+sponsor3=616
+sponsor2=615
+sponsor1=614
 =======
-#Sun May 19 13:05:17 CEST 2019
->>>>>>> a8db775a7571d8a257c43239282a932b83255361
+#Sun May 19 13:13:42 CEST 2019
 user5=670
 user4=669
 user3=667
@@ -85,3 +164,4 @@ userAccount1=642
 sponsor3=673
 sponsor2=672
 sponsor1=671
+>>>>>>> a8db775a7571d8a257c43239282a932b83255361
