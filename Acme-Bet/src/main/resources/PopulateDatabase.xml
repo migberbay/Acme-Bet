@@ -1049,6 +1049,7 @@
 	<bean id="sponsorship1" class="domain.Sponsorship">
 		<property name="banner" value="http://www.pics.com/asjda" />
 		<property name="link" value="http://www.juntadeandalucia.com" />
+		<property name="isActivated" value="True"/>
 		<property name="sponsor" ref="sponsor1" />
 		<property name="betPool" ref="betPool4" />
 	</bean>
@@ -1056,6 +1057,7 @@
 	<bean id="sponsorship2" class="domain.Sponsorship">
 		<property name="banner" value="http://www.pics.com/asjda" />
 		<property name="link" value="http://www.juntadeandalucia.com" />
+		<property name="isActivated" value="True"/>
 		<property name="sponsor" ref="sponsor2" />
 		<property name="betPool" ref="betPool5" />
 	</bean>
@@ -1063,6 +1065,7 @@
 	<bean id="sponsorship3" class="domain.Sponsorship">
 		<property name="banner" value="http://www.pics.com/asjda" />
 		<property name="link" value="http://www.juntadeandalucia.com" />
+		<property name="isActivated" value="True"/>
 		<property name="sponsor" ref="sponsor3" />
 		<property name="betPool" ref="betPool6" />
 	</bean>
