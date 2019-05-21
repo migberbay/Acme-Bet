@@ -22,34 +22,31 @@ public class SponsorshipService {
 	
 	//Supporting services
 	
-//	@Autowired
-//	private SponsorService sponsorService;
+	@Autowired
+	private SponsorService sponsorService;
 	
 	@Autowired
 	private Validator validator;
 	
-	//SIMPLE CRUD METHODS
+	//SIMPLE CRUD METHODS -----------------------------------------------------------------------------
 	
 	public Sponsorship create(){
-		Assert.isTrue(LoginService.hasRole("PROVIDER"));
 		Sponsorship res = new Sponsorship();
 		
-//		res.setSponsor(sponsorService.findByPrincipal());
+		res.setActivate(true);
+		res.setSponsor(sponsorService.findByPrincipal());
 
 		return res;
 	}
 	
 	public Sponsorship save(Sponsorship sponsorship) {
-		Assert.isTrue(LoginService.hasRole("PROVIDER"));
-		Assert.notNull(sponsorship);
+		Assert.isTrue(LoginService.hasRole("SPONSOR"));
 		
 		return sponsorshipRepository.saveAndFlush(sponsorship);
 	}
 	
 	public void delete(Sponsorship sponsorship) {
-		Assert.notNull(sponsorship);
-		Assert.isTrue(sponsorship.getId() != 0);
-		Assert.isTrue(this.sponsorshipRepository.exists(sponsorship.getId()));
+		Assert.isTrue(LoginService.hasRole("SPONSOR"));
 		
 		sponsorshipRepository.delete(sponsorship);
 	}
@@ -64,13 +61,13 @@ public class SponsorshipService {
 	
 	//OTHER BUSINESS METHODS
 	
-//	public Collection<Sponsorship> findBySponsor(Sponsor sponsor) {
-//		Collection<Sponsorship> sponsorships;
-//		
-//		sponsorships = this.sponsorshipRepository.findBySponsorId(sponsor.getId());
-//		
-//		return sponsorships;
-//	}
+	public Collection<Sponsorship> findByPrincipal() {
+		Collection<Sponsorship> sponsorships;
+		
+		sponsorships = this.sponsorshipRepository.findBySponsor(sponsorService.findByPrincipal().getId());
+		
+		return sponsorships;
+	}
 //	
 //	public Collection<Sponsorship> findByPosition(Position position) {
 //		Collection<Sponsorship> sponsorships;

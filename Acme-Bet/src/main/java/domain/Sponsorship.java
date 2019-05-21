@@ -17,6 +17,7 @@ public class Sponsorship extends DomainEntity {
 
 	private String banner;
 	private String link;
+	private boolean activate;
 
 	// Getters & Setters -------------------------------------------------------
 
@@ -40,6 +41,13 @@ public class Sponsorship extends DomainEntity {
 		this.link = link;
 	}
 
+	public boolean isActivate() {
+		return activate;
+	}
+
+	public void setActivate(boolean activate) {
+		this.activate = activate;
+	}
 	
 	// Relationships ----------------------------------------------------------
 
