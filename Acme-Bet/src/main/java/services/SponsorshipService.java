@@ -32,8 +32,8 @@ public class SponsorshipService {
 	
 	public Sponsorship create(){
 		Sponsorship res = new Sponsorship();
-		
-		res.setActivate(true);
+
+		res.setIsActivated(true);
 		res.setSponsor(sponsorService.findByPrincipal());
 
 		return res;
