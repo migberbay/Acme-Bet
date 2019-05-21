@@ -39,7 +39,6 @@ public class SponsorshipService {
 		return res;
 	}
 	
-	
 	public Sponsorship save(Sponsorship sponsorship) {
 		Assert.isTrue(LoginService.hasRole("SPONSOR"));
 		
