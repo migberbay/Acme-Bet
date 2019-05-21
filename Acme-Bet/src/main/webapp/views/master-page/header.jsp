@@ -41,7 +41,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.bookmaker" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="bookmaker/warranty/list.do"><spring:message code="master.page.bookmaker.list" /></a></li>
+					<li><a href="bookmaker/warranty/list.do"><spring:message code="master.page.warranty.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
