@@ -49,6 +49,8 @@
 		<security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
 		
 		<security:intercept-url pattern="/bookmaker/**" access="hasRole('BOOKMAKER')" />
+		
+		<security:intercept-url pattern="/sponsor/**" access="hasRole('SPONSOR')" />
 
 
 
