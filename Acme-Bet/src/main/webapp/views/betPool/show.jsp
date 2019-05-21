@@ -10,33 +10,32 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<!-- 
+ <spring:message code="pool.dateformat" var = "format"/>
 
--->
-	<jstl:out value="${betPool.ticker}"/><br>
-	<jstl:out value="${betPool.title}"/><br>
-	<jstl:out value="${betPool.minRange}"/><jstl:out value="${betPool.maxRange}"/><br>
-	<jstl:out value="${betPool.description}"/><br>
-	<jstl:out value="${betPool.startDate}"/><br>
-	<jstl:out value="${betPool.endDate}"/><br>
-	<jstl:out value="${betPool.resultDate}"/><br>
 	
+	<b><spring:message code="pool.ticker"/>:</b> <jstl:out value="${betPool.ticker}"/><br>
+	<b><spring:message code="pool.title"/>:</b> <jstl:out value="${betPool.title}"/><br>
+	<b><spring:message code="pool.range"/>:</b> <jstl:out value="${betPool.minRange}"/> - <jstl:out value="${betPool.maxRange}"/><br>
+	<b><spring:message code="pool.description"/>:</b> <jstl:out value="${betPool.description}"/><br>
+	<b><spring:message code="pool.startDate"/>:</b> <fmt:formatDate pattern = "${format}" value = "${betPool.startDate}" /><br>
+	<b><spring:message code="pool.endDate"/>:</b> <fmt:formatDate pattern = "${format}" value = "${betPool.endDate}" /><br>
+	<b><spring:message code="pool.resultDate"/>:</b> <fmt:formatDate pattern = "${format}" value = "${betPool.resultDate}" /><br>
 	<display:table name="betPool.participants" id="row" requestURI="betPool/show.do" pagesize="5">
-		<display:column>
+		<display:column titleKey="pool.participants">
 			<jstl:out value="${row}"></jstl:out>
 		</display:column>
 	</display:table>
 	
 	<display:table name="betPool.winners" id="row" requestURI="betPool/show.do" pagesize="5">
-		<display:column>
+		<display:column titleKey="pool.winners">
 			<jstl:out value="${row}"></jstl:out>
 		</display:column>
 	</display:table>
 	
 	<display:table name="betPool.bets" id="row" requestURI="betPool/show.do" pagesize="5">
-		<display:column titleKey="user" property="user.username"/>
-		<display:column titleKey="amount" property="amount"/>
-		<display:column titleKey="moment" property="moment"/>
+		<display:column titleKey="pool.user" property="user.username"/>
+		<display:column titleKey="pool.amount" property="amount"/>
+		<display:column titleKey="pool.moment" property="moment"/>
 		
 	</display:table>
 
@@ -46,8 +45,3 @@
 		value="<spring:message code="pool.back" />"
 		onclick="javascript: window.location.replace('/Acme-Bet/betPool/list.do')" />
 	<br />
-<script>
-
-
-
-</script>

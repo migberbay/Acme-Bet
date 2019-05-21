@@ -25,9 +25,12 @@
 		<display:column titleKey="pool.range">
 		<jstl:out value="${row.minRange}"/>-<jstl:out value="${row.maxRange}"/>
 		</display:column>
-		<display:column property="startDate" titleKey="pool.startDate" />
-		<display:column property="endDate" titleKey="pool.endDate" />
-		<display:column property="resultDate" titleKey="pool.resultDate" />
+		<display:column property="startDate" titleKey="pool.startDate" >
+		</display:column>
+		<display:column property="endDate" titleKey="pool.endDate" >
+		</display:column>
+		<display:column property="resultDate" titleKey="pool.resultDate" >pool.action			= action
+		</display:column>
 	
 	</display:table>
 	
