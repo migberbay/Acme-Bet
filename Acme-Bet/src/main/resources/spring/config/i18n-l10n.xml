@@ -28,6 +28,8 @@
 		<value>/views/profile/messages</value>
 		<value>/views/message/messages</value>
 		<value>/views/betPool/messages</value>
+		<value>/views/warranty/messages</value>
+		
 		<value>/views/error/messages</value>
 	</util:list>
 

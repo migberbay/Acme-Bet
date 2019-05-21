@@ -47,6 +47,8 @@
 		<security:intercept-url pattern="/betPool/list.do" access="permitAll" />
 		<security:intercept-url pattern="/betPool/show.do" access="permitAll" />
 		<security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
+		
+		<security:intercept-url pattern="/bookmaker/**" access="hasRole('BOOKMAKER')" />
 
 
 
