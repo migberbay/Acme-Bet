@@ -5,6 +5,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
@@ -17,7 +18,7 @@ public class Sponsorship extends DomainEntity {
 
 	private String banner;
 	private String link;
-	private boolean activate;
+	private Boolean isActivated;
 
 	// Getters & Setters -------------------------------------------------------
 
@@ -40,13 +41,14 @@ public class Sponsorship extends DomainEntity {
 	public void setLink(final String link) {
 		this.link = link;
 	}
-
-	public boolean isActivate() {
-		return activate;
+	
+	@NotNull
+	public Boolean getIsActivated() {
+		return isActivated;
 	}
 
-	public void setActivate(boolean activate) {
-		this.activate = activate;
+	public void setIsActivated(Boolean isActivated) {
+		this.isActivated = isActivated;
 	}
 	
 	// Relationships ----------------------------------------------------------
