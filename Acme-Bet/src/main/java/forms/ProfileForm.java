@@ -21,13 +21,11 @@ public class ProfileForm {
 	//personal Data:
 	private String	name;
 	private String	surnames;
-	private String  vatNumber;
 	private String	photo;
 	private String	email;
 	private String	phone;
 	private String	address;
 	
-	private String commercialName;
 	
 	//Credit card:
 	
@@ -96,24 +94,6 @@ public class ProfileForm {
 	}
 	
 	// end CreditCard------------------------------
-
-	@NotBlank
-	public String getCommercialName() {
-		return commercialName;
-	}
-
-	public void setCommercialName(String commercialName) {
-		this.commercialName = commercialName;
-	}
-
-	@Pattern(regexp = "^[A-Z]{3}[0-9]{8}$")
-	public String getVatNumber() {
-		return vatNumber;
-	}
-
-	public void setVatNumber(String vatNumber) {
-		this.vatNumber = vatNumber;
-	}
 
 	@NotEmpty
 	public String getUsername() {

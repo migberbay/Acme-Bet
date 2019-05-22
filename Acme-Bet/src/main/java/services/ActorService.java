@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,13 +25,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import domain.Actor;
 import domain.Admin;
-import domain.Bet;
 import domain.BetPool;
 import domain.Bookmaker;
 import domain.Counselor;
 import domain.CreditCard;
-import domain.HelpRequest;
-import domain.Review;
 import domain.SocialProfile;
 import domain.Sponsor;
 import domain.Sponsorship;
@@ -293,6 +291,37 @@ public class ActorService {
 		return actor;
 	}
 	
+	public ProfileForm rellenaForm (Actor a , ProfileForm f , List<String> parts){
+		
+		if (parts.contains("personal") || parts.isEmpty()) {
+			// personal data
+			f.setAddress(a.getAddress());
+			f.setEmail(a.getEmail());
+			f.setPhone(a.getPhone());
+			f.setPhoto(a.getPhoto());
+			f.setSurnames(a.getSurnames());
+			f.setName(a.getName());
+		}
+		
+		if(parts.contains("credit") || parts.isEmpty()){
+			//credit card
+			f.setCVV(a.getCreditCard().getCVV());
+			f.setExpirationMonth(a.getCreditCard().getExpirationDate().getMonth());
+			f.setExpirationYear(a.getCreditCard().getExpirationDate().getYear()+1900);
+			f.setHolder(a.getCreditCard().getHolder());
+			f.setMake(a.getCreditCard().getMake());
+			f.setNumber(a.getCreditCard().getNumber());
+		}
+		
+		if(parts.contains("account")|| parts.isEmpty()){
+			//account
+			f.setPassword("default");
+			f.setPassword2("default");
+			f.setUsername(a.getUserAccount().getUsername());
+		}
+		
+		return f;
+	}
 	
 	
 	public String actorToJson(Actor actor){
@@ -310,7 +339,6 @@ public class ActorService {
 		
 		form.setAddress(actor.getAddress());
 		form.setEmail(actor.getEmail());
-		form.setCommercialName("null");
 		form.setName(actor.getName());
 		form.setPassword("null");
 		form.setPassword2("null");

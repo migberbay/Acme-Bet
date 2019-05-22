@@ -35,10 +35,10 @@ public class SocialProfileService {
 
 		Assert.notNull(socialProfile);
 		Assert.isTrue(LoginService.hasRole("ADMIN")
-				|| LoginService.hasRole("COMPANY")
-				|| LoginService.hasRole("ROOKIE")
-				|| LoginService.hasRole("AUDITOR")
-				|| LoginService.hasRole("PROVIDER"));
+				|| LoginService.hasRole("BOOKMAKER")
+				|| LoginService.hasRole("USER")
+				|| LoginService.hasRole("SPONSOR")
+				|| LoginService.hasRole("COUNSELOR"));
 
 		Actor actor = actorService.getByUserAccount(LoginService.getPrincipal());
 
@@ -71,10 +71,10 @@ public class SocialProfileService {
 		
 		Assert.notNull(socialProfile);
 		Assert.isTrue(LoginService.hasRole("ADMIN")
-				|| LoginService.hasRole("COMPANY")
-				|| LoginService.hasRole("ROOKIE")
-				|| LoginService.hasRole("AUDITOR")
-				|| LoginService.hasRole("PROVIDER"));
+				|| LoginService.hasRole("BOOKMAKER")
+				|| LoginService.hasRole("USER")
+				|| LoginService.hasRole("SPONSOR")
+				|| LoginService.hasRole("COUNSELOR"));
 		
 		Actor actor = actorService.getByUserAccount(LoginService.getPrincipal());
 		actor.getSocialProfiles().remove(socialProfile);
