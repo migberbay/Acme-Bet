@@ -30,6 +30,7 @@
 		<value>/views/betPool/messages</value>
 		<value>/views/warranty/messages</value>
 		<value>/views/sponsorship/messages</value>
+		<value>/views/bet/messages</value>
 		
 		<value>/views/error/messages</value>
 	</util:list>

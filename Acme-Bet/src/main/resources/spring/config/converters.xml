@@ -20,9 +20,59 @@
 	<util:list id="converters">
 			<bean class="converters.AuthorityToStringConverter" />
 			<bean class="converters.MessageToStringConverter" />
+			<bean class="converters.ActorToStringConverter" />
+			<bean class="converters.AdminToStringConverter" />
+			<bean class="converters.BetToStringConverter" />
+			<bean class="converters.BetPoolToStringConverter" />
+			<bean class="converters.BookmakerToStringConverter" />
+			<bean class="converters.CategoryToStringConverter" />
+			<bean class="converters.ConfigurationToStringConverter" />
+			<bean class="converters.CounselorToStringConverter" />
+			<bean class="converters.CreditCardToStringConverter" />
+			<bean class="converters.CurriculaToStringConverter" />
+			<bean class="converters.EducationRecordToStringConverter" />
+			<bean class="converters.EndorserRecordToStringConverter" />
+			<bean class="converters.FinderToStringConverter" />
+			<bean class="converters.HelpRequestToStringConverter" />
+			<bean class="converters.MessageToStringConverter" />
+			<bean class="converters.MiscellaneousRecordToStringConverter" />
+			<bean class="converters.PersonalRecordToStringConverter" />
+			<bean class="converters.ProfessionalRecordToStringConverter" />
+			<bean class="converters.ReviewToStringConverter" />
+			<bean class="converters.SocialProfileToStringConverter" />
+			<bean class="converters.SponsorshipToStringConverter" />
+			<bean class="converters.SponsorToStringConverter" />
+			<bean class="converters.UserToStringConverter" />
+			<bean class="converters.WarrantyToStringConverter" />
+			<bean class="converters.WordToStringConverter" />
 			
+			<bean class="converters.StringToActorConverter" />
+			<bean class="converters.StringToAdminConverter" />
 			<bean class="converters.StringToAuthorityConverter" />
-			<bean class="converters.StringToMessageConverter" />			
+			<bean class="converters.StringToBetConverter" />
+			<bean class="converters.StringToBetPoolConverter" />
+			<bean class="converters.StringToBookmakerConverter" />
+			<bean class="converters.StringToCategoryConverter" />
+			<bean class="converters.StringToConfigurationConverter" />
+			<bean class="converters.StringToCounselorConverter" />
+			<bean class="converters.StringToCreditCardConverter" />
+			<bean class="converters.StringToCurriculaConverter" />
+			<bean class="converters.StringToEducationRecordConverter" />
+			<bean class="converters.StringToEndorserRecordConverter" />
+			<bean class="converters.StringToFinderConverter" />
+			<bean class="converters.StringToHelpRequestConverter" />
+			<bean class="converters.StringToMessageConverter" />
+			<bean class="converters.StringToMiscellaneousRecordConverter" />
+			<bean class="converters.StringToPersonalRecordConverter" />
+			<bean class="converters.StringToProfessionalRecordConverter" />
+			<bean class="converters.StringToReviewConverter" />
+			<bean class="converters.StringToSocialProfileConverter" />
+			<bean class="converters.StringToSponsorConverter" />
+			<bean class="converters.StringToSponsorshipConverter" />
+			<bean class="converters.StringToUserConverter" />
+			<bean class="converters.StringToWarrantyeConverter" />
+			<bean class="converters.StringToWordConverter" />	
+	
 	</util:list>
 	
 </beans>

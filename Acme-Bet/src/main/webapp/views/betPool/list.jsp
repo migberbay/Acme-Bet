@@ -19,7 +19,10 @@
 	<spring:message code="pool.dateformat" var = "format"/>
 	<display:table name="betPools" id="row" requestURI="betPool/list.do" pagesize="5">
 		<display:column titleKey="pool.action" >
-			<a href="betPool/show.do?betPoolId=${row.id}">show</a>
+			<a href="betPool/show.do?betPoolId=${row.id}">show</a><br>
+			<jstl:if test="${isUser}">
+			<a href="bet/user/create.do?betPoolId=${row.id}">bet</a>
+			</jstl:if>
 		</display:column>
 		<display:column property="title" titleKey="pool.title" />
 		<display:column property="ticker" titleKey="pool.ticker" />

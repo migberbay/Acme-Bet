@@ -10,19 +10,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Bet extends Actor {
+public class Bet extends DomainEntity {
 	
 	private String ticker;
 	private Double amount;
 	private Date moment;
+	private String winner;
 	
 	@Column(unique = true)
 	@Pattern(regexp="^([0]{1}[0-9]{1}|[1]{1}[0-8]{1})([0]{1}[1-9]{1}|[1]{1}[0-2]{1})([0-2]{1}[1-9]{1}|[3]{1}[0-1]{1})[-][A-Z0-9]{6}$")
@@ -33,6 +37,9 @@ public class Bet extends Actor {
 		this.ticker = ticker;
 	}
 	
+	@Min(10)
+	@Max(10000)
+	@NotBlank
 	@NotNull
 	public Double getAmount() {
 		return amount;
@@ -52,9 +59,16 @@ public class Bet extends Actor {
 		this.moment = moment;
 	}
 	
+	@NotBlank
+	public String getWinner() {
+		return winner;
+	}
+	public void setWinner(String winner) {
+		this.winner = winner;
+	}
 	
 	//Relationships
-	
+
 	private User user;
 	private BetPool betPool;
 	

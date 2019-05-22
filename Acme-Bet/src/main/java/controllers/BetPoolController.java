@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
+import security.Authority;
+import security.LoginService;
 import services.BetPoolService;
 
 @Controller
@@ -23,9 +25,19 @@ public class BetPoolController extends AbstractController {
 	public ModelAndView list() {
 
 		ModelAndView result;
+		Boolean isUser = false;
+		Authority userAuthority = new Authority();
+		userAuthority.setAuthority("USER");
+		try {
+			isUser = LoginService.getPrincipal().getAuthorities().contains(userAuthority);
+		} catch (Exception e) {
+			isUser = false;
+		}
+		
 
 		result = new ModelAndView("betPool/list");
 		result.addObject("betPools", betPoolService.findFinal());
+		result.addObject("isUser", isUser);
 
 		return result;
 	}

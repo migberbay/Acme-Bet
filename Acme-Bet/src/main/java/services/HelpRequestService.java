@@ -1,0 +1,53 @@
+package services;
+
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import repositories.HelpRequestRepository;
+import domain.Actor;
+import domain.HelpRequest;
+
+
+@Service
+@Transactional
+public class HelpRequestService {
+
+	//Managed Repository -----
+	
+	@Autowired
+	private HelpRequestRepository helpRequestRepository;
+	
+	//Supporting Services -----
+	
+	//Simple CRUD methods -----
+	
+	public HelpRequest create(){
+		HelpRequest res = new HelpRequest();
+		
+		return res;
+	}
+	
+	public Collection<HelpRequest> findAll(){
+		return helpRequestRepository.findAll();
+	}
+	
+	public HelpRequest findOne(int Id){
+		return helpRequestRepository.findOne(Id);
+	}
+	
+	public HelpRequest save(HelpRequest a){
+		
+		HelpRequest saved = helpRequestRepository.saveAndFlush(a);
+		return saved;
+	}
+	
+	public void delete(HelpRequest a){
+		helpRequestRepository.delete(a);
+	}
+	
+	//Other business methods -----
+
+}

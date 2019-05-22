@@ -30,6 +30,7 @@
 		<value>/views/betPool/tiles.xml</value>
 		<value>/views/warranty/tiles.xml</value>
 		<value>/views/sponsorship/tiles.xml</value>
+		<value>/views/bet/tiles.xml</value>
 		
 		<value>/views/error/tiles.xml</value>
 	</util:list>

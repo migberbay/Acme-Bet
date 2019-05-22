@@ -56,7 +56,7 @@
 		<h3><spring:message code="actor.socialProfile"/>:</h3> 
 		
 		<jstl:if test="${logged}">
-			<a href="socialProfile/create.do"> <spring:message code="actor.create" /> </a>
+			<a href="socialProfile/create.do"> <spring:message code="actor.create" /> </a><br>
 		</jstl:if>
 		
 		<display:table name="socialProfiles" id="row" requestURI="socialProfile/actor/list.do" pagesize="5">
@@ -73,7 +73,7 @@
 		    <display:column titleKey="actor.socialProfile.link" property="link" />
 		    
 		</display:table>
-		
+		<br>
 		
 		
 	<jstl:if test="${logged}">
