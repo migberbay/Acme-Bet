@@ -16,6 +16,7 @@
 -->
 
 
+	<spring:message code="pool.dateformat" var = "format"/>
 	<display:table name="betPools" id="row" requestURI="betPool/list.do" pagesize="5">
 		<display:column titleKey="pool.action" >
 			<a href="betPool/show.do?betPoolId=${row.id}">show</a>
@@ -23,13 +24,16 @@
 		<display:column property="title" titleKey="pool.title" />
 		<display:column property="ticker" titleKey="pool.ticker" />
 		<display:column titleKey="pool.range">
-		<jstl:out value="${row.minRange}"/>-<jstl:out value="${row.maxRange}"/>
+		<jstl:out value="${row.minRange}"/> - <jstl:out value="${row.maxRange}"/>
 		</display:column>
-		<display:column property="startDate" titleKey="pool.startDate" >
+		<display:column property="startDate" titleKey="pool.startDate">
+			<fmt:formatDate pattern = "${format}" value = "${row.startDate}" />
 		</display:column>
-		<display:column property="endDate" titleKey="pool.endDate" >
+		<display:column property="endDate" titleKey="pool.endDate">
+			<fmt:formatDate pattern = "${format}" value = "${row.endDate}" />
 		</display:column>
-		<display:column property="resultDate" titleKey="pool.resultDate" >pool.action			= action
+		<display:column property="resultDate" titleKey="pool.resultDate" >
+			<fmt:formatDate pattern = "${format}" value = "${row.resultDate}" />
 		</display:column>
 	
 	</display:table>

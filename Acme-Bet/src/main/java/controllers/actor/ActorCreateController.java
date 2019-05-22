@@ -18,11 +18,6 @@ import security.LoginService;
 import services.ActorService;
 import controllers.AbstractController;
 import domain.Actor;
-import domain.Admin;
-import domain.Bookmaker;
-import domain.Counselor;
-import domain.Sponsor;
-import domain.User;
 import forms.RegisterForm;
 
 @Controller

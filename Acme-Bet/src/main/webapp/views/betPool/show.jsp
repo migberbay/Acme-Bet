@@ -11,7 +11,6 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
  <spring:message code="pool.dateformat" var = "format"/>
-
 	
 	<b><spring:message code="pool.ticker"/>:</b> <jstl:out value="${betPool.ticker}"/><br>
 	<b><spring:message code="pool.title"/>:</b> <jstl:out value="${betPool.title}"/><br>
