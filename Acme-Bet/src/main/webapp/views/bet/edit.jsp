@@ -36,6 +36,17 @@
 		</jstl:forEach>	
 	</form:select>
 	<form:errors path="winner" cssClass="error" />
+	<br>
+	<div class="error">
+	<jstl:if test="${hasEnoughFunds == false}">
+		Not enough funds punk, go get some money!
+	</jstl:if>
+	<br>
+	<jstl:if test="${betAmountIsCorrect == false}">
+		The range in this bet is <jstl:out value="${range}"/>, you either exceeded it or you went too low.
+	</jstl:if>
+	</div>
+	
 	
 	<br/>
 	<acme:submit name="save" code="bet.save"/>

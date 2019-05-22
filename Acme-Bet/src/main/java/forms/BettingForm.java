@@ -1,7 +1,5 @@
 package forms;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -13,7 +11,6 @@ public class BettingForm {
 	private String winner;
 	
 	@NotNull
-	@NotBlank
 	public Integer getBetPoolId() {
 		return betPoolId;
 	}
@@ -21,9 +18,9 @@ public class BettingForm {
 		this.betPoolId = betPoolId;
 	}
 	
-	@NotBlank
-	@Min(10)
-	@Max(10000)
+//	@Min(10)
+//	@Max(10000)
+	@NotNull
 	public Double getAmount() {
 		return amount;
 	}

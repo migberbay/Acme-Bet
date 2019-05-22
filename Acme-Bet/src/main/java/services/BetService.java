@@ -65,12 +65,8 @@ public class BetService {
 		Bet res = this.create(betPoolService.findOne(form.getBetPoolId()), userService.findByPrincipal());
 		res.setAmount(form.getAmount());
 		res.setWinner(form.getWinner());
-		
-//		try {
-//			validator.validate(form, bind);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+	
+		validator.validate(form, bind);
 
 		return res;
 	}

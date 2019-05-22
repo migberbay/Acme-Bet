@@ -3,6 +3,7 @@ package controllers.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,17 +48,28 @@ public class BetUserController extends AbstractController {
 	//Save ---------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(BettingForm form, BindingResult binding) {
+	public ModelAndView save(@ModelAttribute("form") BettingForm form, BindingResult binding) {
 		ModelAndView result;
 		
 		Bet res = betService.reconstruct(form, binding);
+		Boolean betAmountIsCorrect = false;
+		Boolean hasEnoughFunds = false;
 		
+		if (res.getAmount() != null) {
+			betAmountIsCorrect = res.getAmount()<= res.getBetPool().getMaxRange() && res.getAmount()>=res.getBetPool().getMinRange();
+			hasEnoughFunds = res.getAmount()<=res.getUser().getFunds();
+		}
+
 		if(binding.hasErrors()) {
 			result = this.createEditModelAndView(form);
 			System.out.println(binding);
-		} else {
+		}else if (!betAmountIsCorrect || !hasEnoughFunds) {
+			result = this.createEditModelAndView(form);
+			result.addObject("betAmountIsCorrect", betAmountIsCorrect);
+			result.addObject("hasEnoughFunds", hasEnoughFunds);
+			result.addObject("range", res.getBetPool().getMinRange()+" - "+res.getBetPool().getMaxRange());
+		}else {
 			try {
-				System.out.println(res.getTicker());
 				Bet saved = betService.save(res);
 				BetPool pool = res.getBetPool();
 				pool.getBets().add(saved);
