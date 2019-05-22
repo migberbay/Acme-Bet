@@ -27,6 +27,13 @@
 					<li><a href="admin/dashboard.do"><spring:message code="master.page.dashboard" /></a></li>
 				</ul>
 			</li>
+			<li><a class="fNiv"><spring:message	code="master.page.category" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="category/admin/list.do"><spring:message code="master.page.category.list" /></a></li>
+					<li><a href="category/admin/edit.do"><spring:message code="master.page.category.create" /></a></li>
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('USER')">
