@@ -35,6 +35,7 @@
 		<display:column titleKey="pool.user" property="user.userAccount.username"/>
 		<display:column titleKey="pool.amount" property="amount"/>
 		<display:column titleKey="pool.moment" property="moment"/>
+		<display:column titleKey="pool.winner" property="winner"/>
 		
 	</display:table>
 
