@@ -1,5 +1,6 @@
 package controllers.admin;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.ValidationException;
@@ -14,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.AdminService;
+import services.BetPoolService;
 import services.CategoryService;
+import services.HelpRequestService;
 import controllers.AbstractController;
 import domain.Admin;
+import domain.BetPool;
 import domain.Category;
+import domain.HelpRequest;
 
 @Controller
 @RequestMapping("category/admin/")
@@ -29,7 +34,10 @@ public class CategoryAdminController extends AbstractController {
 	private CategoryService categoryService;
 
 	@Autowired
-	private AdminService adminService;
+	private BetPoolService betPoolService;
+	
+	@Autowired
+	private HelpRequestService helpRequestService;
 		
 	// List -------------------------------------------------------------------
 	
@@ -77,9 +85,14 @@ public class CategoryAdminController extends AbstractController {
 		Category category;
 		
 		category = categoryService.findOne(categoryId);
+		Collection<BetPool> pools = betPoolService.getPoolsByCategory(category);
+		Collection<HelpRequest> requests = helpRequestService.getRequestsByCategory(category);
 		
+		System.out.println(pools + " " + requests);
 		result = new ModelAndView("category/show");
 		result.addObject("category", category);
+		result.addObject("pools",pools);
+		result.addObject("requests",requests);
 		result.addObject("requestURI", "category/admin/show.do");
 
 		return result;
@@ -92,10 +105,15 @@ public class CategoryAdminController extends AbstractController {
 
 			ModelAndView result;
 			Category category;
-			
 			category = categoryService.findOne(categoryId);	
-			result = this.createEditModelAndView(category);
-
+			Collection<BetPool> pools = betPoolService.getPoolsByCategory(category);
+			Collection<HelpRequest> requests = helpRequestService.getRequestsByCategory(category);
+			
+			if(pools.isEmpty() && requests.isEmpty()){
+				result = this.createEditModelAndView(category);
+			}else{
+				result = new ModelAndView("error/access");	
+			}
 			return result;
 		}
 
@@ -143,7 +161,10 @@ public class CategoryAdminController extends AbstractController {
 		ModelAndView res;
 
 		res = new ModelAndView("category/edit");
+		Collection<String> types = new ArrayList<String>();
+		types.add("POOL");types.add("REQUEST");
 		res.addObject("category", category);
+		res.addObject("types", types);
 		res.addObject("message", messageCode);
 
 		return res;

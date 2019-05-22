@@ -10,12 +10,39 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 	    
 	    <div>
-		    <b><spring:message code="audit.moment"   /></b>: <jstl:out value="${audit.moment}"   /> <br/> 
-		    <b><spring:message code="audit.text"   /></b>: <jstl:out value="${audit.text}"   /> <br/> 
-		    <b><spring:message code="audit.score" /></b>: <jstl:out value="${audit.score}" /> <br/>
-		    <b><spring:message code="audit.position" /></b>: <a href="position/show.do?positionId=${audit.position.id}"><jstl:out value="${audit.position.title}"/></a> <br/>
+		    <b><spring:message code="category.englishName"/></b> <jstl:out value="${category.englishName}"   /> <br/> 
+		    <b><spring:message code="category.spanishName"   /></b> <jstl:out value="${category.spanishName}"   /> <br/> 
+		    <b><spring:message code="category.type" /></b> <jstl:out value="${category.type}" /> <br/>
 		</div>
-		<br/>
 		
-		<acme:cancel url="${uri}" code="audit.back"/>
+		<jstl:if test="${empty pools and empty requests}">
+		<a href="category/admin/edit.do?categoryId=${category.id}"><spring:message code="category.edit"/></a>
+		<br/>
+		</jstl:if>
+		<jstl:if test="${category.type == 'POOL' }">
+			<h3><spring:message code="category.pools"/></h3>
+			<spring:message code="pool.dateformat" var = "format"/>
+			<display:table name="pools" id="row" requestURI="category/admin/show.do?categoryId=${category.id}" pagesize="5">
+
+				<display:column property="title" titleKey="pool.title" />
+				<display:column property="ticker" titleKey="pool.ticker" />
+				<display:column titleKey="pool.range">
+					<jstl:out value="${row.minRange}"/> - <jstl:out value="${row.maxRange}"/>
+				</display:column>
+				<display:column property="startDate" titleKey="pool.startDate">
+					<fmt:formatDate pattern = "${format}" value = "${row.startDate}" />
+				</display:column>
+				<display:column property="endDate" titleKey="pool.endDate">
+					<fmt:formatDate pattern = "${format}" value = "${row.endDate}" />
+				</display:column>
+				<display:column property="resultDate" titleKey="pool.resultDate" >
+					<fmt:formatDate pattern = "${format}" value = "${row.resultDate}" />
+				</display:column>
+	
+			</display:table>
+		</jstl:if>
+		
+		
+		<br/>
+		<acme:cancel url="category/admin/list.do" code="category.back"/>
 		

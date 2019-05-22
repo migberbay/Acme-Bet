@@ -13,6 +13,7 @@ import security.LoginService;
 import domain.Actor;
 import domain.Bet;
 import domain.BetPool;
+import domain.Category;
 import domain.Finder;
 import domain.HelpRequest;
 
@@ -52,5 +53,9 @@ public class BetPoolService {
 	
 	public Collection<BetPool> findFinal(){
 		return this.betPoolRepository.findFinal();
+	}
+	
+	public Collection<BetPool> getPoolsByCategory(Category category){
+		return this.betPoolRepository.getPoolsByCategory(category);
 	}
 }

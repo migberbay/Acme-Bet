@@ -10,11 +10,10 @@
 
 <security:authorize access="hasRole('ADMIN')">
 
-	<display:table name="audits" id="row" requestURI="category/admin/list.do" pagesize="5">
+	<display:table name="categories" id="row" requestURI="category/admin/list.do" pagesize="5">
 		
 		<display:column>
 			<a href="category/admin/show.do?categoryId=${row.id}"><spring:message code="category.show"/></a><br/>
-			<a href="category/admin/edit.do?categoryId=${row.id}"><spring:message code="category.edit"/></a><br/>
 			<a href="category/admin/delete.do?categoryId=${row.id}"><spring:message code="category.delete"/></a><br/>
 		</display:column>
 		<jstl:if test="${lan=='es'}">

@@ -1117,19 +1117,19 @@
 	<bean id="category6" class="domain.Category">
 		<property name="spanishName" value="Problema con las fechas" />
 		<property name="englishName" value="Date issue" />
-		<property name="type" value="POOL" />
+		<property name="type" value="REQUEST" />
 	</bean>
 	
 	<bean id="category7" class="domain.Category">
 		<property name="spanishName" value="Problema con los ganadores" />
 		<property name="englishName" value="Winners issue" />
-		<property name="type" value="POOL" />
+		<property name="type" value="REQUEST" />
 	</bean>
 	
 	<bean id="category8" class="domain.Category">
 		<property name="spanishName" value="Problema con mi apuesta" />
 		<property name="englishName" value="Bet issue" />
-		<property name="type" value="POOL" />
+		<property name="type" value="REQUEST" />
 	</bean>
 	
 		<bean id="configuration1" class="domain.Configuration">

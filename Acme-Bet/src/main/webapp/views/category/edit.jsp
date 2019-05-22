@@ -19,27 +19,29 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="audit/auditor/edit.do" modelAttribute="audit">
+<form:form action="category/admin/edit.do" modelAttribute="category">
 
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
 
-	<security:authorize access="hasRole('AUDITOR')">
+	<security:authorize access="hasRole('ADMIN')">
 	
-	<acme:textbox code="audit.text" path="text"/>
-	<br />
+	<acme:textbox code="category.englishName" path="englishName"/>
 	
-	<acme:textbox code="audit.score" path="score"/>
-	<br />
-	<jstl:if test="${audit.id!=0}">
-		<acme:checkbox code="audit.isFinal" path="isFinal"/>
-		<br />
-	</jstl:if>
-	<acme:select items="${positions}" itemLabel="title" code="audit.position" path="position"/>
+	<acme:textbox code="category.spanishName" path="spanishName"/>
+
+	<form:label path="type">
+		<spring:message code="category.type" />
+	</form:label>	
+	<form:select path="type">
+		<form:option value="0" label="----" />		
+		<form:options items="${types}" />
+	</form:select>
+	<form:errors path="type" cssClass="error" />
 	<br/>
 	
-	<acme:submit name="save" code="audit.save"/>
-	<acme:cancel url="audit/auditor/list.do" code="audit.cancel"/>
+	<acme:submit name="save" code="category.save"/>
+	<acme:cancel url="category/admin/list.do" code="category.cancel"/>
 	<br />	
 	
 	</security:authorize>

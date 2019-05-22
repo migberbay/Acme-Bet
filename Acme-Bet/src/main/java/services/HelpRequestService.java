@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import repositories.HelpRequestRepository;
 import domain.Actor;
+import domain.Category;
 import domain.HelpRequest;
 
 
@@ -49,5 +50,9 @@ public class HelpRequestService {
 	}
 	
 	//Other business methods -----
+	
+	public Collection<HelpRequest> getRequestsByCategory(Category category){
+		return this.helpRequestRepository.getRequestsByCategory(category);
+	}
 
 }
