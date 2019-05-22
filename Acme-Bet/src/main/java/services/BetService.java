@@ -60,17 +60,17 @@ public class BetService {
 	
 	// Other business operations go here.
 	
-	public Bet Reconstruct(BettingForm form, BindingResult bind) {
+	public Bet reconstruct(BettingForm form, BindingResult bind) {
 		
 		Bet res = this.create(betPoolService.findOne(form.getBetPoolId()), userService.findByPrincipal());
 		res.setAmount(form.getAmount());
 		res.setWinner(form.getWinner());
 		
-		try {
-			validator.validate(form, bind);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			validator.validate(form, bind);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 
 		return res;
 	}

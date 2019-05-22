@@ -32,7 +32,7 @@
 	</display:table>
 	
 	<display:table name="betPool.bets" id="row" requestURI="betPool/show.do" pagesize="5">
-		<display:column titleKey="pool.user" property="user.username"/>
+		<display:column titleKey="pool.user" property="user.userAccount.username"/>
 		<display:column titleKey="pool.amount" property="amount"/>
 		<display:column titleKey="pool.moment" property="moment"/>
 		

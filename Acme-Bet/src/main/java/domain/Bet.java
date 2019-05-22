@@ -29,7 +29,7 @@ public class Bet extends DomainEntity {
 	private String winner;
 	
 	@Column(unique = true)
-	@Pattern(regexp="^([0]{1}[0-9]{1}|[1]{1}[0-8]{1})([0]{1}[1-9]{1}|[1]{1}[0-2]{1})([0-2]{1}[1-9]{1}|[3]{1}[0-1]{1})[-][A-Z0-9]{6}$")
+	@Pattern(regexp="^([0-9]{1}[0-9]{1})([0]{1}[1-9]{1}|[1]{1}[0-2]{1})([0-2]{1}[1-9]{1}|[3]{1}[0-1]{1})[-][A-Z0-9]{6}$")
 	public String getTicker() {
 		return ticker;
 	}
@@ -37,10 +37,10 @@ public class Bet extends DomainEntity {
 		this.ticker = ticker;
 	}
 	
-	@Min(10)
-	@Max(10000)
-	@NotBlank
-	@NotNull
+//	@Min(10)
+//	@Max(10000)
+//	@NotBlank
+//	@NotNull
 	public Double getAmount() {
 		return amount;
 	}

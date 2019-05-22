@@ -49,13 +49,15 @@ public class BetUserController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(BettingForm form, BindingResult binding) {
 		ModelAndView result;
-
+		
+		Bet res = betService.reconstruct(form, binding);
+		
 		if(binding.hasErrors()) {
 			result = this.createEditModelAndView(form);
 			System.out.println(binding);
 		} else {
 			try {
-				Bet res = betService.Reconstruct(form, binding);
+				System.out.println(res.getTicker());
 				Bet saved = betService.save(res);
 				BetPool pool = res.getBetPool();
 				pool.getBets().add(saved);

@@ -70,7 +70,7 @@
 			<bean class="converters.StringToSponsorConverter" />
 			<bean class="converters.StringToSponsorshipConverter" />
 			<bean class="converters.StringToUserConverter" />
-			<bean class="converters.StringToWarrantyeConverter" />
+			<bean class="converters.StringToWarrantyConverter" />
 			<bean class="converters.StringToWordConverter" />	
 	
 	</util:list>
