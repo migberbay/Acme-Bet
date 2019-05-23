@@ -19,17 +19,22 @@
 		<b><spring:message code="actor.phone"/></b>: <jstl:out value="${actor.phone}"/> <br/>
 		<b><spring:message code="actor.address"/></b>: <jstl:out value="${actor.address}"/> <br/>
 		
-<%--  	<jstl:if test="${isCompany and actor.auditScore != null}">
-			<b>Audit Score</b>: <jstl:out value="${actor.auditScore}"/> <br/>
+    	<jstl:if test="${isUser or isSponsor}">
+			<b>Funds</b>: <jstl:out value="${actor.funds}"/> <br/>
+		</jstl:if>
+		
+		<jstl:if test="${isCounselor}">
+			<b>Funds</b>: <jstl:out value="${actor.funds}"/> <br/>
+			<b>Fare</b>: <jstl:out value="${actor.fare}"/> <br/>
 		</jstl:if> 
 		
-		<jstl:if test="${isCompany and actor.auditScore == null}">
+<%-- 		<jstl:if test="${isCompany and actor.auditScore == null}">
 			<b>Audit Score</b>: NIL <br/>
 		</jstl:if>
 		
 		<jstl:if test="${isProvider}">
 			<b><spring:message code="actor.sponsor.sponsorship.fare"/></b> <jstl:out value="${debt}"/><br/>
-		</jstl:if> --%>
+		</jstl:if>  --%>
 		
 	</div>
 	<br/>
