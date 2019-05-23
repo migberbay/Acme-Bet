@@ -30,6 +30,11 @@
 		<put-attribute name="body" value="/views/actor/edit.jsp" />
 	</definition>
 	
+	<definition name="actor/editFunds" extends="master.page">	
+		<put-attribute name="title" value="Editar fondos" />
+		<put-attribute name="body" value="/views/actor/editFunds.jsp" />
+	</definition>
+	
 	<definition name="socialProfile/edit" extends="master.page">	
 		<put-attribute name="title" value="Editar red social" />
 		<put-attribute name="body" value="/views/actor/editSocial.jsp" />

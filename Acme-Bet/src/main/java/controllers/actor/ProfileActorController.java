@@ -7,9 +7,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -338,9 +340,85 @@ public class ProfileActorController extends AbstractController {
 		}
 	}
 }
+//Add funds-------------------------------------------------------------------------
+	@RequestMapping(value = "/editFunds", method = RequestMethod.GET)
+	public ModelAndView editFunds() {
+		ModelAndView result = new ModelAndView("actor/editFunds");
+		
+		Authority userAuth = new Authority();
+		Authority sponsorAuth = new Authority();
+		
+		userAuth.setAuthority(Authority.USER);
+		sponsorAuth.setAuthority(Authority.SPONSOR);
+		
+		if(LoginService.getPrincipal().getAuthorities().contains(userAuth)){
+			User user = userService.findByPrincipal();
+			user.setFunds(0.0);
+			result.addObject("actor",user);
+			result.addObject("isUser", true);
+		}else
+		if(LoginService.getPrincipal().getAuthorities().contains(sponsorAuth)){
+			Sponsor sponsor = sponsorService.findByPrincipal();
+			sponsor.setFunds(0.0);
+			result.addObject("actor",sponsor);
+			result.addObject("isSponsor", true);
+		}else{
+			result = new ModelAndView("error/access");
+		}
+
+		return result;
+	}
+	
+	
+	@RequestMapping(value = "/editFunds", method = RequestMethod.POST, params = "saveUser")
+	public ModelAndView saveFunds(User user,BindingResult binding) {
+		ModelAndView res;
+		
+		try {
+			if (user.getFunds() > 0 && user.getFunds() <= 1000) {
+				res = new ModelAndView("redirect:show.do");
+				User u = userService.findByPrincipal();
+				u.setFunds(u.getFunds() + user.getFunds());
+				userService.save(u);
+			} else {
+				res = editFunds();
+				res.addObject("incorrectFunds", true);
+			}
+
+		} catch (Exception e) {
+			res = editFunds();
+			res.addObject("error", true);
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
+	@RequestMapping(value = "/editFunds", method = RequestMethod.POST, params = "saveSponsor")
+	public ModelAndView saveFunds(Sponsor sponsor,BindingResult binding) {
+		ModelAndView res;
+		
+		try {
+			if (sponsor.getFunds() > 0 && sponsor.getFunds() <= 1000) {
+				res = new ModelAndView("redirect:show.do");
+				Sponsor s = sponsorService.findByPrincipal();
+				s.setFunds(s.getFunds() + sponsor.getFunds());
+				sponsorService.save(s);
+			} else {
+				res = editFunds();
+				res.addObject("incorrectFunds", true);
+			}
+
+		} catch (Exception e) {
+			res = editFunds();
+			res.addObject("error", true);
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
 	
 
-	
 //Generate JSON---------------------------------------------------------------------
 	@RequestMapping(value = "/generateData", method = RequestMethod.GET)
 	public ModelAndView generate() {
