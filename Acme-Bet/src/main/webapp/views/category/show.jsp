@@ -18,6 +18,7 @@
 		<jstl:if test="${empty pools and empty requests}">
 		<a href="category/admin/edit.do?categoryId=${category.id}"><spring:message code="category.edit"/></a>
 		<br/>
+		<a href="category/admin/delete.do?categoryId=${category.id}"><spring:message code="category.delete"/></a><br/>
 		</jstl:if>
 		<jstl:if test="${category.type == 'POOL' }">
 			<h3><spring:message code="category.pools"/></h3>

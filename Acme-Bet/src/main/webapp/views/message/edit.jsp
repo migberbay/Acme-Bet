@@ -34,43 +34,37 @@
 	
 	<security:authorize access="isAuthenticated()">
 	
-	<form:label path="priority">
-		<spring:message code="m.priority" />
-	</form:label>
-	
-	<form:select path="priority">
-		<form:option label="HIGH" value="HIGH"/>
-		<form:option label="NEUTRAL" value="NEUTRAL"/>
-		<form:option label="LOW" value="LOW"/>
-	</form:select>
-	<form:errors cssClass="error" path="priority" />
-	<br />
 	
 	<jstl:if test="${isBroadcast==false}">
-<%-- 	<form:label path="recipients">
-	<spring:message code="m.recipient" />
-	</form:label>
-	
-	<form:select multiple="true" path="recipients">
-		<form:options items="${actors}" itemLabel="userAccount.username" itemValue="id"/>
-	</form:select>
-	<form:errors cssClass="error" path="recipients" /> --%>
 	
 	systems user accounts:
-	<jstl:forEach items="${accounts}" var="account">
-		<jstl:out value="${account.username}, "/>
+	<jstl:forEach items="${actors}" var="a">
+		<jstl:out value="${a.userAccount.username}, "/>
 	</jstl:forEach>
 	<br/>
+	
+	<form:hidden path="isBroadcast"/>
+	
 	<acme:textbox code="m.recipients" path="recipients" placeholder="useraccount1,useraccount2, useraccount3 "/>
 	<br />
 	</jstl:if>
 	
 	<acme:textbox code="m.subject" path="subject"/>
 	<br />	
+	
 	<acme:textarea code="m.body" path="body"/>
 	<br />
+	
+	<jstl:if test="${isBroadcast==false}"> 
 	<acme:textbox code="m.tags" path="tags" placeholder="tag1,tag2, tag3, tag4"/>
+	</jstl:if>
+	
+	<jstl:if test="${isBroadcast}"> 
+	<acme:textbox code="m.tags" path="tags" placeholder="tag1,tag2, tag3, tag4" readonly="true"/>
+	</jstl:if> 
+	
 	<br />
+	
 	<acme:submit name="save" code="m.save"/>
 	<acme:cancel url="message/list.do" code="m.cancel"/>
 	<br />

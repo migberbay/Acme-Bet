@@ -18,7 +18,7 @@ public class Category extends DomainEntity {
 	private String type;
 	
 	@Column(unique=true)
-	@NotNull
+	@NotBlank
 	public String getSpanishName() {
 		return spanishName;
 	}
@@ -26,7 +26,7 @@ public class Category extends DomainEntity {
 		this.spanishName = spanishName;
 	}
 	@Column(unique=true)
-	@NotNull
+	@NotBlank
 	public String getEnglishName() {
 		return englishName;
 	}
@@ -34,7 +34,7 @@ public class Category extends DomainEntity {
 		this.englishName = englishName;
 	}
 	
-	@NotBlank
+	@NotNull
 	@Pattern(regexp="^REQUEST|POOL$")
 	public String getType() {
 		return type;

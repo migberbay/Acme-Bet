@@ -6,80 +6,70 @@
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <!-- 
-	Recieves: List<Messages> messages - los mensajes de un box y un actor correspondientes.
-			  List<Box> boxes - los boxes de un actor para mover el mensaje. (no se incluye la trashbox)
+	Recieves: List<Messages> messages, la lista de mensajes de un actor dado
+			  MessageFinderForm messageFinderForm, formulario para buscar mensajes por tag
 -->
 
 <security:authorize access="isAuthenticated()">
-	<a href="message/create.do"><spring:message code='m.create' /></a>
+
+	<form:form action="message/list.do" modelAttribute="messageFinderForm">
+	
+		<acme:textbox code="m.tag" path="keyword"/>
+	
+		<acme:submit name="list" code="m.finder.search" />
+		<acme:submit name="cancel" code="m.finder.cancel"/>
+	</form:form>
+	<br/>
+	
+	<a href="message/create.do"><spring:message code='m.create' /></a><br>
+	<jstl:if test="${isAdmin}">
+	<a href="message/createBroadcast.do"><spring:message code='m.createBroadcast' /></a><br>
+	</jstl:if>
+	<jstl:if test="${isAdmin and notificationIsSent == false}">
+	<a href="admin/notifyUpdate.do"> Send the users the nofication about the update</a><br>
+	</jstl:if>
+	
 
 	<display:table name="messages" id="row" requestURI="message/list.do" pagesize="5">
 
 		<display:column titleKey="m.messages">
 			<table border='1' style="width:100%">
 				<tr>
-				<td>
-					<spring:message code='m.priority'/><jstl:out value="${row.priority}" />
-				</td>
+					<td>
+						<spring:message code='m.sender' /><jstl:out value=" ${row.sender.userAccount.username}" /> <br>
+						<spring:message code='m.subject' /><jstl:out value=" ${row.subject}" /><br>
+						<spring:message code='m.moment'/><jstl:out value=" ${row.moment}"/>
+					</td>
 				</tr>
 				
 				<tr>
-				<td>
-					<spring:message code='m.sender' /><jstl:out value="${row.sender.username}" /> <br>
-					<spring:message code='m.subject' /><jstl:out value="${row.subject}" />
-				</td>
+					<td>
+						<jstl:out value="${row.body}" />
+					</td>
 				</tr>
 				
 				<tr>
-				<td>
-					<jstl:out value="${row.body}" />
-				</td>
-				</tr>
-				
-				<tr>
-				<td>
-					<a href="message/delete.do?messageId=${row.id}"><spring:message code='m.delete' /></a>
-				</td>
-				</tr>
-				
-				<tr>
-				<td>
-					<select id="boxToMove">
-						<jstl:forEach var="i" items="${boxes}">
-							<option value="${i.id}"><jstl:out value="${i.name}"/></option>
-						</jstl:forEach>	
-					</select>
-					<div id="messageID" style="visibility: hidden"><jstl:out value="${row.id}"/></div>
-					<input id="clickMe" type="button" value='<spring:message code="m.move"/>' onclick="myFunction();" />
-				</td>
+					<td>
+						<spring:message code='m.tags'/>: 
+						<jstl:forEach items="${row.tags}" var="x">
+							<jstl:out value="${x} , " />
+						</jstl:forEach>
+					</td>
 				</tr>
 			</table>
+			<a href="message/delete.do?messageId=${row.id}"><spring:message code='m.delete' /></a>
 		</display:column>
 
-	</display:table>
-	<!-- edit method must diferentiate between no attributes where 
-	the sender will be obtained via the create method. -->
+	</display:table><br>
 	<a href="message/create.do"><spring:message code='m.create' /></a><br/>
 	
 	<input type="button" name="back"
 		value="<spring:message code="m.back" />"
-		onclick="javascript: window.location.replace('/Sample-Project/box/list.do')" />
+		onclick="javascript: window.location.replace('')" />
 	<br />
 </security:authorize>
-<script>
-function myFunction () { 
-	var e = document.getElementById("boxToMove");
-	var boxId = e.options[e.selectedIndex].value;
-	var messageId = document.getElementById("messageID").innerHTML;
-	var str = window.location.href;
-	var res = str.split("?");
-	window.location.href = "message/moveToBox.do?messageId="+messageId+"&newBoxId="+boxId+"&"+res[1];
-};
-
-
-</script>

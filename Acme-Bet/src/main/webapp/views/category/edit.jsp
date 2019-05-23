@@ -34,7 +34,7 @@
 		<spring:message code="category.type" />
 	</form:label>	
 	<form:select path="type">
-		<form:option value="0" label="----" />		
+		<form:option value="null" label="----" />		
 		<form:options items="${types}" />
 	</form:select>
 	<form:errors path="type" cssClass="error" />

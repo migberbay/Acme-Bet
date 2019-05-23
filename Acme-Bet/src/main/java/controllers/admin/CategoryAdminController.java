@@ -3,6 +3,7 @@ package controllers.admin;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.validation.Valid;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +89,6 @@ public class CategoryAdminController extends AbstractController {
 		Collection<BetPool> pools = betPoolService.getPoolsByCategory(category);
 		Collection<HelpRequest> requests = helpRequestService.getRequestsByCategory(category);
 		
-		System.out.println(pools + " " + requests);
 		result = new ModelAndView("category/show");
 		result.addObject("category", category);
 		result.addObject("pools",pools);
@@ -120,13 +120,14 @@ public class CategoryAdminController extends AbstractController {
 	// Save -----------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", params = "save", method = RequestMethod.POST)
-	public ModelAndView edit(Category category, BindingResult bindingResult) {
+	public ModelAndView edit(@Valid Category category, BindingResult bindingResult) {
 		ModelAndView result;
 			
 		try {
 			categoryService.save(category);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
+			oops.printStackTrace();
 			result = this.createEditModelAndView(category,"category.commit.error");
 		}
 		
@@ -139,12 +140,18 @@ public class CategoryAdminController extends AbstractController {
 		public ModelAndView delete(@RequestParam int categoryId) {
 			ModelAndView result;
 			Category category;
-			
 			category = categoryService.findOne(categoryId);
-			categoryService.delete(category);
-			result = new ModelAndView("redirect:list.do");
 
+			Collection<BetPool> pools = betPoolService.getPoolsByCategory(category);
+			Collection<HelpRequest> requests = helpRequestService.getRequestsByCategory(category);
 			
+			if(pools.isEmpty() && requests.isEmpty()){
+				categoryService.delete(category);
+				result = new ModelAndView("redirect:list.do");
+			}else{
+				result = new ModelAndView("error/access");	
+			}
+
 			return result;
 		}
 	

@@ -14,7 +14,6 @@
 		
 		<display:column>
 			<a href="category/admin/show.do?categoryId=${row.id}"><spring:message code="category.show"/></a><br/>
-			<a href="category/admin/delete.do?categoryId=${row.id}"><spring:message code="category.delete"/></a><br/>
 		</display:column>
 		<jstl:if test="${lan=='es'}">
 			<display:column titleKey="category.name" property="spanishName" />
