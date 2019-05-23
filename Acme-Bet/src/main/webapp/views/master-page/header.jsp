@@ -50,6 +50,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.bookmaker" /></a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="betPool/bookmaker/create.do"><spring:message code="master.page.betPool.create" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
