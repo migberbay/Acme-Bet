@@ -1,13 +1,10 @@
 package controllers.user;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
-import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,15 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.AdminService;
-import services.BetPoolService;
-import services.CategoryService;
+
 import services.HelpRequestService;
 import controllers.AbstractController;
-import domain.Admin;
-import domain.BetPool;
-import domain.Category;
+
 import domain.HelpRequest;
+
 
 @Controller
 @RequestMapping("helpRequest/user/")
@@ -54,11 +48,11 @@ public class HelpRequestUserController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView result;
 		
-		Category category;
+		HelpRequest request;
 		
-		category = categoryService.create();		
+		request = helpRequestService.create();		
 		
-		result = this.createEditModelAndView(category);
+		result = this.createEditModelAndView(request);
 		
 		return result;
 	}
@@ -66,20 +60,17 @@ public class HelpRequestUserController extends AbstractController {
 	// Show --------------------------------------------------------------------
 	
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam int categoryId) {
+	public ModelAndView show(@RequestParam int helpRequestId) {
 
 		ModelAndView result;
-		Category category;
+		HelpRequest request;
 		
-		category = categoryService.findOne(categoryId);
-		Collection<BetPool> pools = betPoolService.getPoolsByCategory(category);
-		Collection<HelpRequest> requests = helpRequestService.getRequestsByCategory(category);
-		
-		result = new ModelAndView("category/show");
-		result.addObject("category", category);
-		result.addObject("pools",pools);
-		result.addObject("requests",requests);
-		result.addObject("requestURI", "category/admin/show.do");
+		request = helpRequestService.findOne(helpRequestId);
+
+		result = new ModelAndView("helpRequest/show");
+		result.addObject("helpRequest", request);
+
+		result.addObject("requestURI", "helpRequest/user/show.do");
 
 		return result;
 	}
@@ -87,34 +78,29 @@ public class HelpRequestUserController extends AbstractController {
 	// Edit --------------------------------------------------------------------
 	
 		@RequestMapping(value = "/edit", method = RequestMethod.GET)
-		public ModelAndView edit(@RequestParam int categoryId) {
+		public ModelAndView edit(@RequestParam int helpRequestId) {
 
 			ModelAndView result;
-			Category category;
-			category = categoryService.findOne(categoryId);	
-			Collection<BetPool> pools = betPoolService.getPoolsByCategory(category);
-			Collection<HelpRequest> requests = helpRequestService.getRequestsByCategory(category);
+			HelpRequest helpRequest;
+			helpRequest = helpRequestService.findOne(helpRequestId);	
 			
-			if(pools.isEmpty() && requests.isEmpty()){
-				result = this.createEditModelAndView(category);
-			}else{
-				result = new ModelAndView("error/access");	
-			}
+			result = this.createEditModelAndView(helpRequest);
+
 			return result;
 		}
 
 	// Save -----------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", params = "save", method = RequestMethod.POST)
-	public ModelAndView edit(@Valid Category category, BindingResult bindingResult) {
+	public ModelAndView edit(@Valid HelpRequest helpRequest, BindingResult bindingResult) {
 		ModelAndView result;
 			
 		try {
-			categoryService.save(category);
+			helpRequestService.save(helpRequest);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
 			oops.printStackTrace();
-			result = this.createEditModelAndView(category,"category.commit.error");
+			result = this.createEditModelAndView(helpRequest,"helpRequest.commit.error");
 		}
 		
 		return result;
@@ -123,41 +109,32 @@ public class HelpRequestUserController extends AbstractController {
 	// Delete -----------------------------------------------------------------
 
 		@RequestMapping(value = "/delete", method = RequestMethod.GET)
-		public ModelAndView delete(@RequestParam int categoryId) {
+		public ModelAndView delete(@RequestParam int helpRequestId) {
 			ModelAndView result;
-			Category category;
-			category = categoryService.findOne(categoryId);
-
-			Collection<BetPool> pools = betPoolService.getPoolsByCategory(category);
-			Collection<HelpRequest> requests = helpRequestService.getRequestsByCategory(category);
+			HelpRequest helpRequest;
+			helpRequest = helpRequestService.findOne(helpRequestId);
 			
-			if(pools.isEmpty() && requests.isEmpty()){
-				categoryService.delete(category);
-				result = new ModelAndView("redirect:list.do");
-			}else{
-				result = new ModelAndView("error/access");	
-			}
+			helpRequestService.delete(helpRequest);
+			result = new ModelAndView("redirect:list.do");
+
 
 			return result;
 		}
 	
 	//Helper methods --------------------------------------------------------------------------
 	
-	protected ModelAndView createEditModelAndView(Category category){
+	protected ModelAndView createEditModelAndView(HelpRequest helpRequest){
 		ModelAndView res;
-		res = createEditModelAndView(category, null);
+		res = createEditModelAndView(helpRequest, null);
 		return res;
 	}
 	
-	protected ModelAndView createEditModelAndView(Category category, String messageCode){
+	protected ModelAndView createEditModelAndView(HelpRequest helpRequest, String messageCode){
 		
 		ModelAndView res;
 
-		res = new ModelAndView("category/edit");
-		Collection<String> types = new ArrayList<String>();
-		types.add("POOL");types.add("REQUEST");
-		res.addObject("category", category);
-		res.addObject("types", types);
+		res = new ModelAndView("helpRequest/edit");
+		res.addObject("helpRequest", helpRequest);
 		res.addObject("message", messageCode);
 
 		return res;

@@ -44,6 +44,13 @@
 					<li><a href="actor/editFunds.do"><spring:message code="master.page.addFunds" /></a></li>
 				</ul>
 			</li>
+			<li><a class="fNiv"><spring:message	code="master.page.helpRequest" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="helpRequest/user/list.do"><spring:message code="master.page.helpRequest.list" /></a></li>
+					<li><a href="helpRequest/user/edit.do"><spring:message code="master.page.helpRequest.create" /></a></li>
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('BOOKMAKER')">

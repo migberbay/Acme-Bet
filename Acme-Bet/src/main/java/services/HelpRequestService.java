@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class HelpRequestService {
 	
 	public HelpRequest create(){
 		HelpRequest res = new HelpRequest();
-		
+		res.setAttachements(new ArrayList<String>());
 		return res;
 	}
 	
