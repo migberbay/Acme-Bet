@@ -51,8 +51,7 @@
 		
 		<security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/category/admin/**" access="hasRole('ADMIN')" />
-		
-		<security:intercept-url pattern="/bookmaker/**" access="hasRole('BOOKMAKER')" />
+		<security:intercept-url pattern="/warrany/admin/**" access="hasRole('ADMIN')" />
 		
 		<security:intercept-url pattern="/bet/user/**" access="hasRole('USER')" />
 		

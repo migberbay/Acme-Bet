@@ -34,6 +34,7 @@
 					<li><a href="category/admin/edit.do"><spring:message code="master.page.category.create" /></a></li>
 				</ul>
 			</li>
+			<li><a class="fNiv" href="warranty/admin/list.do"><spring:message code="master.page.warranty.list" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('USER')">
@@ -50,7 +51,6 @@
 					<li class="arrow"></li>
 				</ul>
 			</li>
-			<li><a class="fNiv" href="bookmaker/warranty/list.do"><spring:message code="master.page.warranty.list" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('SPONSOR')">
