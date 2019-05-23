@@ -8,25 +8,33 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<security:authorize access="hasRole('ADMIN')">
+<security:authorize access="hasRole('USER')">
 
-	<display:table name="categories" id="row" requestURI="category/admin/list.do" pagesize="5">
+	<display:table name="helpRequests" id="row" requestURI="helpRequest/user/list.do" pagesize="5">
 		
 		<display:column>
-			<a href="category/admin/show.do?categoryId=${row.id}"><spring:message code="category.show"/></a><br/>
+			<a href="helpRequest/user/show.do?helpRequestId=${row.id}"><spring:message code="helpRequest.show"/></a><br/>
+			<jstl:if test="${row.counselor==null}">
+				<a href="helpRequest/user/edit.do?helpRequestId=${row.id}"><spring:message code="helpRequest.edit"/></a><br/>
+				<a href="helpRequest/user/delete.do?helpRequestId=${row.id}"><spring:message code="helpRequest.delete"/></a><br/>
+			</jstl:if>
 		</display:column>
 		<jstl:if test="${lan=='es'}">
-			<display:column titleKey="category.name" property="spanishName" />
+			<display:column titleKey="helpRequest.category" property="category.spanishName" />
 		</jstl:if>
 		<jstl:if test="${lan=='en'}">
-			<display:column titleKey="category.name" property="englishName" />
+			<display:column titleKey="helpRequest.category" property="category.englishName" />
 		</jstl:if>
-		<display:column titleKey="category.type" property="type" />
 		
+		<spring:message code="helpRequest.moment.format" var="formatMoment"/>
+		<display:column titleKey="helpRequest.moment" property="moment" format="{0,date,${formatMoment} }"/>
+		<display:column titleKey="helpRequest.status" property="status"/>
+		<display:column titleKey="helpRequest.betPool" property="betPool.ticker"/>
+		<display:column titleKey="helpRequest.counselor" property="counselor.userAccount.username"/>
 	</display:table>
 
 	<div>
-	<a href="category/admin/create.do"> <spring:message code="category.create" /> </a>
+	<a href="helpRequest/user/create.do"> <spring:message code="helpRequest.create" /> </a>
 	</div>
 
 </security:authorize>

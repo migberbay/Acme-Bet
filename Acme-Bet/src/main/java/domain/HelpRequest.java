@@ -20,11 +20,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class HelpRequest extends Actor {
+public class HelpRequest extends DomainEntity {
 	
 	private String status;
 	private String description;
-	private Collection<String> attachements;
+	private Collection<String> attachments;
 	private Date moment;
 	
 	@NotNull
@@ -45,11 +45,11 @@ public class HelpRequest extends Actor {
 	}
 	
 	@ElementCollection
-	public Collection<String> getAttachements() {
-		return attachements;
+	public Collection<String> getAttachments() {
+		return attachments;
 	}
-	public void setAttachements(Collection<String> attachements) {
-		this.attachements = attachements;
+	public void setAttachments(Collection<String> attachments) {
+		this.attachments = attachments;
 	}
 	
 	@Past
@@ -75,9 +75,8 @@ public class HelpRequest extends Actor {
 	private Category category;
 	private BetPool	betPool;
 
-	@ManyToOne(optional=false)
+	@ManyToOne(optional=true)
 	@Valid
-	@NotNull
 	public Counselor getCounselor() {
 		return counselor;
 	}

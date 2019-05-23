@@ -16,18 +16,18 @@
       
 <tiles-definitions>
 
-	<definition name="category/list" extends="master.page">	
-		<put-attribute name="title" value="Lista de categorías" />
-		<put-attribute name="body" value="/views/category/list.jsp" />
+	<definition name="helpRequest/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de peticiones" />
+		<put-attribute name="body" value="/views/helpRequest/list.jsp" />
 	</definition>
 	
-	<definition name="category/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar categoría" />
-		<put-attribute name="body" value="/views/category/edit.jsp" />
+	<definition name="helpRequest/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit help request" />
+		<put-attribute name="body" value="/views/helpRequest/edit.jsp" />
 	</definition>
 	
-	<definition name="category/show" extends="master.page">	
-		<put-attribute name="title" value="Mostrar categoría" />
-		<put-attribute name="body" value="/views/category/show.jsp" />
+	<definition name="helpRequest/show" extends="master.page">	
+		<put-attribute name="title" value="Show help request" />
+		<put-attribute name="body" value="/views/helpRequest/show.jsp" />
 	</definition>
 </tiles-definitions>
