@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
@@ -26,7 +27,7 @@ public class HelpRequest extends Actor {
 	private Collection<String> attachements;
 	private Date moment;
 	
-	@NotBlank
+	@NotNull
 	@Pattern(regexp="^OPEN|PENDING|SOLVED$")
 	public String getStatus() {
 		return status;
@@ -61,21 +62,42 @@ public class HelpRequest extends Actor {
 		this.moment = moment;
 	}
 	
+	
+	
+	
+	
+	
+	
 	//Relationships
+
 	private Counselor counselor;
+	private User user;
 	private Category category;
 	private BetPool	betPool;
 
 	@ManyToOne(optional=false)
 	@Valid
+	@NotNull
 	public Counselor getCounselor() {
 		return counselor;
 	}
 	public void setCounselor(Counselor counselor) {
 		this.counselor = counselor;
 	}
+	
+	@Valid
+	@NotNull
+	@ManyToOne(optional=false)
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	@Valid
 	@ManyToOne(optional=false)
+	@NotNull
 	public Category getCategory() {
 		return category;
 	}
@@ -84,6 +106,7 @@ public class HelpRequest extends Actor {
 	}
 	@ManyToOne(optional=false)
 	@Valid
+	@NotNull
 	public BetPool getBetPool() {
 		return betPool;
 	}
@@ -91,12 +114,4 @@ public class HelpRequest extends Actor {
 		this.betPool = betPool;
 	}
 	
-	
-
-	
-	
-
-	
-	
-
 }

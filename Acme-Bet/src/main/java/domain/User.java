@@ -60,7 +60,7 @@ public class User extends Actor {
 		this.reviews = reviews;
 	}
 
-	@OneToMany
+	@OneToMany(mappedBy="user")
 	@Valid
 	public Collection<HelpRequest> getHelpRequests() {
 		return helpRequests;

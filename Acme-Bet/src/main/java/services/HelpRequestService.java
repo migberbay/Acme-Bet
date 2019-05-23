@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.HelpRequestRepository;
+import security.LoginService;
 import domain.Actor;
 import domain.Category;
 import domain.HelpRequest;
@@ -22,6 +23,9 @@ public class HelpRequestService {
 	private HelpRequestRepository helpRequestRepository;
 	
 	//Supporting Services -----
+	
+	@Autowired
+	private UserService userService;
 	
 	//Simple CRUD methods -----
 	
@@ -48,11 +52,16 @@ public class HelpRequestService {
 	public void delete(HelpRequest a){
 		helpRequestRepository.delete(a);
 	}
-	
+
 	//Other business methods -----
 	
 	public Collection<HelpRequest> getRequestsByCategory(Category category){
 		return this.helpRequestRepository.getRequestsByCategory(category);
 	}
+
+	public Collection<HelpRequest> findRequestsByPrincipal() {
+		return helpRequestRepository.findRequestsByUser(userService.findByPrincipal().getId());
+	}
+
 
 }
