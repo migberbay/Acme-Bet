@@ -55,7 +55,7 @@
 		
 		<security:intercept-url pattern="/bet/user/**" access="hasRole('USER')" />
 		
-		<security:intercept-url pattern="/sponsor/**" access="hasRole('SPONSOR')" />
+		<security:intercept-url pattern="sponsorship/sponsor/**" access="hasRole('SPONSOR')" />
 
 
 

@@ -59,7 +59,7 @@
 					<li class="arrow"></li>
 				</ul>
 			</li>
-			<li><a class="fNiv" href="sponsor/sponsorship/list.do"><spring:message code="master.page.sponsorship.list" /></a></li>
+			<li><a class="fNiv" href="sponsorship/sponsor/list.do"><spring:message code="master.page.sponsorship.list" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('COUNSELOR')">
