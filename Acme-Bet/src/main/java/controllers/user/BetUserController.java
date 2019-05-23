@@ -73,6 +73,9 @@ public class BetUserController extends AbstractController {
 				Bet saved = betService.save(res);
 				BetPool pool = res.getBetPool();
 				pool.getBets().add(saved);
+				res.getUser().setFunds(res.getUser().getFunds()-res.getAmount());
+				userService.save(res.getUser());
+				
 				
 				result = new ModelAndView("redirect:/betPool/show.do?betPoolId="+pool.getId());
 			} catch (Throwable oops) {

@@ -49,10 +49,17 @@
 	
 	
 	<br/>
-	<acme:submit name="save" code="bet.save"/>
+	<button type="submit" name="save" onclick="confirmLeave();" class="btn btn-primary">
+		<spring:message code="bet.save" />
+	</button>
 	<acme:cancel url="betPool/list.do" code="bet.back"/>
 	<br />	
-	
 	</security:authorize>
 
 </form:form>
+
+<script>
+	function confirmLeave() {
+	if(!confirm("This operation is not reversible and funds will be substracted from your account, you're sure you want to proceed?")) return;
+	}
+</script>

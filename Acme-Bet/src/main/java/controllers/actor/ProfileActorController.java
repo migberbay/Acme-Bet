@@ -98,7 +98,6 @@ public class ProfileActorController extends AbstractController {
 		Authority sponsorauth = new Authority();
 		sponsorauth.setAuthority("SPONSOR");
 
-		Boolean isBookmaker = false;
 		
 		Actor principal;
 		try {
@@ -115,10 +114,6 @@ public class ProfileActorController extends AbstractController {
 				
 			result.addObject("actor", actor); // actor que se va a mostrar
 			result.addObject("logged", false); // flag para permitir editar
-
-			if (actor.getUserAccount().getAuthorities().contains(bookmakerAuth)) {
-				isBookmaker = true;
-			}
 			
 			if (principal == null) {
 				
@@ -128,7 +123,7 @@ public class ProfileActorController extends AbstractController {
 
 			result.addObject("socialProfiles", socialProfiles);
 
-		} else {
+		} else {//accedemos a nuestro perfil
 			Actor actor = actorService.getByUserAccount(LoginService.getPrincipal());
 			Collection<SocialProfile> socialProfiles = actor.getSocialProfiles();
 			result.addObject("logged", true);
@@ -141,17 +136,18 @@ public class ProfileActorController extends AbstractController {
 
 			if (actor.getUserAccount().getAuthorities().contains(userAuth)) {
 				User user = userService.findOne(actor.getId());
+				result.addObject("isUser", true);
 				result.addObject("actor", user);
 			}
 
 			if (actor.getUserAccount().getAuthorities().contains(bookmakerAuth)) {
-				isBookmaker = true;
 				Bookmaker bookmaker = bookmakerService.findOne(actor.getId());
 				result.addObject("actor", bookmaker);
 			}
 			
 			if (actor.getUserAccount().getAuthorities().contains(counselorAuth)) {
 				Counselor counselor = counselorService.findOne(actor.getId());
+				result.addObject("isCounselor", true);
 				result.addObject("actor", counselor);
 			}
 			
@@ -164,8 +160,6 @@ public class ProfileActorController extends AbstractController {
 			result.addObject("socialProfiles", socialProfiles);
 		}
 		
-		
-		result.addObject("isBookmaker", isBookmaker);
 		result.addObject("requestURI", "actor/show.do");
 
 		return result;
