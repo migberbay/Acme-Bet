@@ -23,8 +23,6 @@ public class WarrantyService {
 	
 	//Supporting Services ---------------------------------------------------------------------
 	
-	@Autowired
-	private BookmakerService bookmakerService;
 	
 	//Simple CRUD methods ---------------------------------------------------------------------
 	
@@ -47,23 +45,20 @@ public class WarrantyService {
 	
 	public Warranty save(Warranty a){
 		
-		Assert.isTrue(LoginService.hasRole("BOOKMAKER"));
+		Assert.isTrue(LoginService.hasRole("ADMIN"));
 		
 		return warrantyRepository.saveAndFlush(a);
 	}
 	
 	public void delete(Warranty a){
 		
-		Assert.isTrue(LoginService.hasRole("BOOKMAKER"));
+		Assert.isTrue(LoginService.hasRole("ADMIN"));
 		
 		warrantyRepository.delete(a);
 	}
 	
 	//Other business methods --------------------------------------------------------------
 	
-	public Collection<Warranty> findByPrincipal(){
 
-		return warrantyRepository.findWarrantyByBookmaker(bookmakerService.findByPrincipal().getId());
-	}
 
 }

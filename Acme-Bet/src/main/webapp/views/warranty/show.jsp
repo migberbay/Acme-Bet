@@ -10,22 +10,18 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<!-- 
+	<security:authorize access="hasRole('ADMIN')">
 
--->
-	<spring:message code="warranty.title"/>:
-	<jstl:out value="${warranty.title}"/><br>
-	<spring:message code="warranty.terms"/>:
-	<jstl:out value="${warranty.terms}"/><br>
-	<spring:message code="warranty.laws"/>:
-	<jstl:out value="${warranty.laws}"/><br>
+		<spring:message code="warranty.title"/>:
+		<jstl:out value="${warranty.title}"/><br>
+		<spring:message code="warranty.terms"/>:
+		<jstl:out value="${warranty.terms}"/><br>
+		<spring:message code="warranty.laws"/>:
+		<jstl:out value="${warranty.laws}"/><br>
+		
+		<input type="button" name="back"
+			value="<spring:message code="warranty.back" />"
+			onclick="javascript: window.location.replace('/Acme-Bet/warranty/admin/list.do')" />
+		<br />
 	
-	<input type="button" name="back"
-		value="<spring:message code="warranty.back" />"
-		onclick="javascript: window.location.replace('/Acme-Bet/bookmaker/warranty/list.do')" />
-	<br />
-<script>
-
-
-
-</script>
+	</security:authorize>

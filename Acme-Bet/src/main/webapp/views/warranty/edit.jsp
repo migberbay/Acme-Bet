@@ -19,25 +19,32 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="bookmaker/warranty/edit.do" modelAttribute="warranty">
+<form:form action="warranty/admin/edit.do" modelAttribute="warranty">
 	
-	<security:authorize access="hasRole('BOOKMAKER')">
+	<security:authorize access="hasRole('ADMIN')">
 	
-	<form:hidden path="id"/>
-	<form:hidden path="version"/>
-	
-	<form:hidden path="isFinal"/>
-	
-	<acme:textbox code="warranty.title" path="title"/>
-	<br />	
-	<acme:textbox code="warranty.terms" path="terms" placeholder="term1,term2, term3"/>
-	<br />
-	<acme:textbox code="warranty.laws" path="laws"/>
-	<br />
-	<acme:submit name="save" code="warranty.save"/>
-	<acme:cancel url="list.do" code="warranty.cancel"/>
-	<br />
-	
+		<form:hidden path="id"/>
+		<form:hidden path="version"/>
+		
+		<jstl:if test="${warranty.id == 0}">
+			<form:hidden path="isFinal"/>
+		</jstl:if>
+				
+		<acme:textbox code="warranty.title" path="title"/>
+		<br />	
+		<acme:textbox code="warranty.terms" path="terms" placeholder="term1,term2, term3"/>
+		<br />
+		<acme:textbox code="warranty.laws" path="laws"/>
+		<br />
+		<jstl:if test="${warranty.id != 0}">
+			<acme:checkbox code="warranty.isFinal" path="isFinal"/>
+			<br />
+		</jstl:if>
+		
+		<acme:submit name="save" code="warranty.save"/>
+		<acme:cancel url="warranty/admin/list.do" code="warranty.cancel"/>
+		<br />
+		
 	</security:authorize>
 
 </form:form>

@@ -10,23 +10,26 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+	<security:authorize access="hasRole('ADMIN')">
 
-	<display:table name="warranties" id="row" requestURI="bookmaker/warranty/list.do" pagesize="5">
+		<display:table name="warranties" id="row" requestURI="warranty/admin/list.do" pagesize="5">
+			
+			<display:column >
+				<a href="warranty/admin/show.do?warrantyId=${row.id}"><spring:message code="warranty.show"/></a>
+				<jstl:if test="${row.isFinal == false}">
+					<a href="warranty/admin/edit.do?warrantyId=${row.id}"><spring:message code="warranty.edit"/></a>
+					<a href="warranty/admin/delete.do?warrantyId=${row.id}"><spring:message code="warranty.delete"/></a>
+				</jstl:if>	
+			</display:column>
+			<display:column property="title" titleKey="warranty.title" />
+			<display:column property="terms" titleKey="warranty.terms" />
+			<display:column property="laws" titleKey="warranty.laws" />
 		
-		<display:column >
-			<a href="bookmaker/warranty/show.do?warrantyId=${row.id}"><spring:message code="warranty.show"/></a>
-			<jstl:if test="${row.isFinal == false}">
-				<a href="bookmaker/warranty/edit.do?warrantyId=${row.id}"><spring:message code="warranty.edit"/></a>
-				<a href="bookmaker/warranty/delete.do?warrantyId=${row.id}"><spring:message code="warranty.delete"/></a>
-			</jstl:if>	
-		</display:column>
-		<display:column property="title" titleKey="warranty.title" />
-		<display:column property="terms" titleKey="warranty.terms" />
-		<display:column property="laws" titleKey="warranty.laws" />
+		</display:table>
+		
+		<a href="warranty/admin/create.do"><spring:message code="warranty.create"/></a>
 	
-	</display:table>
-	
-	<a href="bookmaker/warranty/create.do"><spring:message code="warranty.create"/></a>
+	</security:authorize>
 	
 <script>
 
