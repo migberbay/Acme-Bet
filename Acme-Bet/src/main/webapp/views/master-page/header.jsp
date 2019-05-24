@@ -48,7 +48,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="helpRequest/user/list.do"><spring:message code="master.page.helpRequest.list" /></a></li>
-					<li><a href="helpRequest/user/edit.do"><spring:message code="master.page.helpRequest.create" /></a></li>
+					<li><a href="helpRequest/user/create.do"><spring:message code="master.page.helpRequest.create" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
