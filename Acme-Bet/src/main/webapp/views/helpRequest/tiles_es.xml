@@ -30,4 +30,10 @@
 		<put-attribute name="title" value="Show help request" />
 		<put-attribute name="body" value="/views/helpRequest/show.jsp" />
 	</definition>
+	
+	<definition name="helpRequest/answer" extends="master.page">	
+		<put-attribute name="title" value="Responder petición" />
+		<put-attribute name="body" value="/views/helpRequest/answer.jsp" />
+	</definition>
+	
 </tiles-definitions>

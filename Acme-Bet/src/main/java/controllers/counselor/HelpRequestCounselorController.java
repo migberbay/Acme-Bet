@@ -20,12 +20,14 @@ import services.BetPoolService;
 import services.CategoryService;
 import services.HelpRequestService;
 import services.CounselorService;
+import services.MessageService;
 import controllers.AbstractController;
 
 import domain.Bet;
 import domain.BetPool;
 import domain.HelpRequest;
 import domain.Counselor;
+import domain.Message;
 
 
 @Controller
@@ -45,7 +47,12 @@ public class HelpRequestCounselorController extends AbstractController {
 	
 	@Autowired
 	private CategoryService categoryService;
-		
+	
+	@Autowired
+	private MessageService messageService;
+	
+	private HelpRequest request;
+
 	// List open -------------------------------------------------------------------
 	
 	@RequestMapping(value = "/listOpen", method = RequestMethod.GET)
@@ -116,40 +123,41 @@ public class HelpRequestCounselorController extends AbstractController {
 		return result;
 	}
 	
-	// Edit --------------------------------------------------------------------
+	// Answer --------------------------------------------------------------------
 	
-		@RequestMapping(value = "/edit", method = RequestMethod.GET)
-		public ModelAndView edit(@RequestParam int helpRequestId) {
+		@RequestMapping(value = "/answer", method = RequestMethod.GET)
+		public ModelAndView answer(@RequestParam int helpRequestId) {
 
 			ModelAndView result;
 			HelpRequest helpRequest;
-			helpRequest = helpRequestService.findOne(helpRequestId);	
-			
-			if(helpRequest.getCounselor()==null){
-				result = this.createEditModelAndView(helpRequest);
-			}else{
-				result = new ModelAndView("error/access");
-			}
-
+			helpRequest = helpRequestService.findOne(helpRequestId);
+			this.request=helpRequest;
+			result = new ModelAndView("helpRequest/answer");
+			Message message = new Message();
+			message.setSubject("ANSWER HELP REQUEST " + helpRequest.getTicker());
+			result.addObject("m",message);
 			return result;
 		}
 
-	// Save -----------------------------------------------------------------
+	// Save answer -----------------------------------------------------------------
 
-	@RequestMapping(value = "/edit", params = "save", method = RequestMethod.POST)
-	public ModelAndView edit(HelpRequest helpRequest, BindingResult bindingResult) {
+	@RequestMapping(value = "/answer", params = "save", method = RequestMethod.POST)
+	public ModelAndView answer(Message m, BindingResult bindingResult) {
 		ModelAndView result;
 			
 		try {
-			HelpRequest saved = helpRequestService.reconstruct(helpRequest, bindingResult);
-			helpRequestService.save(saved);
+			Message savedM = helpRequestService.reconstructMessage(this.request,m, bindingResult);
+			messageService.save(savedM);
+			this.request.setStatus("PENDING");
+			this.request.setCounselor(counselorService.findByPrincipal());
+			helpRequestService.save(this.request);
 			result = new ModelAndView("redirect:list.do");
 		} catch (ValidationException oops) {
-			result = new ModelAndView("helpRequest/edit");
-			result.addObject("helpRequest",helpRequest);
+			result = new ModelAndView("helpRequest/answer");
+			result.addObject("m",m);
 		} catch (Throwable e) {
-			result = new ModelAndView("helpRequest/edit");
-			result.addObject("helpRequest",helpRequest);
+			result = new ModelAndView("helpRequest/answer");
+			result.addObject("m",m);
 			result.addObject("errorMessage", "helpRequest.commit.error");
 		}
 		

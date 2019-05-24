@@ -25,6 +25,7 @@
 			</jstl:if>
 			</security:authorize>
 		</display:column>
+		<display:column titleKey="helpRequest.ticker" property="ticker" />
 		<jstl:if test="${lan=='es'}">
 			<display:column titleKey="helpRequest.category" property="category.spanishName" />
 		</jstl:if>

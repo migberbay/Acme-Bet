@@ -19,6 +19,7 @@ import security.LoginService;
 import domain.Actor;
 import domain.Category;
 import domain.HelpRequest;
+import domain.Message;
 
 
 @Service
@@ -34,6 +35,9 @@ public class HelpRequestService {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CounselorService counselorService;
 	
 	@Autowired
 	private Validator validator;
@@ -79,7 +83,7 @@ public class HelpRequestService {
 	}
 	
 	public Collection<HelpRequest> findRequestsByCounselor() {
-		return helpRequestRepository.findRequestsByCounselor(userService.findByPrincipal().getId());
+		return helpRequestRepository.findRequestsByCounselor(counselorService.findByPrincipal().getId());
 	}
 	
 	public HelpRequest reconstruct(HelpRequest request, BindingResult binding){
@@ -117,12 +121,28 @@ public class HelpRequestService {
 		 String SALTCHARS = "1234567890";
 	        StringBuilder salt = new StringBuilder();
 	        Random rnd = new Random();
-	        while (salt.length() < 6) { // length of the random string.
+	        while (salt.length() < 3) { // length of the random string.
 	            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
 	            salt.append(SALTCHARS.charAt(index));
 	        }
 	        String saltStr = salt.toString();
 	        return saltStr;
+	}
+
+	public Message reconstructMessage(HelpRequest request, Message message, BindingResult bindingResult) {
+		Message res;
+		res = message;
+		res.setFlagSpam(false);
+		res.setMoment(new Date());
+		res.setRecipient(request.getUser());
+		res.setSender(counselorService.findByPrincipal());
+		res.getTags().add(request.getTicker());res.getTags().add("HELP from"+counselorService.findByPrincipal().getUserAccount().getUsername());
+		
+		validator.validate(res, bindingResult);
+		if(bindingResult.hasErrors()){
+			throw new ValidationException();
+		}
+		return res;
 	}
 
 
