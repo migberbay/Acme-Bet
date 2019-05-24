@@ -27,6 +27,7 @@ public class Bet extends DomainEntity {
 	private Double amount;
 	private Date moment;
 	private String winner;
+	private Boolean isAccepted;
 	
 	@Column(unique = true)
 	@Pattern(regexp="^([0-9]{1}[0-9]{1})([0]{1}[1-9]{1}|[1]{1}[0-2]{1})([0-2]{1}[1-9]{1}|[3]{1}[0-1]{1})[-][A-Z0-9]{6}$")
@@ -65,6 +66,14 @@ public class Bet extends DomainEntity {
 	}
 	public void setWinner(String winner) {
 		this.winner = winner;
+	}
+	
+	@NotNull
+	public Boolean getIsAccepted() {
+		return isAccepted;
+	}
+	public void setIsAccepted(Boolean isAccepted) {
+		this.isAccepted = isAccepted;
 	}
 	
 	//Relationships

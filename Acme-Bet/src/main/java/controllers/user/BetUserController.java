@@ -11,10 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.BetPoolService;
 import services.BetService;
+import services.PetitionService;
 import services.UserService;
 import controllers.AbstractController;
 import domain.Bet;
 import domain.BetPool;
+import domain.Petition;
 import forms.BettingForm;
 
 @Controller
@@ -29,6 +31,9 @@ public class BetUserController extends AbstractController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PetitionService petitionService;
 
 
 	//Create -----------------------------------------------------------
@@ -70,14 +75,27 @@ public class BetUserController extends AbstractController {
 			result.addObject("range", res.getBetPool().getMinRange()+" - "+res.getBetPool().getMaxRange());
 		}else {
 			try {
-				Bet saved = betService.save(res);
 				BetPool pool = res.getBetPool();
-				pool.getBets().add(saved);
-				res.getUser().setFunds(res.getUser().getFunds()-res.getAmount());
-				userService.save(res.getUser());
 				
-				
-				result = new ModelAndView("redirect:/betPool/show.do?betPoolId="+pool.getId());
+				if(res.getAmount()>=500.0){
+					result = new ModelAndView("betPool/show");
+					result.addObject("betPool",res.getBetPool());
+					result.addObject("petitionIssued", true);
+					Petition pet = petitionService.create();
+					res.setIsAccepted(false);
+					Bet saved = betService.save(res);
+					pet.setBet(saved);
+					pet.setStatus("PENDING");
+					pet.setUser(res.getUser());
+					petitionService.save(pet);
+				}else{
+					result = new ModelAndView("redirect:/betPool/show.do?betPoolId="+pool.getId());
+					res.setIsAccepted(true);
+					Bet saved = betService.save(res);
+					pool.getBets().add(saved);
+					res.getUser().setFunds(res.getUser().getFunds()-res.getAmount());
+					userService.save(res.getUser());
+				}
 			} catch (Throwable oops) {
 				result = this.createEditModelAndView(form, "commit.error");
 				oops.printStackTrace();

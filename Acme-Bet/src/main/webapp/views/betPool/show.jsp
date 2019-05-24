@@ -32,13 +32,33 @@
 	</display:table>
 	
 	<display:table name="betPool.bets" id="row" requestURI="betPool/show.do" pagesize="5">
-		<display:column titleKey="pool.user" property="user.userAccount.username"/>
-		<display:column titleKey="pool.amount" property="amount"/>
-		<display:column titleKey="pool.moment" property="moment"/>
-		<display:column titleKey="pool.winner" property="winner"/>
-		
+		<display:column titleKey="pool.user">
+			<jstl:if test="${row.isAccepted}">
+				<jstl:out value="${row.user.userAccount.username}"/>
+			</jstl:if>
+		</display:column>
+		<display:column titleKey="pool.amount">
+			<jstl:if test="${row.isAccepted}">
+				<jstl:out value="${row.amount}"/>
+			</jstl:if>
+		</display:column>
+		<display:column titleKey="pool.moment">
+			<jstl:if test="${row.isAccepted}">
+				<jstl:out value="${row.moment}"/>
+			</jstl:if>
+		</display:column>
+		<display:column titleKey="pool.winner">
+			<jstl:if test="${row.isAccepted}">
+				<jstl:out value="${row.winner}"/>
+			</jstl:if>
+		</display:column>
 	</display:table>
-
+	
+	<jstl:if test="${petitionIssued}">
+		<div class ="error">
+			A petition has been issued to the bookmaker for your high stake bet.
+		</div>
+	</jstl:if>
 	
 	
 	<input type="button" name="back"
