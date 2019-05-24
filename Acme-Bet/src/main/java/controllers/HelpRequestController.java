@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
 import services.HelpRequestService;
 
 import controllers.AbstractController;
@@ -46,7 +47,8 @@ public class HelpRequestController extends AbstractController {
 		result = new ModelAndView("helpRequest/show");
 		result.addObject("helpRequest", request);
 		result.addObject("lan",language);
-		result.addObject("requestURI", "helpRequest/show.do");
+		if(LoginService.hasRole("USER")) result.addObject("requestURI", "helpRequest/user/list.do");
+		if(LoginService.hasRole("COUNSELOR")) result.addObject("requestURI", "helpRequest/counselor/list.do");
 
 		return result;
 	}

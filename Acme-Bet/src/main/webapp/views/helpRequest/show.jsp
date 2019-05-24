@@ -34,5 +34,5 @@
 		</div>
 		
 		<br/>
-		<acme:cancel url="helpRequest/user/list.do" code="helpRequest.back"/>
+		<acme:cancel url="${requestURI }" code="helpRequest.back"/>
 		
