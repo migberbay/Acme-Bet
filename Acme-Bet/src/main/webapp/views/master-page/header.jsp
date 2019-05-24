@@ -78,6 +78,13 @@
 					<li class="arrow"></li>
 				</ul>
 			</li>
+			<li><a class="fNiv"><spring:message	code="master.page.helpRequest" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="helpRequest/counselor/listOpen.do"><spring:message code="master.page.helpRequest.listOpen" /></a></li>
+					<li><a href="helpRequest/counselor/list.do"><spring:message code="master.page.helpRequest.list" /></a></li>
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">

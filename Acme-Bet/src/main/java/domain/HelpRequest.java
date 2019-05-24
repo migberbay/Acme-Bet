@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -26,6 +27,7 @@ public class HelpRequest extends DomainEntity {
 	private String description;
 	private Collection<String> attachments;
 	private Date moment;
+	private String ticker;
 	
 	@NotNull
 	@Pattern(regexp="^OPEN|PENDING|SOLVED$")
@@ -63,7 +65,14 @@ public class HelpRequest extends DomainEntity {
 	}
 	
 	
-	
+	@Column(unique=true)
+	@NotNull
+	public String getTicker() {
+		return ticker;
+	}
+	public void setTicker(String ticker) {
+		this.ticker = ticker;
+	}
 	
 	
 	

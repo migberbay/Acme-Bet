@@ -17,6 +17,11 @@ public interface HelpRequestRepository extends JpaRepository<HelpRequest, Intege
 
 	@Query("select h from HelpRequest h where h.user.id = ?1")
 	Collection<HelpRequest> findRequestsByUser(int userId);
+	
+	@Query("select h from HelpRequest h where h.counselor.id = ?1")
+	Collection<HelpRequest> findRequestsByCounselor(int counselorId);
 
+	@Query("select h from HelpRequest h where h.status = 'OPEN'")
+	Collection<HelpRequest> getOpenRequests();
 }
 

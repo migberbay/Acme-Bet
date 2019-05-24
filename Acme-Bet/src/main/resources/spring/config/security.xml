@@ -56,6 +56,8 @@
 		<security:intercept-url pattern="/bet/user/**" access="hasRole('USER')" />
 		<security:intercept-url pattern="/helpRequest/user/**" access="hasRole('USER')" />
 		
+		<security:intercept-url pattern="/helpRequest/counselor/**" access="hasRole('COUNSELOR')" />
+		
 		<security:intercept-url pattern="/betPool/bookmaker/**" access="hasRole('BOOKMAKER')" />
 		
 		<security:intercept-url pattern="/sponsorship/sponsor/**" access="hasRole('SPONSOR')" />

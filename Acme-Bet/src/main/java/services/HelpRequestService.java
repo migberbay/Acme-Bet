@@ -1,8 +1,10 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Random;
 
 import javax.validation.ValidationException;
 
@@ -72,6 +74,14 @@ public class HelpRequestService {
 		return helpRequestRepository.findRequestsByUser(userService.findByPrincipal().getId());
 	}
 	
+	public Collection<HelpRequest> getOpenRequests(){
+		return helpRequestRepository.getOpenRequests();
+	}
+	
+	public Collection<HelpRequest> findRequestsByCounselor() {
+		return helpRequestRepository.findRequestsByCounselor(userService.findByPrincipal().getId());
+	}
+	
 	public HelpRequest reconstruct(HelpRequest request, BindingResult binding){
 		HelpRequest result;
 		if(request.getId()==0){
@@ -79,6 +89,7 @@ public class HelpRequestService {
 			result.setStatus("OPEN");
 			result.setMoment(new Date());
 			result.setUser(userService.findByPrincipal());
+			result.setTicker(this.generateTicker(request.getBetPool().getTicker()));
 		}else{
 			result = helpRequestRepository.findOne(request.getId());
 			result.setDescription(request.getDescription());
@@ -93,6 +104,27 @@ public class HelpRequestService {
 		}
 		return result;
 	}
+	
+	private String generateTicker(String poolTicker){
+		String t = "";
+
+		t = poolTicker.substring(7)+"-"+ randomNumbers();
+
+		return t;
+	}
+	
+	private String randomNumbers(){
+		 String SALTCHARS = "1234567890";
+	        StringBuilder salt = new StringBuilder();
+	        Random rnd = new Random();
+	        while (salt.length() < 6) { // length of the random string.
+	            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+	            salt.append(SALTCHARS.charAt(index));
+	        }
+	        String saltStr = salt.toString();
+	        return saltStr;
+	}
+
 
 
 }
