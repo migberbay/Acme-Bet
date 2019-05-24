@@ -39,7 +39,18 @@ public class BetPoolBookmakerController extends AbstractController {
 	@Autowired
 	private WarrantyService warrantyService;
 
+	//List -----------------------------------------------------------
 
+		@RequestMapping(value = "/list", method = RequestMethod.GET)
+		public ModelAndView list() {
+			ModelAndView result = new ModelAndView("betPool/list");
+			result.addObject("betPools", betPoolService.getPoolsByPrincipal());
+			result.addObject("isOwner", true);
+			result.addObject("requestURI","betPool/bookmaker/list.do");
+			return result;
+		}
+	
+	
 	//Create -----------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -53,6 +64,29 @@ public class BetPoolBookmakerController extends AbstractController {
 		return result;
 
 	}
+	
+	//Edit -----------------------------------------------------------
+
+		@RequestMapping(value = "/edit", method = RequestMethod.GET)
+		public ModelAndView edit(Integer betPoolId) {
+			ModelAndView result;
+
+			BetPoolForm form = betPoolService.build(betPoolService.findOne(betPoolId));
+			result = this.createEditModelAndView(form);
+			
+			return result;
+
+		}
+	
+	//Delete -----------------------------------------------------------
+
+		@RequestMapping(value = "/delete", method = RequestMethod.GET)
+		public ModelAndView delete(Integer betPoolId) {
+			BetPool pool = betPoolService.findOne(betPoolId);
+			betPoolService.delete(pool);
+			
+			return list();
+		}
 	
 	//Save ---------------------------------------------------------------
 
@@ -74,17 +108,20 @@ public class BetPoolBookmakerController extends AbstractController {
 					Double[] ranges = {10.0, 50.0, 100.0, 500.0, 10000.0};
 					for (int i = 0; i < 4; i++) {
 						BetPool aux = betPoolService.copy(pool);
+						aux.setTitle(pool.getTitle() + " ("+ ranges[i] +"-"+ranges[i+1]+")");
 						aux.setMinRange(ranges[i]);
 						aux.setMaxRange(ranges[i+1]-0.01);
+						aux.setTicker(betPoolService.generateTicker());
 						if(i==3){aux.setMaxRange(ranges[i+1]);}
 						betPoolService.save(aux);
 					}
+					betPoolService.delete(pool);
 					
 				}else{
 					betPoolService.save(pool);
 				}
 				
-				res = new ModelAndView("redirect:/betPool/list.do");
+				res = new ModelAndView("redirect:/betPool/bookmaker/list.do");
 				} catch (Exception e) {
 					e.printStackTrace();
 					res = createEditModelAndView(form);

@@ -52,7 +52,7 @@
 		<spring:message code="pool.save" />
 	</button>
 	
-	<acme:cancel url="betPool/list.do" code="pool.back"/>
+	<acme:cancel url="betPool/bookmaker/list.do" code="pool.back"/>
 	<br />	
 	</security:authorize>
 

@@ -58,6 +58,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="betPool/bookmaker/create.do"><spring:message code="master.page.betPool.create" /></a></li>
+					<li><a href="betPool/bookmaker/list.do"><spring:message code="master.page.betPool.create" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
