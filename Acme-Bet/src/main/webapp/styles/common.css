@@ -8,6 +8,18 @@
  * 
  */
 
+.PENDING {
+	background-color: grey;
+}
+
+.REJECTED {
+	background-color: red;
+}
+
+.ACCEPTED {
+	background-color: green;
+}
+
 .error {
 	color: red;
 	font-weight: bolder;

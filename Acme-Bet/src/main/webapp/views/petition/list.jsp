@@ -20,7 +20,7 @@
 	
 	
 	<display:table name="petitions" id="row" requestURI="petition/bookmaker/list.do" pagesize="5">
-		<display:column titleKey="petition.action" >
+		<display:column titleKey="petition.action" class ="${row.status}">
 		<jstl:if test='${row.status.equals("PENDING")}'>
 			<form:form action="petition/bookmaker/list.do" modelAttribute="petition">
 				<form:hidden path="id" value="${row.id}"/>
@@ -35,16 +35,16 @@
 		</jstl:if>	
 		</display:column>
 		
-		<display:column property="status" titleKey="petition.status" />
-		<display:column property="bet.amount" titleKey="petition.amount" />
-		<display:column property="user.userAccount.username" titleKey="petition.user" />
-		<display:column property="bet.betPool.title" titleKey="petition.betPool" />
+		<display:column property="status" titleKey="petition.status" class ="${row.status}" />
+		<display:column property="bet.amount" titleKey="petition.amount"  class ="${row.status}"/>
+		<display:column property="user.userAccount.username" titleKey="petition.user" class ="${row.status}" />
+		<display:column property="bet.betPool.title" titleKey="petition.betPool"  class ="${row.status}"/>
 	</display:table>
 	
 	<input type="button" name="back"
 		value="<spring:message code="petition.back" />"
-		onclick="javascript: window.location.replace('/')" />
-	<br />
+		onclick="javascript: window.location.replace('/Acme-Bet')" />
+	<br/>
 <script>
 
 

@@ -78,6 +78,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.counselor" /></a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="actor/editFare.do"><spring:message code="master.page.editFare" /></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message	code="master.page.helpRequest" /></a>

@@ -26,6 +26,7 @@ import services.AdminService;
 import services.BookmakerService;
 import services.CounselorService;
 import services.CreditCardService;
+import services.HelpRequestService;
 import services.MessageService;
 import services.SponsorService;
 import services.UserService;
@@ -35,6 +36,7 @@ import domain.Admin;
 import domain.Bookmaker;
 import domain.Counselor;
 import domain.CreditCard;
+import domain.HelpRequest;
 import domain.SocialProfile;
 import domain.Sponsor;
 import domain.User;
@@ -69,6 +71,9 @@ public class ProfileActorController extends AbstractController {
 	
 	@Autowired
 	private CreditCardService cardService;
+	
+	@Autowired
+	private HelpRequestService helpRequestService;
 	
 	@Autowired
 	private MessageService messageService;
@@ -415,6 +420,42 @@ public class ProfileActorController extends AbstractController {
 			e.printStackTrace();
 		}
 		
+		return res;
+	}
+	
+//Adjust Fare-------------------------------------------------------------------------
+	@RequestMapping(value = "/editFare", method = RequestMethod.GET)
+	public ModelAndView editFare() {
+		ModelAndView result = new ModelAndView("actor/editFare");
+		
+		Authority counselorAuth = new Authority();
+		counselorAuth.setAuthority(Authority.COUNSELOR);
+		
+		if(LoginService.getPrincipal().getAuthorities().contains(counselorAuth)){
+			Counselor counselor = counselorService.findByPrincipal();
+			result.addObject("actor", counselor);
+		}else{
+			result = new ModelAndView("error/access");
+		}
+
+		return result;
+	}
+	
+	
+	@RequestMapping(value = "/editFare", method = RequestMethod.POST, params = "save")
+	public ModelAndView editFare(Counselor counselor, BindingResult binding) {
+		ModelAndView res = editFare();
+		
+		Counselor couns = counselorService.findOne(counselor.getId());
+		double max = (double) helpRequestService.findRequestsByCounselor().size()*0.1;
+		
+		if (counselor.getFare()> max || counselor.getFare()> 2.0 || counselor.getFare()< 0.0 || counselor.getFare().equals("")) {
+			res.addObject("valueTooHigh", true);
+			res.addObject("max", max);
+		}else{
+			couns.setFare(counselor.getFare());
+			counselorService.save(couns);
+		}
 		return res;
 	}
 	
