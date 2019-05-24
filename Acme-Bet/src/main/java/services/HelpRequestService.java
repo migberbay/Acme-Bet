@@ -134,10 +134,11 @@ public class HelpRequestService {
 		res = message;
 		res.setFlagSpam(false);
 		res.setMoment(new Date());
+		res.setTags(new ArrayList<String>());
 		res.setRecipient(request.getUser());
 		res.setSender(counselorService.findByPrincipal());
-		res.getTags().add(request.getTicker());res.getTags().add("HELP from"+counselorService.findByPrincipal().getUserAccount().getUsername());
-		
+		String s = "HELP from "+counselorService.findByPrincipal().getUserAccount().getUsername();
+		res.getTags().add(request.getTicker()); res.getTags().add(s);
 		validator.validate(res, bindingResult);
 		if(bindingResult.hasErrors()){
 			throw new ValidationException();

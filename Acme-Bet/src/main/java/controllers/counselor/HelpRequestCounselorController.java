@@ -1,9 +1,7 @@
 package controllers.counselor;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.validation.Valid;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +21,7 @@ import services.CounselorService;
 import services.MessageService;
 import controllers.AbstractController;
 
-import domain.Bet;
-import domain.BetPool;
 import domain.HelpRequest;
-import domain.Counselor;
 import domain.Message;
 
 
@@ -41,13 +36,7 @@ public class HelpRequestCounselorController extends AbstractController {
 	
 	@Autowired
 	private CounselorService counselorService;
-	
-	@Autowired
-	private BetPoolService betPoolService;
-	
-	@Autowired
-	private CategoryService categoryService;
-	
+
 	@Autowired
 	private MessageService messageService;
 	
@@ -144,7 +133,6 @@ public class HelpRequestCounselorController extends AbstractController {
 	@RequestMapping(value = "/answer", params = "save", method = RequestMethod.POST)
 	public ModelAndView answer(Message m, BindingResult bindingResult) {
 		ModelAndView result;
-			
 		try {
 			Message savedM = helpRequestService.reconstructMessage(this.request,m, bindingResult);
 			messageService.save(savedM);
@@ -153,6 +141,7 @@ public class HelpRequestCounselorController extends AbstractController {
 			helpRequestService.save(this.request);
 			result = new ModelAndView("redirect:list.do");
 		} catch (ValidationException oops) {
+			oops.printStackTrace();
 			result = new ModelAndView("helpRequest/answer");
 			result.addObject("m",m);
 		} catch (Throwable e) {
@@ -162,52 +151,6 @@ public class HelpRequestCounselorController extends AbstractController {
 		}
 		
 		return result;
-	}
-	
-	// Delete -----------------------------------------------------------------
-
-		@RequestMapping(value = "/delete", method = RequestMethod.GET)
-		public ModelAndView delete(@RequestParam int helpRequestId) {
-			ModelAndView result;
-			HelpRequest helpRequest;
-			helpRequest = helpRequestService.findOne(helpRequestId);
-			
-			helpRequestService.delete(helpRequest);
-			result = new ModelAndView("redirect:list.do");
-
-
-			return result;
-		}
-	
-	//Helper methods --------------------------------------------------------------------------
-	
-	protected ModelAndView createEditModelAndView(HelpRequest helpRequest){
-		ModelAndView res;
-		res = createEditModelAndView(helpRequest, null);
-		return res;
-	}
-	
-	protected ModelAndView createEditModelAndView(HelpRequest helpRequest, String messageCode){
-		
-		ModelAndView res;
-		Counselor counselor = counselorService.findByPrincipal();
-		res = new ModelAndView("helpRequest/edit");
-		
-		String language = "";
-		if(LocaleContextHolder.getLocale().getLanguage().toLowerCase().equals("es")){
-			language ="es";
-		}
-		if(LocaleContextHolder.getLocale().getLanguage().toLowerCase().equals("en")){
-			language ="en";
-		}
-		
-		res.addObject("helpRequest", helpRequest);
-		res.addObject("pools", betPoolService.findFinal());
-		res.addObject("categories",categoryService.getRequestCategories());
-		res.addObject("lan",language);
-		res.addObject("message", messageCode);
-
-		return res;
 	}
 	
 }

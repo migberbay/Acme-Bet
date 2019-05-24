@@ -12,11 +12,14 @@
 	<display:table name="helpRequests" id="row" requestURI="helpRequest/user/list.do" pagesize="5">
 		
 		<display:column>
-			<a href="helpRequest/user/show.do?helpRequestId=${row.id}"><spring:message code="helpRequest.show"/></a><br/>
+			<a href="helpRequest/show.do?helpRequestId=${row.id}"><spring:message code="helpRequest.show"/></a><br/>
 			<security:authorize access="hasRole('USER')">
 			<jstl:if test="${row.counselor==null}">
 				<a href="helpRequest/user/edit.do?helpRequestId=${row.id}"><spring:message code="helpRequest.edit"/></a><br/>
 				<a href="helpRequest/user/delete.do?helpRequestId=${row.id}"><spring:message code="helpRequest.delete"/></a><br/>
+			</jstl:if>
+			<jstl:if test="${row.counselor!=null and row.status=='PENDING'}">
+				<a href="helpRequest/user/solve.do?helpRequestId=${row.id}"><spring:message code="helpRequest.solve"/></a><br/>
 			</jstl:if>
 			</security:authorize>
 			<security:authorize access="hasRole('COUNSELOR')">

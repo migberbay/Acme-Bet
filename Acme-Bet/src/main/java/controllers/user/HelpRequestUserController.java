@@ -163,6 +163,22 @@ public class HelpRequestUserController extends AbstractController {
 
 			return result;
 		}
+		
+		
+	// Solve -----------------------------------------------------------------
+
+			@RequestMapping(value = "/solve", method = RequestMethod.GET)
+			public ModelAndView solve(@RequestParam int helpRequestId) {
+				ModelAndView result;
+				HelpRequest helpRequest;
+				helpRequest = helpRequestService.findOne(helpRequestId);
+				helpRequest.setStatus("SOLVED");
+				helpRequestService.save(helpRequest);
+				result = new ModelAndView("redirect:list.do");
+
+
+				return result;
+			}
 	
 	//Helper methods --------------------------------------------------------------------------
 	
