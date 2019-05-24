@@ -3,9 +3,8 @@ package controllers.user;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.validation.Valid;
-import javax.validation.ValidationException;
 
+import org.hibernate.metamodel.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,12 +17,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.BetPoolService;
 import services.CategoryService;
+import services.CounselorService;
 import services.HelpRequestService;
 import services.UserService;
 import controllers.AbstractController;
 
 import domain.Bet;
 import domain.BetPool;
+import domain.Counselor;
 import domain.HelpRequest;
 import domain.User;
 
@@ -46,6 +47,8 @@ public class HelpRequestUserController extends AbstractController {
 	@Autowired
 	private CategoryService categoryService;
 		
+	@Autowired
+	private CounselorService counselorService;
 	// List -------------------------------------------------------------------
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -118,7 +121,7 @@ public class HelpRequestUserController extends AbstractController {
 			HelpRequest helpRequest;
 			helpRequest = helpRequestService.findOne(helpRequestId);	
 			
-			if(helpRequest.getCounselor()==null){
+			if(helpRequest.getCounselor()==null && helpRequest.getUser().equals(userService.findByPrincipal())){
 				result = this.createEditModelAndView(helpRequest);
 			}else{
 				result = new ModelAndView("error/access");
@@ -132,17 +135,14 @@ public class HelpRequestUserController extends AbstractController {
 	@RequestMapping(value = "/edit", params = "save", method = RequestMethod.POST)
 	public ModelAndView edit(HelpRequest helpRequest, BindingResult bindingResult) {
 		ModelAndView result;
-			
 		try {
 			HelpRequest saved = helpRequestService.reconstruct(helpRequest, bindingResult);
 			helpRequestService.save(saved);
 			result = new ModelAndView("redirect:list.do");
 		} catch (ValidationException oops) {
-			result = new ModelAndView("helpRequest/edit");
-			result.addObject("helpRequest",helpRequest);
+			result = this.createEditModelAndView(helpRequest);
 		} catch (Throwable e) {
-			result = new ModelAndView("helpRequest/edit");
-			result.addObject("helpRequest",helpRequest);
+			result = this.createEditModelAndView(helpRequest);
 			result.addObject("errorMessage", "helpRequest.commit.error");
 		}
 		
@@ -151,34 +151,41 @@ public class HelpRequestUserController extends AbstractController {
 	
 	// Delete -----------------------------------------------------------------
 
-		@RequestMapping(value = "/delete", method = RequestMethod.GET)
-		public ModelAndView delete(@RequestParam int helpRequestId) {
-			ModelAndView result;
-			HelpRequest helpRequest;
-			helpRequest = helpRequestService.findOne(helpRequestId);
-			
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam int helpRequestId) {
+		ModelAndView result;
+		HelpRequest helpRequest;
+		helpRequest = helpRequestService.findOne(helpRequestId);
+		if(helpRequest.getUser().equals(userService.findByPrincipal())){
 			helpRequestService.delete(helpRequest);
 			result = new ModelAndView("redirect:list.do");
-
-
-			return result;
+		}else{
+			result = new ModelAndView("error/access");
 		}
+		
+		return result;
+	}
 		
 		
 	// Solve -----------------------------------------------------------------
 
-			@RequestMapping(value = "/solve", method = RequestMethod.GET)
-			public ModelAndView solve(@RequestParam int helpRequestId) {
-				ModelAndView result;
-				HelpRequest helpRequest;
-				helpRequest = helpRequestService.findOne(helpRequestId);
-				helpRequest.setStatus("SOLVED");
-				helpRequestService.save(helpRequest);
-				result = new ModelAndView("redirect:list.do");
+	@RequestMapping(value = "/solve", method = RequestMethod.GET)
+	public ModelAndView solve(@RequestParam int helpRequestId) {
+		ModelAndView result;
+		HelpRequest helpRequest;
+		helpRequest = helpRequestService.findOne(helpRequestId);
+		helpRequest.setStatus("SOLVED");
+		Counselor c = helpRequest.getCounselor();
+		User u = helpRequest.getUser();
+		c.setFunds(c.getFunds()+c.getFare());
+		u.setFunds(u.getFunds()-c.getFare());
+		counselorService.save(c);
+		userService.save(u);
+		helpRequestService.save(helpRequest);
+		result = new ModelAndView("redirect:list.do");
 
-
-				return result;
-			}
+		return result;
+	}
 	
 	//Helper methods --------------------------------------------------------------------------
 	
@@ -191,7 +198,6 @@ public class HelpRequestUserController extends AbstractController {
 	protected ModelAndView createEditModelAndView(HelpRequest helpRequest, String messageCode){
 		
 		ModelAndView res;
-		User user = userService.findByPrincipal();
 		res = new ModelAndView("helpRequest/edit");
 		
 		String language = "";

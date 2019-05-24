@@ -93,9 +93,11 @@ public class HelpRequestService {
 			result.setStatus("OPEN");
 			result.setMoment(new Date());
 			result.setUser(userService.findByPrincipal());
-			result.setTicker(this.generateTicker(request.getBetPool().getTicker()));
+			if(request.getBetPool()!=null)result.setTicker(this.generateTicker(request.getBetPool().getTicker()));
 		}else{
+			System.out.println("owo");
 			result = helpRequestRepository.findOne(request.getId());
+			System.out.println("user " + result.getUser());
 			result.setDescription(request.getDescription());
 			result.setAttachments(request.getAttachments());
 			result.setBetPool(request.getBetPool());
@@ -104,6 +106,7 @@ public class HelpRequestService {
 		
 		validator.validate(result, binding);
 		if(binding.hasErrors()){
+			System.out.println(binding.getFieldErrors());
 			throw new ValidationException();
 		}
 		return result;
@@ -136,11 +139,15 @@ public class HelpRequestService {
 		res.setMoment(new Date());
 		res.setTags(new ArrayList<String>());
 		res.setRecipient(request.getUser());
+		System.out.println("que");
 		res.setSender(counselorService.findByPrincipal());
 		String s = "HELP from "+counselorService.findByPrincipal().getUserAccount().getUsername();
 		res.getTags().add(request.getTicker()); res.getTags().add(s);
+		System.out.println("no");
 		validator.validate(res, bindingResult);
+		System.out.println("quejjj");
 		if(bindingResult.hasErrors()){
+			System.out.println("sfjaoifj");
 			throw new ValidationException();
 		}
 		return res;

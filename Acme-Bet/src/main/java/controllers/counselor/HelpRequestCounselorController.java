@@ -121,10 +121,15 @@ public class HelpRequestCounselorController extends AbstractController {
 			HelpRequest helpRequest;
 			helpRequest = helpRequestService.findOne(helpRequestId);
 			this.request=helpRequest;
-			result = new ModelAndView("helpRequest/answer");
-			Message message = new Message();
-			message.setSubject("ANSWER HELP REQUEST " + helpRequest.getTicker());
-			result.addObject("m",message);
+			System.out.println("STATUS " + helpRequest.getStatus());
+			if(helpRequest.getStatus().equals("OPEN")){
+				Message message = new Message();
+				message.setSubject("ANSWER HELP REQUEST " + helpRequest.getTicker());
+				result = this.createEditModelAndView(message);
+				result.addObject("m",message);
+			}else{
+				result = new ModelAndView("error/access");
+			}
 			return result;
 		}
 
@@ -134,23 +139,43 @@ public class HelpRequestCounselorController extends AbstractController {
 	public ModelAndView answer(Message m, BindingResult bindingResult) {
 		ModelAndView result;
 		try {
+			System.out.println("uwu");
 			Message savedM = helpRequestService.reconstructMessage(this.request,m, bindingResult);
 			messageService.save(savedM);
 			this.request.setStatus("PENDING");
 			this.request.setCounselor(counselorService.findByPrincipal());
+			System.out.println("qué");
 			helpRequestService.save(this.request);
+			System.out.println("no");
 			result = new ModelAndView("redirect:list.do");
 		} catch (ValidationException oops) {
+			System.out.println("11");
 			oops.printStackTrace();
-			result = new ModelAndView("helpRequest/answer");
-			result.addObject("m",m);
+			result = this.createEditModelAndView(m);
 		} catch (Throwable e) {
-			result = new ModelAndView("helpRequest/answer");
-			result.addObject("m",m);
-			result.addObject("errorMessage", "helpRequest.commit.error");
+			System.out.println("12");
+			result = this.createEditModelAndView(m);
 		}
 		
 		return result;
+	}
+	
+	protected ModelAndView createEditModelAndView(Message m){
+		ModelAndView res;
+		res = createEditModelAndView(m, null);
+		return res;
+	}
+	
+	protected ModelAndView createEditModelAndView(Message m, String messageCode){
+		
+		ModelAndView res;
+		res = new ModelAndView("helpRequest/answer");
+
+		res.addObject("m", m);
+
+		res.addObject("message", messageCode);
+
+		return res;
 	}
 	
 }
