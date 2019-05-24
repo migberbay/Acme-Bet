@@ -449,13 +449,20 @@ public class ProfileActorController extends AbstractController {
 		Counselor couns = counselorService.findOne(counselor.getId());
 		double max = (double) helpRequestService.findRequestsByCounselor().size()*0.1;
 		
-		if (counselor.getFare()> max || counselor.getFare()> 2.0 || counselor.getFare()< 0.0 || counselor.getFare().equals("")) {
+		try {
+			if (counselor.getFare()> max || counselor.getFare()> 2.0 || counselor.getFare()< 0.0) {
+				res.addObject("valueTooHigh", true);
+				res.addObject("max", max);
+			}else{
+				couns.setFare(counselor.getFare());
+				counselorService.save(couns);
+				res.addObject("changed", true);
+			}
+		} catch (Exception e) {
 			res.addObject("valueTooHigh", true);
 			res.addObject("max", max);
-		}else{
-			couns.setFare(counselor.getFare());
-			counselorService.save(couns);
 		}
+			
 		return res;
 	}
 	

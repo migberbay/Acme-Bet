@@ -20,7 +20,11 @@
 	<jstl:if test="${valueTooHigh}">
 		fare must be a number between 0-2, your personal maximum is: <jstl:out value="${max}"/>
 	</jstl:if>
+	
+	<jstl:if test="${changed}">Value changed successfully</jstl:if>
 	</div>
+	
+
 	
 	<acme:submit name="save" code="actor.save"/>
 	<acme:cancel url="actor/show.do" code="actor.cancel"/>
