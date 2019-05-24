@@ -12,16 +12,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.BetPoolService;
 import services.SponsorshipService;
 import controllers.AbstractController;
+import domain.BetPool;
 import domain.Sponsorship;
 
 @Controller
-@RequestMapping("sponsor/sponsorship")
+@RequestMapping("sponsorship/sponsor")
 public class SponsorSponsorshipController extends AbstractController {
 
 	@Autowired
 	private SponsorshipService sponsorshipService;
+	
+	@Autowired
+	private BetPoolService betService;
 
 	// Listing -----------------------------------------------------------------
 
@@ -35,7 +40,7 @@ public class SponsorSponsorshipController extends AbstractController {
 		
 		result = new ModelAndView("sponsorship/list");
 		result.addObject("sponsorships", sponsorships);
-		result.addObject("requestURI", "sponsor/sponsorship/list.do");
+		result.addObject("requestURI", "sponsorship/sponsor/list.do");
 
 		return result;
 	}
@@ -57,79 +62,99 @@ public class SponsorSponsorshipController extends AbstractController {
 
 	// Create-----------------------------------------------------------
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
-		
-		ModelAndView result;
-		Sponsorship sponsorship;
-		
-		sponsorship = sponsorshipService.create();
-		result = this.createEditModelAndView(sponsorship);
-
-		return result;
-	}
+		@RequestMapping(value = "/create", method = RequestMethod.GET)
+		public ModelAndView create() {
+			
+			ModelAndView result;
+			Sponsorship sponsorship;
+			
+			sponsorship = sponsorshipService.create();
+			result = this.createEditModelAndView(sponsorship);
+	
+			return result;
+		}
 
 	// Edit -----------------------------------------------------------------
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int sponsorshipId) {
-		
-		ModelAndView result;
-		Sponsorship sponsorship;
-		
-		sponsorship = sponsorshipService.findOne(sponsorshipId);
-		
-		if (sponsorshipService.findByPrincipal().contains(sponsorship)) {
-			result = this.createEditModelAndView(sponsorship);
-		}else{
-			result = new ModelAndView("error/access");
+		@RequestMapping(value = "/edit", method = RequestMethod.GET)
+		public ModelAndView edit(@RequestParam final int sponsorshipId) {
+			
+			ModelAndView result;
+			Sponsorship sponsorship;
+			
+			sponsorship = sponsorshipService.findOne(sponsorshipId);
+			
+			if (sponsorshipService.findByPrincipal().contains(sponsorship)) {
+				result = this.createEditModelAndView(sponsorship);
+			}else{
+				result = new ModelAndView("error/access");
+			}
+	
+			return result;
 		}
-
-		return result;
-	}
 
 	// Save -----------------------------------------------------------------
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Sponsorship sponsorship, BindingResult binding) {
-		ModelAndView result;
-
-		if (binding.hasErrors()) {
-			result = this.createEditModelAndView(sponsorship);
-		} else{
-			try {
-				sponsorshipService.save(sponsorship);
-				result = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(sponsorship,"sponsorship.commit.error");
+		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+		public ModelAndView save(@Valid Sponsorship sponsorship, BindingResult binding) {
+			ModelAndView result;
+	
+			if (binding.hasErrors()) {
+				result = this.createEditModelAndView(sponsorship);
+			} else{
+				try {
+					sponsorshipService.save(sponsorship);
+					result = new ModelAndView("redirect:list.do");
+				} catch (final Throwable oops) {
+					result = this.createEditModelAndView(sponsorship,"sponsorship.commit.error");
+				}
 			}
+			
+			return result;
 		}
 		
-		return result;
-	}
+	// Activate/Deactivate -----------------------------------------------------------------
 
+		@RequestMapping(value = "/activate", method = RequestMethod.GET)
+		public ModelAndView activate(@RequestParam int sponsorshipId) {
+			ModelAndView result;
+			Sponsorship sponsorship;
+			
+			sponsorship = sponsorshipService.findOne(sponsorshipId);
+			
+			if(sponsorship.getIsActivated()){
+				sponsorshipService.activateSponsorship(sponsorship, false);
+			}else{
+				sponsorshipService.activateSponsorship(sponsorship, true);
+			}
+		
+			result = new ModelAndView("redirect:list.do");
+			
+			return result;
+		}	
+	
 	// Delete ------------------------------------------------------------------
 
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int sponsorshipId) {
-		ModelAndView res;
-		Sponsorship sponsorship;
-		
-		sponsorship = sponsorshipService.findOne(sponsorshipId);
-		
-		if (sponsorshipService.findByPrincipal().contains(sponsorship)) {
-			try {
-				sponsorshipService.delete(sponsorship);
-				res = new ModelAndView("redirect:/list.do");
-			} catch (Throwable oops) {
-				res = createEditModelAndView(sponsorship, "sponsorship.commit.error");
+		@RequestMapping(value = "/delete", method = RequestMethod.GET)
+		public ModelAndView delete(@RequestParam final int sponsorshipId) {
+			ModelAndView res;
+			Sponsorship sponsorship;
+			
+			sponsorship = sponsorshipService.findOne(sponsorshipId);
+			
+			if (sponsorshipService.findByPrincipal().contains(sponsorship)) {
+				try {
+					sponsorshipService.delete(sponsorship);
+					res = new ModelAndView("redirect:list.do");
+				} catch (Throwable oops) {
+					res = createEditModelAndView(sponsorship, "sponsorship.commit.error");
+				}
+			}else{
+				res = new ModelAndView("error/access");
 			}
-		}else{
-			res = new ModelAndView("error/access");
+	
+			return res;
 		}
-
-		return res;
-	}
 
 	// Helper methods -----------------------------------------------------------------------------
 
@@ -145,10 +170,13 @@ public class SponsorSponsorshipController extends AbstractController {
 	private ModelAndView createEditModelAndView(final Sponsorship sponsorship, final String message) {
 
 		ModelAndView result;
-
+		Collection<BetPool> pools;
+		
+		pools = betService.findAll();
 		result = new ModelAndView("sponsorship/edit");
 
 		result.addObject("sponsorship", sponsorship);
+		result.addObject("pools", pools);
 		result.addObject("message", message);
 
 		return result;

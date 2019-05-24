@@ -32,7 +32,7 @@ public class SponsorshipService {
 	
 	public Sponsorship create(){
 		Sponsorship res = new Sponsorship();
-
+		
 		res.setIsActivated(true);
 		res.setSponsor(sponsorService.findByPrincipal());
 
@@ -59,7 +59,7 @@ public class SponsorshipService {
 		return sponsorshipRepository.findAll();
 	}
 	
-	//OTHER BUSINESS METHODS
+	//OTHER BUSINESS METHODS --------------------------------------------------------------------------------
 	
 	public Collection<Sponsorship> findByPrincipal() {
 		Collection<Sponsorship> sponsorships;
@@ -67,6 +67,13 @@ public class SponsorshipService {
 		sponsorships = this.sponsorshipRepository.findBySponsor(sponsorService.findByPrincipal().getId());
 		
 		return sponsorships;
+	}
+	
+	public void activateSponsorship(Sponsorship ss, Boolean res){
+		Assert.isTrue(LoginService.hasRole("SPONSOR"));
+		
+		ss.setIsActivated(res);
+		this.save(ss);
 	}
 //	
 //	public Collection<Sponsorship> findByPosition(Position position) {

@@ -16,11 +16,11 @@
 	<spring:message code="sponsorship.link"/>:
 	<jstl:out value="${sponsorship.link}"/><br>
 	<spring:message code="sponsorship.betPool"/>:
-	<jstl:out value="${sponsorship.betPool}"/><br>
+	<jstl:out value="${sponsorship.betPool.title}"/><br>
 	
 	<input type="button" name="back"
 		value="<spring:message code="sponsorship.back" />"
-		onclick="javascript: window.location.replace('/Acme-Bet/sponsor/sponsorship/list.do')" />
+		onclick="javascript: window.location.replace('/Acme-Bet/sponsorship/sponsor/list.do')" />
 	<br />
 <script>
 
