@@ -50,6 +50,7 @@ public class FinderUserController extends AbstractController {
 		} else {
 			try {
 				Finder updatedFinder = finderService.save(finder);
+				System.out.println("Bet pools controller: " + updatedFinder.getBetPools() + " con keyword: ("+ updatedFinder.getKeyword()+")");
 				result = createEditModelAndView(updatedFinder);
 			} catch (final Throwable oops) {
 				oops.printStackTrace();
@@ -91,12 +92,14 @@ public class FinderUserController extends AbstractController {
 		String cachedMessageCode = null;
 		Collection<Category> categories = categoryService.getPoolCategories();
 		res = new ModelAndView("finder/edit");
-
+		System.out.println("MOdelandview betpools " + finder.getBetPools() + " y kw " + finder.getKeyword());
 		if(finderService.findOne(finder.getId()).getMoment() == null
 				|| finderService.isVoid(finder)
 				|| finderService.isExpired(finder)){
+			System.out.println("Todas las betpools");
 			betPools.addAll(betPoolService.findAll());
 		}else{
+			System.out.println("of");
 			betPools.addAll(finderService.findOne(finder.getId()).getBetPools());
 			cachedMessageCode = "finder.cachedMessage";
 		}

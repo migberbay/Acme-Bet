@@ -69,13 +69,17 @@ public class FinderService {
 		Finder result;
 		Assert.notNull(finder);
 		if (finder.getId() != 0) {
+			System.out.println("Save finder id!=0");
 			Assert.isTrue(this.esDeActorActual(finder));
 			if(isVoid(finder)){
+				System.out.println("Save finder es void");
 				finder.setMoment(null);
 				finder.setBetPools(new HashSet<BetPool>());
 			}else{
+				System.out.println("Save finder no es void");
 				finder.setMoment(DateUtils.addMilliseconds(new Date(),-1));
-				filterParades(finder);
+				finder = filterBetPools(finder);
+				System.out.println("Else f " + finder.getBetPools());
 			}
 
 		}else{
@@ -85,7 +89,9 @@ public class FinderService {
 
 			Assert.isNull(finder.getMoment());
 		}
+		System.out.println("Save save finder " + finder.getBetPools());
 		result = this.finderRepository.save(finder);
+		System.out.println("Post guardado " + result.getBetPools());
 		return result;
 	}
 	
@@ -124,11 +130,12 @@ public class FinderService {
 
 	public Boolean isVoid(final Finder finder){
 		Boolean result;
-
+		System.out.println("void");
+		System.out.println(finder.getCategory());
 		result = (finder.getKeyword() == null || finder.getKeyword() == "")
 				&& finder.getMinRange() == null && finder.getMaxRange() == null
 				&& finder.getOpeningDate() == null && finder.getEndDate() == null
-				&& finder.getCategory() == null;
+				&& (finder.getCategory()==null);
 
 		return result;
 	}
@@ -168,13 +175,13 @@ public class FinderService {
 	}
 
 	/*Don't declare finder parameter as final*/
-	public Finder filterParades(Finder finder){
+	public Finder filterBetPools(Finder finder){
 		String keyword;
 		Date openingDate, endDate;
 		Double minRange, maxRange;
 		Integer categoryId;
 
-		Collection<BetPool> positions;
+		Collection<BetPool> betPools;
 
 		keyword = finder.getKeyword();
 
@@ -183,9 +190,10 @@ public class FinderService {
 		openingDate = finder.getOpeningDate();
 		endDate = finder.getEndDate();
 		categoryId = finder.getCategory();
-
-		positions = finderRepository.filterBetPools(keyword, maxRange, minRange, openingDate, endDate, categoryId);
-		finder.setBetPools(positions);
+		System.out.println("Filter betpools " + keyword);
+		betPools = finderRepository.filterBetPools(keyword, maxRange, minRange, openingDate, endDate, categoryId);
+		System.out.println("Filter betpools " + betPools);
+		finder.setBetPools(betPools);
 		return finder;
 	}
 

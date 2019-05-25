@@ -63,7 +63,7 @@
 </jstl:if>
 	
 <spring:message code="pool.dateformat" var = "format"/>
-	<display:table name="betPools" id="row" requestURI="${requestURI}" pagesize="5">
+	<display:table name="betPools" id="row" requestURI="finder/user/filter.do" pagesize="5">
 		<display:column titleKey="pool.action" >
 			<a href="betPool/show.do?betPoolId=${row.id}">show</a><br>			
 		</display:column>
