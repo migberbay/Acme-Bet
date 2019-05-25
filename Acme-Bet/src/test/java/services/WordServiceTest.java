@@ -60,7 +60,7 @@ public class WordServiceTest extends AbstractTest {
 		Word word = (Word) wordService.findAll().toArray()[0];
 
 		wordService.delete(word);
-		
+
 		Assert.isTrue(!wordService.findAll().contains(word));
 
 		super.authenticate(null);
@@ -84,10 +84,10 @@ public class WordServiceTest extends AbstractTest {
 
 	@Test
 	public void driver() {
-		Object testingData[][] = {{"admin", null},
-				                  {"bookmaker1", IllegalArgumentException.class},
-				                  {null,      IllegalArgumentException.class}};
-		
+		Object testingData[][] = { { "admin", null },
+				{ "bookmaker1", IllegalArgumentException.class },
+				{ null, IllegalArgumentException.class } };
+
 		for (int i = 0; i < testingData.length; i++) {
 			template((String) testingData[i][0], (Class<?>) testingData[i][1]);
 		}

@@ -23,11 +23,14 @@ public class SponsorshipServiceTest extends AbstractTest {
 	@Test
 	public void testCreate() {
 		
-		authenticate("provider1");
+		authenticate("sponsor1");
 		
 		Sponsorship sponsorship = sponsorshipService.create();
 		
 		Assert.isNull(sponsorship.getBanner());
+		Assert.isNull(sponsorship.getLink());
+		Assert.notNull(sponsorship.getSponsor());
+		Assert.isTrue(sponsorship.getIsActivated().equals(true));
 		
 		unauthenticate();
 	}
@@ -35,16 +38,19 @@ public class SponsorshipServiceTest extends AbstractTest {
 	@Test
 	public void driverCreateSponsorship(){
 		
-		final Object testingData[][] = {{"provider1", null},
-										{"provider2", null},
-										{"provider3", null},
-										{"admin",   java.lang.IllegalArgumentException.class},
-										{"rookie1", java.lang.IllegalArgumentException.class},
-										{"rookie2", java.lang.IllegalArgumentException.class},
-										{"rookie3", java.lang.IllegalArgumentException.class},
-										{"company1", java.lang.IllegalArgumentException.class},
-										{"company2", java.lang.IllegalArgumentException.class},
-										{"company3", java.lang.IllegalArgumentException.class}};
+		final Object testingData[][] = {{"sponsor1", null},
+										{"sponsor2", null},
+										{"sponsor3", null}};
+//										{"admin",   java.lang.IllegalArgumentException.class},
+//										{"bookmaker1", java.lang.IllegalArgumentException.class},
+//										{"bookmaker2", java.lang.IllegalArgumentException.class},
+//										{"bookmaker3", java.lang.IllegalArgumentException.class},
+//										{"counselor1", java.lang.IllegalArgumentException.class},
+//										{"counselor2", java.lang.IllegalArgumentException.class},
+//										{"counselor3", java.lang.IllegalArgumentException.class}, 
+//										{"user1",   java.lang.IllegalArgumentException.class},
+//										{"user2",   java.lang.IllegalArgumentException.class},
+//										{"user3",   java.lang.IllegalArgumentException.class}};
 		
 		for(int i = 0; i < testingData.length; i++){
 			templateCreateSponsorship((String) testingData[i][0], (Class<?>)testingData[i][1]);
@@ -68,11 +74,12 @@ public class SponsorshipServiceTest extends AbstractTest {
 	@Test
 	public void testSave(){
 		
-		authenticate("provider1");
+		authenticate("sponsor1");
 		
 		Sponsorship result;
 		Sponsorship sponsorship = sponsorshipService.create();
 		
+		sponsorship.setLink("http://www.link.com");
 		sponsorship.setBanner("http://www.banner.com");
 		
 		result = sponsorshipService.save(sponsorship);
@@ -89,6 +96,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 		Sponsorship result;
 		Sponsorship sponsorship = sponsorshipService.create();
 		
+		sponsorship.setLink("http://www.link.com");
 		sponsorship.setBanner("http://www.banner.com");
 		
 		result = sponsorshipService.save(sponsorship);
@@ -100,7 +108,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	@Test(expected = javax.validation.ConstraintViolationException.class)
 	public void testSaveIncorrectData(){
 		
-		authenticate("provider1");
+		authenticate("sponsor1");
 		
 		Sponsorship result;
 		Sponsorship sponsorship = sponsorshipService.create();
@@ -116,30 +124,34 @@ public class SponsorshipServiceTest extends AbstractTest {
 	@Test
 	public void driverSaveSponsorship(){
 		
-		Object testingData[][] = {{"provider1", "http://www.banner.com", "http://www.target.com", null},
-								  {"provider2", "http://www.banner.com", "http://www.target.com", null},
-								  {"provider3", "http://www.banner.com", "http://www.target.com", null},
-								  {"admin",   "http://www.banner.com", "http://www.target.com", java.lang.IllegalArgumentException.class},
-								  {"rookie1", "http://www.banner.com", "http://www.target.com", java.lang.IllegalArgumentException.class},
-								  {"rookie2", "http://www.banner.com", "http://www.target.com", java.lang.IllegalArgumentException.class},
-								  {"rookie3", "http://www.banner.com", "http://www.target.com", java.lang.IllegalArgumentException.class},
-								  {"company1", "http://www.banner.com", "http://www.target.com", java.lang.IllegalArgumentException.class},
-								  {"company2", "http://www.banner.com", "http://www.target.com", java.lang.IllegalArgumentException.class},
-								  {"company3", "http://www.banner.com", "http://www.target.com", java.lang.IllegalArgumentException.class}};
+		Object testingData[][] = {{"sponsor1", "http://www.banner.com", "http://www.link.com", null},
+								  {"sponsor1", "http://www.banner.com", "http://www.link.com", null},
+								  {"sponsor1", "http://www.banner.com", "http://www.link.com", null},
+								  {"admin",    "http://www.banner.com", "http://www.link.com", java.lang.IllegalArgumentException.class},
+								  {"bookmaker1", "http://www.banner.com", "http://www.link.com", java.lang.IllegalArgumentException.class},
+								  {"bookmaker2", "http://www.banner.com", "http://www.link.com", java.lang.IllegalArgumentException.class},
+								  {"bookmaker3", "http://www.banner.com", "http://www.link.com", java.lang.IllegalArgumentException.class},
+								  {"counselor1", "http://www.banner.com", "http://www.link.com", java.lang.IllegalArgumentException.class},
+								  {"counselor2", "http://www.banner.com", "http://www.link.com", java.lang.IllegalArgumentException.class},
+								  {"counselor3", "http://www.banner.com", "http://www.link.com", java.lang.IllegalArgumentException.class},
+								  {"user1", "http://www.banner.com", "http://www.link.com", java.lang.IllegalArgumentException.class},
+								  {"user2", "http://www.banner.com", "http://www.link.com", java.lang.IllegalArgumentException.class},
+								  {"user3", "http://www.banner.com", "http://www.link.com", java.lang.IllegalArgumentException.class}};
 		
 		for(int i = 0; i < testingData.length; i++){
-			templateSaveSponsorship((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>)testingData[i][5]);
+			templateSaveSponsorship((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>)testingData[i][3]);
 		}
 	}
 	
-	protected void templateSaveSponsorship(String username, String banner, String target, Class<?> expected){
+	protected void templateSaveSponsorship(String username, String banner, String link, Class<?> expected){
 		Class<?> caught = null;
 		Sponsorship sponsorship;
 		
 		try{
 			super.authenticate(username);
 			sponsorship = this.sponsorshipService.create();
-			sponsorship.setBanner("http://www.banner.com");
+			sponsorship.setBanner(banner);
+			sponsorship.setLink(link);
 			sponsorship = this.sponsorshipService.save(sponsorship);
 		} catch (Throwable oops){
 			caught = oops.getClass();
@@ -152,7 +164,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	@Test
 	public void testUpdate() {
 		
-		authenticate("provider1");
+		authenticate("sponsor1");
 
 		Sponsorship sponsorship = (Sponsorship) sponsorshipService.findAll().toArray()[0];
 		
@@ -184,7 +196,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	@Test(expected = javax.validation.ConstraintViolationException.class)
 	public void testUpdateIncorrectData() {
 		
-		authenticate("provider1");
+		authenticate("sponsor1");
 
 		Sponsorship sponsorship = (Sponsorship) sponsorshipService.findAll().toArray()[0];
 		
@@ -234,7 +246,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	@Test
 	public void testDelete(){
 		
-		authenticate("provider1");
+		authenticate("sponsor1");
 		
 		Sponsorship sponsorship = (Sponsorship) sponsorshipService.findAll().toArray()[0];
 		sponsorshipService.delete(sponsorship);
@@ -260,9 +272,9 @@ public class SponsorshipServiceTest extends AbstractTest {
 	@Test
 	public void driverDeleteSponsorship(){
 		
-		Object testingData[][] = {{"provider1", null},
-								  {"provider2", null},
-								  {"provider3", null}, };
+		Object testingData[][] = {{"sponsor1", null},
+								  {"sponsor2", null},
+								  {"sponsor3", null}};
 //								  {null, java.lang.IllegalArgumentException.class},};
 //								  {"auditor1", java.lang.IllegalArgumentException.class},
 //								  {"auditor2", java.lang.IllegalArgumentException.class},
