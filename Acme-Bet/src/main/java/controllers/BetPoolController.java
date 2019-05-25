@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -47,10 +48,10 @@ public class BetPoolController extends AbstractController {
 		} catch (Exception e) {
 			isUser = false;
 		}
-		
 
 		result = new ModelAndView("betPool/list");
 		result.addObject("betPools", betPoolService.findFinal());
+		result.addObject("date", new Date());
 		result.addObject("requestURI","betPool/list.do");
 		result.addObject("isUser", isUser);
 

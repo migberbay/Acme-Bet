@@ -1,5 +1,7 @@
 package controllers.bookmaker;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -46,6 +48,7 @@ public class BetPoolBookmakerController extends AbstractController {
 			ModelAndView result = new ModelAndView("betPool/list");
 			result.addObject("betPools", betPoolService.getPoolsByPrincipal());
 			result.addObject("isOwner", true);
+			result.addObject("date", new Date());
 			result.addObject("requestURI","betPool/bookmaker/list.do");
 			return result;
 		}
