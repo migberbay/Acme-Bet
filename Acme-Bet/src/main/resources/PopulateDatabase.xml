@@ -306,6 +306,7 @@
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
 		<property name="funds" value="50000.0" />
+		<property name="luckScore" value="0.0" />
 		<property name="userAccount" ref="userAccount5" />
 		<property name="creditCard" ref="creditCard5" />
 		<property name="socialProfiles">
@@ -341,6 +342,7 @@
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
 		<property name="funds" value="50000.0" />
+		<property name="luckScore" value="0.0" />
 		<property name="userAccount" ref="userAccount6" />
 		<property name="creditCard" ref="creditCard6" />
 		<property name="socialProfiles">
@@ -376,6 +378,7 @@
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
 		<property name="funds" value="50000.0" />
+		<property name="luckScore" value="0.0" />
 		<property name="userAccount" ref="userAccount7" />
 		<property name="creditCard" ref="creditCard7" />
 		<property name="socialProfiles">
@@ -411,6 +414,7 @@
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
 		<property name="funds" value="50000.0" />
+		<property name="luckScore" value="0.0" />
 		<property name="userAccount" ref="userAccount8" />
 		<property name="creditCard" ref="creditCard8" />
 		<property name="socialProfiles">
@@ -445,6 +449,7 @@
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
 		<property name="funds" value="50000.0" />
+		<property name="luckScore" value="0.0" />
 		<property name="userAccount" ref="userAccount9" />
 		<property name="creditCard" ref="creditCard9" />
 		<property name="socialProfiles">

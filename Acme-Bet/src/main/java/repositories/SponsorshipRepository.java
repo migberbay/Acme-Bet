@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import domain.BetPool;
 import domain.Sponsorship;
 
 @Repository
@@ -13,6 +14,10 @@ public interface SponsorshipRepository extends JpaRepository<Sponsorship, Intege
 	
 	@Query("select s from Sponsorship s where s.sponsor.id = ?1")
 	Collection<Sponsorship> findBySponsor(int id);
+	
+	@Query("select s from Sponsorship s where s.betPool = ?1")
+	Collection<Sponsorship> findByBetPool(BetPool betpool);
+	
 	
 //	@Query("select s from Sponsorship s where s.provider.id = ?1")
 //	Collection<Sponsorship> findByProviderId(int id);

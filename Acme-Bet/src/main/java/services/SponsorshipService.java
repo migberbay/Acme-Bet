@@ -10,6 +10,7 @@ import org.springframework.validation.Validator;
 
 import repositories.SponsorshipRepository;
 import security.LoginService;
+import domain.BetPool;
 import domain.Sponsorship;
 
 @Service
@@ -75,6 +76,11 @@ public class SponsorshipService {
 		ss.setIsActivated(res);
 		this.save(ss);
 	}
+	
+	public Collection<Sponsorship> findByBetPool(BetPool betPool){
+		return this.sponsorshipRepository.findByBetPool(betPool);
+	}
+	
 //	
 //	public Collection<Sponsorship> findByPosition(Position position) {
 //		Collection<Sponsorship> sponsorships;

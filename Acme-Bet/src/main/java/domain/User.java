@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 public class User extends Actor {
 	
 	private Double funds;
+	private Double luckScore;
 
 	@NotNull
 	public Double getFunds() {
@@ -24,6 +25,17 @@ public class User extends Actor {
 		this.funds = funds;
 	}
 	
+	@NotNull
+	public Double getLuckScore() {
+		return luckScore;
+	}
+
+	public void setLuckScore(Double luckScore) {
+		this.luckScore = luckScore;
+	}
+
+
+
 	//Relationships
 	private Collection<Counselor> blockedCounselors;
 	private Collection<Bet> bets;

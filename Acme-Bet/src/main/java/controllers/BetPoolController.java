@@ -1,5 +1,9 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import security.Authority;
 import security.LoginService;
 import services.BetPoolService;
+import services.SponsorshipService;
+import domain.BetPool;
+import domain.Sponsorship;
 
 @Controller
 @RequestMapping("betPool/")
@@ -18,6 +24,9 @@ public class BetPoolController extends AbstractController {
 
 	@Autowired
 	private BetPoolService betPoolService;
+	
+	@Autowired
+	private SponsorshipService sponsorshipService;
 
 	// Listing -----------------------------------------------------------------
 
@@ -48,9 +57,25 @@ public class BetPoolController extends AbstractController {
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam int betPoolId) {
 		ModelAndView result;
+		Double fare = configurationService.find().getSponsorshipFare();
+		
+		BetPool pool = betPoolService.findOne(betPoolId);
+		List<Sponsorship> sponsorships = new ArrayList<>(sponsorshipService.findByBetPool(pool));
+		
+		for (Sponsorship sponsorship : sponsorships) {
+			
+		}
+		
+		Random rand = new Random(); 
+	   	Sponsorship sponsorship = sponsorships.get(rand.nextInt(sponsorships.size()));
+		
+		
+	    
+	   	
 
 		result = new ModelAndView("betPool/show");
-		result.addObject("betPool",betPoolService.findOne(betPoolId));
+		result.addObject("betPool",pool);
+		
 		return result;
 
 	}
