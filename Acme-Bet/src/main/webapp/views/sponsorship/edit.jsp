@@ -23,15 +23,6 @@
 	
 	<security:authorize access="hasRole('SPONSOR')">
 	
-	<form:hidden path="id"/>
-	<form:hidden path="version"/>
-	
-	<form:hidden path="sponsor"/>
-	
-	<jstl:if test="${sponsorship.id == 0}">
-		<form:hidden path="isActivated"/>
-	</jstl:if>
-	
 	<acme:textbox code="sponsorship.banner" path="banner"/>
 	<br />	
 	<acme:textbox code="sponsorship.link" path="link"/>
@@ -40,7 +31,7 @@
 	<acme:select items="${pools}" itemLabel="title" code="sponsorship.betPool" path="betPool"/>
 	<br/>
 	
-	<jstl:if test="${sponsorship.id != 0}">
+	<jstl:if test="${create == false}">
 		<acme:checkbox code="sponsorship.activate" path="isActivated"/>
 		<br />
 	</jstl:if>

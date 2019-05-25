@@ -2,7 +2,6 @@ package controllers.admin;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +111,7 @@ public class AdminWarrantyController extends AbstractController {
 			} catch (ValidationException oops) {
 				result = this.createEditModelAndView(warranty);
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(warranty,"app.commit.error");
+				result = this.createEditModelAndView(warranty,"warranty.commit.error");
 			}
 		}
 		

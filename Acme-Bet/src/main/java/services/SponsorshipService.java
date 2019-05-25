@@ -2,10 +2,13 @@ package services;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.SponsorshipRepository;
@@ -17,11 +20,12 @@ import domain.Sponsorship;
 @Transactional
 public class SponsorshipService {
 	
-	//Managed repository
+	//Managed repository ----------------------------------------------------------------------------
+	
 	@Autowired
 	private SponsorshipRepository sponsorshipRepository;
 	
-	//Supporting services
+	//Supporting services ----------------------------------------------------------------------------
 	
 	@Autowired
 	private SponsorService sponsorService;
@@ -90,27 +94,29 @@ public class SponsorshipService {
 //		return sponsorships;
 //	}
 //	
-//	public Sponsorship reconstruct(Sponsorship sponsorship, BindingResult binding) {
-//		Sponsorship result;
-//		
-//		if(sponsorship.getId()==0) {
-//			result = sponsorship;
-//			result.setSponsor(this.sponsorService.findByPrincipal());
-//
-//		} else {
-//			result = this.sponsorshipRepository.findOne(sponsorship.getId());
-//			result.setBanner(sponsorship.getBanner());
-//			result.setTarget(sponsorship.getTarget());
-//			result.setPosition(sponsorship.getPosition());
-//		}
-//		validator.validate(result, binding);
-//		if(binding.hasErrors()) {
-//			throw new ValidationException();
-//		}
-//		
-//		return result;
-//		
-//	}
+	public Sponsorship reconstruct(Sponsorship sponsorship, int id, BindingResult binding) {
+		Sponsorship result;
+		
+		if(id==0) {
+			result = sponsorship;
+			result.setSponsor(this.sponsorService.findByPrincipal());
+			result.setIsActivated(true);
+
+		} else {
+			result = this.sponsorshipRepository.findOne(id);
+			result.setBanner(sponsorship.getBanner());
+			result.setBetPool(sponsorship.getBetPool());
+			result.setIsActivated(sponsorship.getIsActivated());
+			result.setLink(sponsorship.getLink());
+		}
+		
+		validator.validate(result, binding);
+		if(binding.hasErrors()) {
+			throw new ValidationException();
+		}
+		
+		return result;
+	}
 //	
 //	public Double getAvgSponsorshipsPerSponsor(){
 //		Double res = sponsorshipRepository.getAvgSponsorshipsPerSponsor();

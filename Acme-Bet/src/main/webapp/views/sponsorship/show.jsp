@@ -11,10 +11,8 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 	
-	<b><spring:message code="sponsorship.banner"/></b>: <a href="${sponsorship.banner}"><jstl:out value="${sponsorship.banner}"/></a> <br/>
-	<img src="${sponsorship.banner}" height="100" width="1000"/><br/>
-	<spring:message code="sponsorship.link"/>:
-	<jstl:out value="${sponsorship.link}"/><br>
+	<b><spring:message code="sponsorship.banner"/></b>:<br/>
+	<a href="${sponsorship.link}" target="_blank"> <img src="${sponsorship.banner}" height="100" width="1000"/></a><br/>
 	<spring:message code="sponsorship.betPool"/>:
 	<jstl:out value="${sponsorship.betPool.title}"/><br>
 	
