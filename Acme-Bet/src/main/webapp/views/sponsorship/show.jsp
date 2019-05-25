@@ -10,9 +10,9 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-
-	<spring:message code="sponsorship.banner"/>:
-	<jstl:out value="${sponsorship.banner}"/><br>
+	
+	<b><spring:message code="sponsorship.banner"/></b>: <a href="${sponsorship.banner}"><jstl:out value="${sponsorship.banner}"/></a> <br/>
+	<img src="${sponsorship.banner}" height="100" width="1000"/><br/>
 	<spring:message code="sponsorship.link"/>:
 	<jstl:out value="${sponsorship.link}"/><br>
 	<spring:message code="sponsorship.betPool"/>:

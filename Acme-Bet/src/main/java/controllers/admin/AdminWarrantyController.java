@@ -3,10 +3,12 @@ package controllers.admin;
 import java.util.Collection;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,10 +21,17 @@ import domain.Warranty;
 @Controller
 @RequestMapping("warranty/admin")
 public class AdminWarrantyController extends AbstractController {
-
+	
+	// Services ----------------------------------------------------------------
+	
 	@Autowired
 	private WarrantyService warrantyService;
-
+	
+	// Atributes ---------------------------------------------------------------
+	
+	private int id = 0;
+	private Boolean create;
+	
 	// Listing -----------------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -63,6 +72,7 @@ public class AdminWarrantyController extends AbstractController {
 		ModelAndView result;
 		Warranty warranty;
 		
+		this.create = true;
 		warranty = warrantyService.create();
 		result = this.createEditModelAndView(warranty);
 
@@ -78,6 +88,8 @@ public class AdminWarrantyController extends AbstractController {
 		Warranty warranty;
 		
 		warranty = warrantyService.findOne(warrantyId);
+		this.id = warranty.getId();
+		this.create = false;
 		result = this.createEditModelAndView(warranty);
 	
 		return result;
@@ -86,17 +98,21 @@ public class AdminWarrantyController extends AbstractController {
 	// Save -----------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Warranty warranty, BindingResult binding) {
+	public ModelAndView save(@ModelAttribute("warranty") Warranty warranty, BindingResult binding){
 		ModelAndView result;
-
+		Warranty res;
+		
 		if (binding.hasErrors()) {
 			result = this.createEditModelAndView(warranty);
 		} else{
 			try {
-				warrantyService.save(warranty);
+				res = warrantyService.reconstruct(warranty,this.id,binding);
+				warrantyService.save(res);
 				result = new ModelAndView("redirect:list.do");
+			} catch (ValidationException oops) {
+				result = this.createEditModelAndView(warranty);
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(warranty,"warranty.commit.error");
+				result = this.createEditModelAndView(warranty,"app.commit.error");
 			}
 		}
 		
@@ -138,7 +154,8 @@ public class AdminWarrantyController extends AbstractController {
 		ModelAndView result;
 
 		result = new ModelAndView("warranty/edit");
-
+		
+		result.addObject("create",create);
 		result.addObject("warranty", warranty);
 		result.addObject("message", message);
 
