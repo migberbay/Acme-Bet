@@ -14,8 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 import security.Authority;
 import security.LoginService;
 import services.BetPoolService;
+import services.SponsorService;
 import services.SponsorshipService;
 import domain.BetPool;
+import domain.Sponsor;
 import domain.Sponsorship;
 
 @Controller
@@ -27,6 +29,9 @@ public class BetPoolController extends AbstractController {
 	
 	@Autowired
 	private SponsorshipService sponsorshipService;
+	
+	@Autowired
+	private SponsorService sponsorService;
 
 	// Listing -----------------------------------------------------------------
 
@@ -56,27 +61,38 @@ public class BetPoolController extends AbstractController {
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam int betPoolId) {
-		ModelAndView result;
-		Double fare = configurationService.find().getSponsorshipFare();
-		
+		ModelAndView result = new ModelAndView("betPool/show");
 		BetPool pool = betPoolService.findOne(betPoolId);
 		List<Sponsorship> sponsorships = new ArrayList<>(sponsorshipService.findByBetPool(pool));
-		
-		for (Sponsorship sponsorship : sponsorships) {
+		if (!sponsorships.isEmpty()) {
 			
+			Double fare = configurationService.find().getSponsorshipFare();
+			Boolean isPossible = false;
+			for (Sponsorship s : sponsorships) {
+				if(s.getSponsor().getFunds() >= fare && s.getIsActivated()){
+					isPossible = true;
+					break;
+				}
+			}
+			
+			Random rand = new Random(); 
+		   	Sponsorship sponsorship = sponsorships.get(rand.nextInt(sponsorships.size()));
+		   	
+			while ((sponsorship.getSponsor().getFunds() < fare || !sponsorship.getIsActivated()) && isPossible) {
+				rand = new Random(); 
+			   	sponsorship = sponsorships.get(rand.nextInt(sponsorships.size()));
+			   	System.out.println("funds: "+ sponsorship.getSponsor().getFunds()+", fare: "+ fare + ", is activated: " + sponsorship.getIsActivated());
+			}
+			
+			if(isPossible){
+				result.addObject("sponsorship",sponsorship);
+				Sponsor sponsor = sponsorship.getSponsor();
+				sponsor.setFunds(sponsor.getFunds()-fare);
+				sponsorService.save(sponsor);
+			}
 		}
 		
-		Random rand = new Random(); 
-	   	Sponsorship sponsorship = sponsorships.get(rand.nextInt(sponsorships.size()));
-		
-		
-	    
-	   	
-
-		result = new ModelAndView("betPool/show");
 		result.addObject("betPool",pool);
-		
 		return result;
-
 	}
 }
