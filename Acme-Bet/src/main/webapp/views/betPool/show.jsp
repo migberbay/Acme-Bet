@@ -26,8 +26,7 @@
         <br />
     </jstl:when>    
     <jstl:otherwise>
-        <jstl:out value="${sponsorship.banner}"></jstl:out> 
-        <br />
+    	<a href="${sponsorship.link}" target="_blank"> <img src="${sponsorship.banner}" height="100" width="1000"/></a><br/>
     </jstl:otherwise>
 </jstl:choose>
 	
