@@ -25,6 +25,7 @@
 					<li class="arrow"></li>
 					<li><a href="admin/configuration.do"><spring:message code="master.page.configuration" /></a></li>
 					<li><a href="admin/dashboard.do"><spring:message code="master.page.dashboard" /></a></li>
+					<li><a href="admin/listActors.do"><spring:message code="master.page.actors.list" /></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message	code="master.page.category" /></a>

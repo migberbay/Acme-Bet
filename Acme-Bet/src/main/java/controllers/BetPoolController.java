@@ -65,7 +65,6 @@ public class BetPoolController extends AbstractController {
 		BetPool pool = betPoolService.findOne(betPoolId);
 		List<Sponsorship> sponsorships = new ArrayList<>(sponsorshipService.findByBetPool(pool));
 		if (!sponsorships.isEmpty()) {
-			
 			Double fare = configurationService.find().getSponsorshipFare();
 			Boolean isPossible = false;
 			for (Sponsorship s : sponsorships) {
