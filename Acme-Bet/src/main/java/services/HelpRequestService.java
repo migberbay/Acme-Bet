@@ -106,6 +106,7 @@ public class HelpRequestService {
 		
 		validator.validate(result, binding);
 		if(binding.hasErrors()){
+			System.out.println("uwu");
 			System.out.println(binding.getFieldErrors());
 			throw new ValidationException();
 		}
@@ -132,22 +133,20 @@ public class HelpRequestService {
 	        return saltStr;
 	}
 
-	public Message reconstructMessage(HelpRequest request, Message message, BindingResult bindingResult) {
+	public Message reconstructMessage(Message message, BindingResult bindingResult) {
 		Message res;
 		res = message;
 		res.setFlagSpam(false);
 		res.setMoment(new Date());
 		res.setTags(new ArrayList<String>());
-		res.setRecipient(request.getUser());
 		System.out.println("que");
 		res.setSender(counselorService.findByPrincipal());
-		String s = "HELP from "+counselorService.findByPrincipal().getUserAccount().getUsername();
-		res.getTags().add(request.getTicker()); res.getTags().add(s);
 		System.out.println("no");
 		validator.validate(res, bindingResult);
 		System.out.println("quejjj");
 		if(bindingResult.hasErrors()){
 			System.out.println("sfjaoifj");
+			System.out.println(bindingResult.getFieldErrors());
 			throw new ValidationException();
 		}
 		return res;

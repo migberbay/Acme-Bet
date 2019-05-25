@@ -17,13 +17,24 @@ public class Finder extends DomainEntity {
 
 	private Date moment;
 	
-	private Double minimumBet;
+	private String keyword;
+	private Double minRange;
+	private Double maxRange;
 	private Date openingDate;
 	private Date endDate;
 	private Integer category;//this should be a select
 
 
 	// Getters and Setters ---------------------------------------------------
+	
+	
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 	
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
@@ -35,14 +46,21 @@ public class Finder extends DomainEntity {
 	public void setMoment(Date moment) {
 		this.moment = moment;
 	}
-	
 
-	public Double getMinimumBet() {
-		return minimumBet;
+	public Double getMinRange() {
+		return minRange;
 	}
 
-	public void setMinimumBet(Double minimumBet) {
-		this.minimumBet = minimumBet;
+	public void setMinRange(Double minRange) {
+		this.minRange = minRange;
+	}
+
+	public Double getMaxRange() {
+		return maxRange;
+	}
+
+	public void setMaxRange(Double maxRange) {
+		this.maxRange = maxRange;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

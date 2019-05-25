@@ -38,6 +38,7 @@
 		</security:authorize>
 		
 		<security:authorize access="hasRole('USER')">
+		<li><a class="fNiv" href="finder/user/filter.do"><spring:message code="master.page.finder" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.user" /></a>
 				<ul>
 					<li class="arrow"></li>

@@ -1,5 +1,6 @@
 package controllers.counselor;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.ValidationException;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -135,12 +137,17 @@ public class HelpRequestCounselorController extends AbstractController {
 
 	// Save answer -----------------------------------------------------------------
 
+	@ModelAttribute("m")
 	@RequestMapping(value = "/answer", params = "save", method = RequestMethod.POST)
 	public ModelAndView answer(Message m, BindingResult bindingResult) {
 		ModelAndView result;
 		try {
 			System.out.println("uwu");
-			Message savedM = helpRequestService.reconstructMessage(this.request,m, bindingResult);
+			m.setRecipient(this.request.getUser());
+			m.setTags(new ArrayList<String>());
+			String s = "HELP from "+counselorService.findByPrincipal().getUserAccount().getUsername();
+			m.getTags().add(request.getTicker()); m.getTags().add(s);
+			Message savedM = helpRequestService.reconstructMessage(m, bindingResult);
 			messageService.save(savedM);
 			this.request.setStatus("PENDING");
 			this.request.setCounselor(counselorService.findByPrincipal());
@@ -151,6 +158,8 @@ public class HelpRequestCounselorController extends AbstractController {
 		} catch (ValidationException oops) {
 			System.out.println("11");
 			oops.printStackTrace();
+			System.out.println("22112");
+			System.out.println(bindingResult.getFieldErrors());
 			result = this.createEditModelAndView(m);
 		} catch (Throwable e) {
 			System.out.println("12");
