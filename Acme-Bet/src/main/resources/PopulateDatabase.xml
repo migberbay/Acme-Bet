@@ -1088,6 +1088,18 @@
 		</property>
 		</bean>
 		
+		<bean id="warranty2" class="domain.Warranty">
+		<property name="title" value="garantia de legalidad del juego." />
+		<property name="terms" value="legales" />
+		<property name="isFinal" value="false" />
+		<property name="laws">
+			<list>
+				<value>codigo penal art 26.3</value>
+				<value>ley de control del juego.</value>
+			</list>
+		</property>
+		</bean>
+		
 	<!-- CATEGORY -->
 	<bean id="category1" class="domain.Category">
 		<property name="spanishName" value="Fútbol" />
