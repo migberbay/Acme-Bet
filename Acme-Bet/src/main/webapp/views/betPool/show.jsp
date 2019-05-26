@@ -22,7 +22,7 @@
 	<br>
 <jstl:choose>
     <jstl:when test="${sponsorship == null}">
-       	your betting add here;
+       	<a href=#><img src='<spring:message code="pool.banner"/>' height="100" width="1000"/></a>
         <br />
     </jstl:when>    
     <jstl:otherwise>

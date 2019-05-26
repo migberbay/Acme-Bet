@@ -485,7 +485,7 @@
 		<property name="address" value="calle falsa 123" />
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
-		<property name="funds" value="0.0" />
+		<property name="funds" value="10.0" />
 		<property name="userAccount" ref="userAccount10" />
 		<property name="creditCard" ref="creditCard10" />
 		<property name="socialProfiles">
@@ -508,7 +508,7 @@
 		<property name="address" value="calle falsa 123" />
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
-		<property name="funds" value="0.0" />
+		<property name="funds" value="10.0" />
 		<property name="userAccount" ref="userAccount11" />
 		<property name="creditCard" ref="creditCard11" />
 		<property name="socialProfiles">
@@ -531,7 +531,7 @@
 		<property name="address" value="calle falsa 123" />
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
-		<property name="funds" value="0.0" />
+		<property name="funds" value="10.0" />
 		<property name="userAccount" ref="userAccount12" />
 		<property name="creditCard" ref="creditCard12" />
 		<property name="socialProfiles">
@@ -884,7 +884,7 @@
 	
 	<bean id="betPool3" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
-		<property name="title" value="title bet pool 3" />
+		<property name="title" value="title bet pool 3 (10.0 - 50.0)" />
 		<property name="description" value="description bet pool 3" />
 		<property name="minRange" value="10" />
 		<property name="maxRange" value="49.99" />
@@ -926,7 +926,7 @@
 	
 	<bean id="betPool4" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
-		<property name="title" value="title bet pool 3" />
+		<property name="title" value="title bet pool 3 (50.0 - 100.0)" />
 		<property name="description" value="description bet pool 3" />
 		<property name="minRange" value="50" />
 		<property name="maxRange" value="99.99" />
@@ -969,7 +969,7 @@
 	<bean id="betPool5" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
 		<property name="title" value="title bet pool 3" />
-		<property name="description" value="description bet pool 3" />
+		<property name="description" value="description bet pool 3 (100.0 - 500.0)" />
 		<property name="minRange" value="100" />
 		<property name="maxRange" value="499.99" />
 		<property name="moment" value="2018/07/07 18:00" />
@@ -1010,7 +1010,7 @@
 	
 	<bean id="betPool6" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
-		<property name="title" value="title bet pool 3" />
+		<property name="title" value="title bet pool 3 (500.0 - 10000.0)" />
 		<property name="description" value="description bet pool 3" />
 		<property name="minRange" value="499.99" />
 		<property name="maxRange" value="10000" />
@@ -1050,26 +1050,26 @@
 		</property>
 	</bean>
 	
-	<!-- SPONSORSHIP -->
+	<!-- SPONSORSHIP -->	
 	<bean id="sponsorship1" class="domain.Sponsorship">
-		<property name="banner" value="http://www.pics.com/asjda" />
-		<property name="link" value="http://www.juntadeandalucia.com" />
+		<property name="banner" value="https://www.trivantis.com/wp-content/uploads/2012/11/test-review-banner1.png" />
+		<property name="link" value="https://www.3djuegos.com/trucos-juegos/0/todos/" />
 		<property name="isActivated" value="True"/>
 		<property name="sponsor" ref="sponsor1" />
 		<property name="betPool" ref="betPool4" />
 	</bean>
 	
 	<bean id="sponsorship2" class="domain.Sponsorship">
-		<property name="banner" value="http://www.pics.com/asjda" />
-		<property name="link" value="http://www.juntadeandalucia.com" />
+		<property name="banner" value="https://image.jimcdn.com/app/cms/image/transf/dimension=990x10000:format=jpg/path/safeff283135903fb/image/i20a93875e12c4be9/version/1524056946/image.jpg" />
+		<property name="link" value="https://www.3djuegos.com/novedades/analisis/juegos/0f0f0f0/fecha/" />
 		<property name="isActivated" value="True"/>
 		<property name="sponsor" ref="sponsor2" />
 		<property name="betPool" ref="betPool5" />
 	</bean>
 	
 	<bean id="sponsorship3" class="domain.Sponsorship">
-		<property name="banner" value="http://www.pics.com/asjda" />
-		<property name="link" value="http://www.juntadeandalucia.com" />
+		<property name="banner" value="http://apps.testinsane.com/mindmaps/Content/images/Mindmap%20Apps%20Website%20Banner%202.jpg" />
+		<property name="link" value="https://www.3djuegos.com/novedades/analisis/juegos/0f0f0f0/fecha/" />
 		<property name="isActivated" value="True"/>
 		<property name="sponsor" ref="sponsor3" />
 		<property name="betPool" ref="betPool6" />
@@ -1083,18 +1083,6 @@
 		<property name="laws">
 			<list>
 				<value>codigo penal art 14.1</value>
-				<value>ley de control del juego.</value>
-			</list>
-		</property>
-		</bean>
-		
-		<bean id="warranty2" class="domain.Warranty">
-		<property name="title" value="garantia de legalidad del juego." />
-		<property name="terms" value="legales" />
-		<property name="isFinal" value="false" />
-		<property name="laws">
-			<list>
-				<value>codigo penal art 26.3</value>
 				<value>ley de control del juego.</value>
 			</list>
 		</property>
