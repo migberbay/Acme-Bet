@@ -53,7 +53,15 @@
 					<li><a href="helpRequest/user/create.do"><spring:message code="master.page.helpRequest.create" /></a></li>
 				</ul>
 			</li>
+			<li><a class="fNiv"><spring:message	code="master.page.review" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="review/user/list.do"><spring:message code="master.page.review.list" /></a></li>
+					<li><a href="review/user/create.do"><spring:message code="master.page.review.create" /></a></li>
+				</ul>
+			</li>
 		</security:authorize>
+		
 		
 		<security:authorize access="hasRole('BOOKMAKER')">
 			<li><a class="fNiv"><spring:message	code="master.page.bookmaker" /></a>

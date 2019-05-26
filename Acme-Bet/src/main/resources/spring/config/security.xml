@@ -55,6 +55,7 @@
 		
 		<security:intercept-url pattern="/bet/user/**" access="hasRole('USER')" />
 		<security:intercept-url pattern="/helpRequest/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/review/user/**" access="hasRole('USER')" />
 		<security:intercept-url pattern="/finder/user/filter.do" access="hasRole('USER')" />
 		
 		<security:intercept-url pattern="/helpRequest/counselor/**" access="hasRole('COUNSELOR')" />
