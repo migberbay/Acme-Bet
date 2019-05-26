@@ -1,6 +1,8 @@
 package controllers.user;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.validation.ValidationException;
 
@@ -18,6 +20,7 @@ import services.ReviewService;
 import services.UserService;
 import controllers.AbstractController;
 
+import domain.Counselor;
 import domain.Review;
 
 
@@ -149,8 +152,13 @@ public class ReviewUserController extends AbstractController {
 		
 		ModelAndView res;
 		res = new ModelAndView("review/edit");
-
+		List<Integer> scores = new ArrayList<Integer>();
+		scores.add(0);scores.add(1);scores.add(2);scores.add(3);scores.add(4);scores.add(5);scores.add(6);scores.add(7);scores.add(8);scores.add(9);scores.add(10);
+		Collection<Counselor> counselors = counselorService.getSolvedCounselorsByUser(userService.findByPrincipal().getId());
+		
 		res.addObject("review", review);
+		res.addObject("scores",scores);
+		res.addObject("counselors",counselors);
 		res.addObject("message", messageCode);
 
 		return res;

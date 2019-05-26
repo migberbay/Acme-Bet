@@ -19,26 +19,28 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="helpRequest/user/edit.do" modelAttribute="helpRequest">
+<form:form action="review/user/edit.do" modelAttribute="review">
 
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
 
 	<security:authorize access="hasRole('USER')">
-	<acme:textarea code="helpRequest.description" path="description"/>
-	<acme:textarea code="helpRequest.attachments" path="attachments"/>
+	<acme:textarea code="review.description" path="description"/>
+	<acme:textarea code="review.attachments" path="attachments"/>
+
+	<form:label path="score">
+		<spring:message code="review.score" />
+	</form:label>	
+	<form:select path="score">
+		<form:options items="${scores}" />
+	</form:select>
+	<form:errors path="score" cssClass="error" />
+	<br/>
 	
-	<jstl:if test="${lan=='es'}">
-		<acme:select code="helpRequest.category" path="category" items="${categories}" itemLabel="spanishName"/>
-	</jstl:if>
-	<jstl:if test="${lan=='en'}">
-		<acme:select code="helpRequest.category" path="category" items="${categories}" itemLabel="englishName"/>
-	</jstl:if>
+	<acme:select code="review.counselor" path="counselor" items="${counselors}" itemLabel="userAccount.username"/>
 	
-	<acme:select code="helpRequest.betPool" path="betPool" items="${pools}" itemLabel="title"/>
-	
-	<acme:submit name="save" code="helpRequest.save"/>
-	<acme:cancel url="helpRequest/user/list.do" code="helpRequest.cancel"/>
+	<acme:submit name="save" code="review.save"/>
+	<acme:cancel url="review/user/list.do" code="review.cancel"/>
 	<br />	
 	
 	</security:authorize>
