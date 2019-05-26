@@ -14,4 +14,6 @@ public interface ReviewRepository extends JpaRepository<Review, Integer>{
 	@Query("select r from Review r where r.user.id = ?1")
 	Collection<Review> findReviewsByUser(int userId);
 
+	@Query("select r from Review r where r.counselor.id = ?1")
+	Collection<Review> findReviewsByCounselor(int counselorId);
 }

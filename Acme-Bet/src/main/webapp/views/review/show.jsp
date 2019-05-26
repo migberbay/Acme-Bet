@@ -10,29 +10,21 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 	    
 	    <div>
-		    <b><spring:message code="helpRequest.description"/>:</b> <jstl:out value="${helpRequest.description}"   /> <br/> 
-		    <b><spring:message code="helpRequest.attachments" />:</b> 
-		    <jstl:forEach var="x" items="${helpRequest.attachments}">
+		    <b><spring:message code="review.description"/>:</b> <jstl:out value="${review.description}"   /> <br/> 
+		    <b><spring:message code="review.attachments" />:</b> 
+		    <jstl:forEach var="x" items="${review.attachments}">
 		    	<a href="${x}"><jstl:out value="${x}" /></a>
 		    </jstl:forEach><br/>
-		    <b><spring:message code="helpRequest.status" />:</b> <jstl:out value="${helpRequest.status}" /> <br/>
+		    <b><spring:message code="review.score" />:</b> <jstl:out value="${review.score}" /> <br/>
 		    
-		    <spring:message code="helpRequest.moment.format" var="format"/>
-		    <b><spring:message code="helpRequest.moment" />:</b> <fmt:formatDate pattern = "${format}" value = "${helpRequest.moment}" /> <br/>
-		    <jstl:if test="${lan=='es'}">
-				 <b><spring:message code="helpRequest.category" />:</b> <jstl:out value="${helpRequest.category.spanishName}" /> <br/>
-			</jstl:if>
-			<jstl:if test="${lan=='en'}">
-				 <b><spring:message code="helpRequest.category" />:</b> <jstl:out value="${helpRequest.category.englishName}" /> <br/>
-			</jstl:if>
+		    <spring:message code="review.moment.format" var="format"/>
+		    <b><spring:message code="review.moment" />:</b> <fmt:formatDate pattern = "${format}" value = "${review.moment}" /> <br/>
 			
-			 <b><spring:message code="helpRequest.counselor" />:</b> 
-			 <a href="actor/show.do?actorId=${helpRequest.counselor.id}"><jstl:out value="${helpRequest.counselor.userAccount.username}" /></a> <br/>
+			 <b><spring:message code="review.counselor" />:</b> 
+			 <a href="actor/show.do?actorId=${review.counselor.id}"><jstl:out value="${review.counselor.userAccount.username}" /></a> <br/>
 			 
-			 <b><spring:message code="helpRequest.betPool" />:</b> 
-			 <a href="betPool/show.do?actorId=${helpRequest.betPool.id}"><jstl:out value="${helpRequest.betPool.title}" /></a> <br/>
+			 <b><spring:message code="review.user" />:</b> 
+			 <a href="actor/show.do?actorId=${review.user.id}"><jstl:out value="${review.user.userAccount.username}" /></a> <br/>
 		</div>
-		
-		<br/>
-		<acme:cancel url="${requestURI }" code="helpRequest.back"/>
+	    
 		

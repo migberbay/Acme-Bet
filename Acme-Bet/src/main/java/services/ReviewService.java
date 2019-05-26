@@ -65,6 +65,10 @@ public class ReviewService {
 		return reviewRepository.findReviewsByUser(userService.findByPrincipal().getId());
 	}
 	
+	public Collection<Review> findReviewsByCounselor(int counselorId){
+		return this.reviewRepository.findReviewsByCounselor(counselorId);
+	}
+	
 	public Review reconstruct(Review review, BindingResult bindingResult) {
 		Review res;
 		if(review.getId()==0){

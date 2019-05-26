@@ -79,7 +79,19 @@
 		    
 		</display:table>
 		<br>
-		
+		<h3><spring:message code="actor.reviews"/>:</h3> 
+		<display:table name="reviews" id="row" requestURI="actor/show.do" pagesize="5">
+		<display:column>
+			<a href="review/show.do?reviewId=${row.id}"><spring:message code="review.show"/></a><br/>
+		</display:column>
+		<display:column titleKey="review.description" property="description" />
+		<spring:message code="review.moment.format" var="formatMoment"/>
+		<display:column titleKey="review.moment" property="moment" format="{0,date,${formatMoment} }"/>
+		<display:column titleKey="review.score" property="score"/>
+		<display:column titleKey="review.user">
+			<a href="actor/show.do?actorId=${row.user.id}"><jstl:out value="${row.user.userAccount.username}"/></a>
+		</display:column>
+	</display:table>
 		
 	<jstl:if test="${logged}">
 				<a href="actor/delete.do" onclick="confirmLeave();">delete ALL data</a><br>

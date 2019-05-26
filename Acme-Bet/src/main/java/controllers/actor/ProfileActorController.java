@@ -28,6 +28,7 @@ import services.CounselorService;
 import services.CreditCardService;
 import services.HelpRequestService;
 import services.MessageService;
+import services.ReviewService;
 import services.SponsorService;
 import services.UserService;
 import controllers.AbstractController;
@@ -37,6 +38,7 @@ import domain.Bookmaker;
 import domain.Counselor;
 import domain.CreditCard;
 import domain.HelpRequest;
+import domain.Review;
 import domain.SocialProfile;
 import domain.Sponsor;
 import domain.User;
@@ -77,6 +79,9 @@ public class ProfileActorController extends AbstractController {
 	
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private ReviewService reviewService;
 	
 	@Autowired
 	private Validator validator;
@@ -127,6 +132,12 @@ public class ProfileActorController extends AbstractController {
 			}else if (principal.getUserAccount().getAuthorities().contains(adminAuth)) {
 				result.addObject("principalIsAdmin", true);
 			}
+			
+			if (actor.getUserAccount().getAuthorities().contains(counselorAuth)) {
+				Counselor counselor = counselorService.findOne(actor.getId());
+				Collection<Review> reviews = reviewService.findReviewsByCounselor(counselor.getId());
+				result.addObject("reviews",reviews);
+			}
 
 			result.addObject("socialProfiles", socialProfiles);
 
@@ -154,8 +165,10 @@ public class ProfileActorController extends AbstractController {
 			
 			if (actor.getUserAccount().getAuthorities().contains(counselorAuth)) {
 				Counselor counselor = counselorService.findOne(actor.getId());
+				Collection<Review> reviews = reviewService.findReviewsByCounselor(counselor.getId());
 				result.addObject("isCounselor", true);
 				result.addObject("actor", counselor);
+				result.addObject("reviews",reviews);
 			}
 			
 			if (actor.getUserAccount().getAuthorities().contains(sponsorauth)) {
