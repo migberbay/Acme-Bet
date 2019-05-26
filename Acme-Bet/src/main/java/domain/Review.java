@@ -11,9 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -21,8 +23,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Review extends DomainEntity {
 	
 	private String description;
-	private Collection<String> attachements;
+	private Collection<String> attachments;
 	private Date moment;
+	private Double score;
 	private Boolean isFinal;
 	
 	@Past
@@ -45,14 +48,24 @@ public class Review extends DomainEntity {
 	}
 	
 	@ElementCollection
-	public Collection<String> getAttachements() {
-		return attachements;
+	public Collection<String> getAttachments() {
+		return attachments;
 	}
 	
-	public void setAttachements(Collection<String> attachements) {
-		this.attachements = attachements;
+	public void setAttachments(Collection<String> attachments) {
+		this.attachments = attachments;
 	}
 	
+	@NotNull
+	@Range(min=0,max=10)
+	public Double getScore() {
+		return score;
+	}
+
+	public void setScore(Double score) {
+		this.score = score;
+	}
+
 	public Boolean getIsFinal() {
 		return isFinal;
 	}
