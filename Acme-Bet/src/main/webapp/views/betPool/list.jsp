@@ -29,7 +29,7 @@
 			</jstl:if>
 			
 			<jstl:if test="${isOwner and row.isFinal and date.after(row.endDate) and row.winners.isEmpty()}">
-				<a href="betPool/bookmaker/selectWinner.do?betPoolId=${row.id}">chooseWinners</a><br>
+				<a href="betPool/bookmaker/selectWinners.do?betPoolId=${row.id}">chooseWinners</a><br>
 			</jstl:if>
 			
 		</display:column>
