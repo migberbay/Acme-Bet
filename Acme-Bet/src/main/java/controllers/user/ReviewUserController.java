@@ -1,13 +1,11 @@
 package controllers.user;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.ValidationException;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,23 +13,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-
-import services.BetPoolService;
-import services.CategoryService;
 import services.CounselorService;
 import services.ReviewService;
 import services.UserService;
 import controllers.AbstractController;
 
-import domain.Bet;
-import domain.BetPool;
-import domain.Counselor;
 import domain.Review;
-import domain.User;
 
 
 @Controller
-@RequestMapping("Review/user/")
+@RequestMapping("review/user/")
 public class ReviewUserController extends AbstractController {
 
 	// Services ---------------------------------------------------------------

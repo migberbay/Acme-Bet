@@ -20,7 +20,6 @@
 			</jstl:if>
 			</security:authorize>
 		</display:column>
-		description, moment, score, counselor
 		<display:column titleKey="review.description" property="description" />
 		<spring:message code="review.moment.format" var="formatMoment"/>
 		<display:column titleKey="review.moment" property="moment" format="{0,date,${formatMoment} }"/>
@@ -29,6 +28,6 @@
 			<a href="actor/show.do?actorId=${row.counselor.id}"><jstl:out value="${row.counselor.userAccount.username}"/></a>
 		</display:column>
 	</display:table>
-
+	<br/>
 	<a href="review/user/create.do"> <spring:message code="review.create" /> </a>
 
