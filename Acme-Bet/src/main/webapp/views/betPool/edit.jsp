@@ -45,6 +45,13 @@
 	</div>
 	<form:errors path="resultDate" cssClass="error" /><br>
 	
+	<jstl:if test="${dateIncorrectOrder}">
+		<div class ="error">The dates must be in the correct order: Start Date comes before End Date and this one before Result Date</div>	
+	</jstl:if>
+	<jstl:if test="${minimumParticipants}">
+		<div class ="error">You must put at least 2 participants.</div>	
+	</jstl:if>
+	
 	Final:<form:checkbox path="isFinal"/><br/>
 	
 	<br/>

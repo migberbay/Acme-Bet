@@ -19,7 +19,7 @@
 		<display:column titleKey="pool.action" >
 				<a href="betPool/show.do?betPoolId=${row.id}">show</a><br>
 				
-			<jstl:if test="${isUser and date.before(row.endDate)}">
+			<jstl:if test="${isUser and date.before(row.endDate) and date.after(row.startDate) and row.winners.isEmpty()}">
 				<a href="bet/user/create.do?betPoolId=${row.id}">bet</a>
 			</jstl:if>
 			

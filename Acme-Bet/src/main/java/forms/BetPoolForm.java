@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -69,6 +70,7 @@ public class BetPoolForm {
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
+	@Future
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	public Date getStartDate() {
 		return startDate;
@@ -80,6 +82,7 @@ public class BetPoolForm {
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
+	@Future
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	public Date getEndDate() {
 		return endDate;
@@ -90,6 +93,7 @@ public class BetPoolForm {
 	}
 	
 	@NotNull
+	@Future
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	public Date getResultDate() {

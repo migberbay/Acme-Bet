@@ -137,7 +137,7 @@ public class BetPoolBookmakerController extends AbstractController {
 			pool.setBets(bets);
 			
 			Collection<String> winners = form.getWinners();
-			if (winners.isEmpty()) {
+			if (winners == null) {
 				res = selectWinners(form.getBetPoolId());
 				res.addObject("isEmpty", true);
 			}else{
@@ -200,10 +200,21 @@ public class BetPoolBookmakerController extends AbstractController {
 		"\n"+form.getStartDate() + "\n"+form.getTitle() + "\n"+form.getCategory() + "\n"+form.getWarranty()+ "\n"+form.getIsFinal());
 		
 		BetPool pool = betPoolService.reconstruct(form,binding);
+		Boolean dateIncorrectOrder = true;
+		Boolean minimumParticipants = false;
 		
-			if (binding.hasErrors()) {
+		if (pool.getEndDate().after(pool.getStartDate()) && 
+			pool.getEndDate().before(pool.getResultDate())){dateIncorrectOrder = false;}
+		
+		if (pool.getParticipants().size()<2) {
+			minimumParticipants = true;
+		}
+		
+			if (binding.hasErrors() || dateIncorrectOrder || minimumParticipants) {
 				System.out.println(binding);
 				res = createEditModelAndView(form);
+				res.addObject("dateIncorrectOrder", dateIncorrectOrder);
+				res.addObject("minimumParticipants", minimumParticipants);
 			}else {
 				try {
 				if (pool.getIsFinal()) {
