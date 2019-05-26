@@ -23,6 +23,7 @@ public class CounselorService {
 	@Autowired
 	private CounselorRepository counselorRepository;
 	
+	
 	//Supporting Services -----
 	
 	//Simple CRUD methods -----
@@ -62,4 +63,7 @@ public class CounselorService {
 		return this.counselorRepository.findByUserAccount(LoginService.getPrincipal());
 	}
 
+	public 	Collection<Counselor> getSolvedCounselorsByUser(Integer userId){
+		return this.counselorRepository.getSolvedCounselorsByUser(userId);
+	}
 }
