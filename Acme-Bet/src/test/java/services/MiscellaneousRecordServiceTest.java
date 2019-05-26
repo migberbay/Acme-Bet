@@ -1,6 +1,5 @@
 package services;
 
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +34,6 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
-	//	En el test de create, comprobamos que los miscellaneous records
-	//	solo los pueden crear las hermandades.
 	@Test
 	public void driverCreateMiscellaneousRecord(){
 		
@@ -92,9 +89,6 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
-	//	En el test de save, comprobamos que los miscellaneous records
-	//	solo los pueden guardar las hermandades y también probamos,
-	//	que se los datos deben estar rellenados y no vacíos.
 	@Test
 	public void driverSaveMiscellaneousRecord(){
 		
@@ -119,11 +113,10 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 	
 	protected void templateSaveMiscellaneousRecord(String username, String title, String attachment, String comments, Class<?> expected){
 		Class<?> caught = null;
-		MiscellaneousRecord miscellaneousRecord;
 		
 		try{
 			super.authenticate(username);
-			miscellaneousRecord = this.miscellaneousRecordService.create();
+			MiscellaneousRecord miscellaneousRecord = this.miscellaneousRecordService.create();
 			miscellaneousRecord.setTitle(title);
 			miscellaneousRecord.setAttachment(attachment);
 			miscellaneousRecord.setComments(comments);
@@ -154,10 +147,6 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
-	//	En el test de update, se comprueba que los miscellaneous records, 
-	//	solo los pueden editar las hermandades y que podemos
-	//	modificar todos o algunos datos, algunos de los cuales,
-	//	al ser incorrectos o vacíos de lugar a error.
 	@Test
 	public void driverUpdateMiscellaneousRecord(){
 		
@@ -210,25 +199,12 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 		Assert.isTrue(!miscellaneousRecordService.findAll().contains(miscellaneousRecord));
 	}
 	
-	//	En el test delete, se comprueba que solo los counselor 
-	//	pueden borrar los miscellaneous records.
 	@Test
 	public void driverDeleteMiscellaneousRecord(){
 		
 		Object testingData[][] = {{"counselor1", null},
 								  {"counselor2", null},
 								  {"counselor3", null}};
-//								  {null, IllegalArgumentException.class},
-//								  {"sponsor1", IllegalArgumentException.class},
-//								  {"sponsor2", IllegalArgumentException.class},
-//								  {"sponsor3", IllegalArgumentException.class},
-//								  {"bookmaker1", IllegalArgumentException.class},
-//								  {"bookmaker2", IllegalArgumentException.class},
-//								  {"bookmaker3", IllegalArgumentException.class},
-//								  {"user1", IllegalArgumentException.class},
-//								  {"user2", IllegalArgumentException.class},
-//								  {"user3", IllegalArgumentException.class},
-//								  {"admin", IllegalArgumentException.class}};
 		
 		for(int i = 0; i < testingData.length; i++)
 			try{

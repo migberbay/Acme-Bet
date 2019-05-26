@@ -37,8 +37,6 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
-	//	En el test de create, comprobamos que los miscellaneous records
-	//	solo los pueden crear las hermandades.
 	@Test
 	public void driverCreateProfessionalRecord(){
 		
@@ -94,9 +92,6 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
-	//	En el test de save, comprobamos que los miscellaneous records
-	//	solo los pueden guardar las hermandades y también probamos,
-	//	que se los datos deben estar rellenados y no vacíos.
 	@Test
 	public void driverSaveProfessionalRecord(){
 		
@@ -156,10 +151,6 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
-	//	En el test de update, se comprueba que los miscellaneous records, 
-	//	solo los pueden editar las hermandades y que podemos
-	//	modificar todos o algunos datos, algunos de los cuales,
-	//	al ser incorrectos o vacíos de lugar a error.
 	@Test
 	public void driverUpdateProfessionalRecord(){
 		
@@ -213,25 +204,12 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 		Assert.isTrue(!professionalRecordService.findAll().contains(professionalRecord));
 	}
 	
-	//	En el test delete, se comprueba que solo los counselor 
-	//	pueden borrar los miscellaneous records.
 	@Test
 	public void driverDeleteMiscellaneousRecord(){
 		
 		Object testingData[][] = {{"counselor1", null},
 								  {"counselor2", null},
 								  {"counselor3", null}};
-//								  {null, IllegalArgumentException.class},
-//								  {"sponsor1", IllegalArgumentException.class},
-//								  {"sponsor2", IllegalArgumentException.class},
-//								  {"sponsor3", IllegalArgumentException.class},
-//								  {"bookmaker1", IllegalArgumentException.class},
-//								  {"bookmaker2", IllegalArgumentException.class},
-//								  {"bookmaker3", IllegalArgumentException.class},
-//								  {"user1", IllegalArgumentException.class},
-//								  {"user2", IllegalArgumentException.class},
-//								  {"user3", IllegalArgumentException.class},
-//								  {"admin", IllegalArgumentException.class}};
 		
 		for(int i = 0; i < testingData.length; i++)
 			try{
