@@ -21,6 +21,7 @@
 			<jstl:if test="${row.counselor!=null and row.status=='PENDING'}">
 				<a href="helpRequest/user/solve.do?helpRequestId=${row.id}"><spring:message code="helpRequest.solve"/></a><br/>
 			</jstl:if>
+
 			</security:authorize>
 			<security:authorize access="hasRole('COUNSELOR')">
 			<jstl:if test="${row.status=='OPEN'}">

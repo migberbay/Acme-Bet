@@ -29,5 +29,7 @@
 		</display:column>
 	</display:table>
 	<br/>
-	<a href="review/user/create.do"> <spring:message code="review.create" /> </a>
+	<jstl:if test="${moreReviews}">
+		<a href="review/user/create.do"> <spring:message code="review.create" /> </a>
+	</jstl:if>
 

@@ -22,6 +22,7 @@ import controllers.AbstractController;
 
 import domain.Counselor;
 import domain.Review;
+import domain.User;
 
 
 @Controller
@@ -38,6 +39,8 @@ public class ReviewUserController extends AbstractController {
 
 	@Autowired
 	private CounselorService counselorService;
+	
+	private Integer counselorId;
 	// List -------------------------------------------------------------------
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -45,8 +48,18 @@ public class ReviewUserController extends AbstractController {
 		ModelAndView result;
 		
 		Collection<Review> reviews = reviewService.findReviewsByPrincipal();
+		User user = userService.findByPrincipal();
+		Collection<Counselor> counselors = counselorService.getSolvedCounselorsByUser(user.getId());
+		if(!user.getReviews().isEmpty()){
+			for(Review r: user.getReviews()){
+				if(counselors.contains(r.getCounselor())){
+					counselors.remove(r.getCounselor());
+				}
+			}
+		}
 		
 		result = new ModelAndView("review/list");
+		result.addObject("moreReviews", !counselors.isEmpty());
 		result.addObject("reviews",reviews);
 		
 		return result;
@@ -60,30 +73,56 @@ public class ReviewUserController extends AbstractController {
 		
 		Review review;
 		
-		review = reviewService.create();		
+		review = reviewService.create();	
 		
-		result = this.createEditModelAndView(review);
+		User user = userService.findByPrincipal();
+		Collection<Counselor> counselors = counselorService.getSolvedCounselorsByUser(user.getId());
+			
+		if(!user.getReviews().isEmpty()){
+			for(Review r: user.getReviews()){
+				if(counselors.contains(r.getCounselor())){
+					counselors.remove(r.getCounselor());
+				}
+			}
+		}
 		
+		if(!counselors.isEmpty()){
+			result = this.createEditModelAndView(review);
+		}else{
+			result = new ModelAndView("redirect:list.do");
+		}
 		return result;
 	}
-	
-	// Show --------------------------------------------------------------------
-	
-	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam int reviewId) {
-
+	/*
+	@RequestMapping(value = "/createByList", method = RequestMethod.GET)
+	public ModelAndView createByList(@RequestParam int counselorId) {
 		ModelAndView result;
+		
 		Review review;
 		
-		review = reviewService.findOne(reviewId);
+		review = reviewService.create();	
+		this.counselorId = counselorId;
+		User user = userService.findByPrincipal();
 		
-
-		result = new ModelAndView("review/show");
-		result.addObject("review", review);
-		result.addObject("requestURI", "review/user/show.do");
-
+		Collection<Counselor> counselors = counselorService.getSolvedCounselorsByUser(user.getId());
+			
+		if(!user.getReviews().isEmpty()){
+			for(Review r: user.getReviews()){
+				if(counselors.contains(r.getCounselor())){
+					counselors.remove(r.getCounselor());
+				}
+			}
+		}
+		
+		if(!counselors.isEmpty()){
+			result = this.createEditModelAndView(review);
+		}else{
+			result = new ModelAndView("redirect:list.do");
+		}
 		return result;
 	}
+	*/
+
 	
 	// Edit --------------------------------------------------------------------
 	
@@ -94,7 +133,7 @@ public class ReviewUserController extends AbstractController {
 			Review review;
 			review = reviewService.findOne(reviewId);	
 			
-			if(review.getUser().equals(userService.findByPrincipal())){
+			if(review.getIsFinal().equals(false) && review.getUser().equals(userService.findByPrincipal())){
 				result = this.createEditModelAndView(review);
 			}else{
 				result = new ModelAndView("error/access");
@@ -109,6 +148,9 @@ public class ReviewUserController extends AbstractController {
 	public ModelAndView edit(Review review, BindingResult bindingResult) {
 		ModelAndView result;
 		try {
+			if(review.getCounselor()==null){
+				review.setCounselor(counselorService.findOne(this.counselorId));
+			}
 			Review saved = reviewService.reconstruct(review, bindingResult);
 			reviewService.save(saved);
 			result = new ModelAndView("redirect:list.do");
@@ -129,7 +171,7 @@ public class ReviewUserController extends AbstractController {
 		ModelAndView result;
 		Review review;
 		review = reviewService.findOne(reviewId);
-		if(review.getUser().equals(userService.findByPrincipal())){
+		if(review.getIsFinal().equals(false) && review.getUser().equals(userService.findByPrincipal())){
 			reviewService.delete(review);
 			result = new ModelAndView("redirect:list.do");
 		}else{
@@ -153,9 +195,21 @@ public class ReviewUserController extends AbstractController {
 		ModelAndView res;
 		res = new ModelAndView("review/edit");
 		List<Integer> scores = new ArrayList<Integer>();
+		User user = userService.findByPrincipal();
 		scores.add(0);scores.add(1);scores.add(2);scores.add(3);scores.add(4);scores.add(5);scores.add(6);scores.add(7);scores.add(8);scores.add(9);scores.add(10);
-		Collection<Counselor> counselors = counselorService.getSolvedCounselorsByUser(userService.findByPrincipal().getId());
+		Collection<Counselor> counselors = counselorService.getSolvedCounselorsByUser(user.getId());
+			
+		if(!user.getReviews().isEmpty()){
+			for(Review r: user.getReviews()){
+				if(counselors.contains(r.getCounselor()) && !r.equals(review)){
+					counselors.remove(r.getCounselor());
+				}
+			}
+		}
 		
+		if(this.counselorId!=null){
+			res.addObject("listrequest",true);
+		}
 		res.addObject("review", review);
 		res.addObject("scores",scores);
 		res.addObject("counselors",counselors);
