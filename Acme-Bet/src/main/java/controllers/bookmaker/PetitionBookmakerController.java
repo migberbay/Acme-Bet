@@ -56,13 +56,14 @@ public class PetitionBookmakerController extends AbstractController {
 		Petition res = petitionService.findOne(petition.getId());
 		Bet bet = res.getBet();
 		bet.setIsAccepted(true);
-		betService.save(bet);
+		Bet saved = betService.save(bet);
 		
 		res.setStatus("ACCEPTED");
 		petitionService.save(res);
 		
 		User user = res.getUser();
 		user.setFunds(user.getFunds()-bet.getAmount());
+		user.getBets().add(saved);
 		userService.save(user);
 		
 		return list();

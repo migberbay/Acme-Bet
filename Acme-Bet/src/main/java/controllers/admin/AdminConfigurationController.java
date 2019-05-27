@@ -229,15 +229,16 @@ public class AdminConfigurationController extends AbstractController {
 			res = new ModelAndView("error/access");
 		}else{
 		Collection<User> users = userService.findAll();
-			try {
-				Date now = new Date();
-				Double won = 0.;
-				Double lost = 0.;
+			try {				
 				for (User user : users) {
+					System.out.println(user.getBets().size());
+					Double won = 0.;
+					Double lost = 0.;
 					for (Bet bet : user.getBets()) {
-						if(now.after(bet.getBetPool().getResultDate())){
-							if(bet.getBetPool().getWinners().contains(bet.getWinner())){won++;}else{lost++;}
-						}
+						System.out.println(bet.getWinner()+ " "+ bet.getBetPool().getWinners());
+						if(bet.getBetPool().getWinners().contains(bet.getWinner())){
+							won++;
+						}else{lost++;}
 					}
 					user.setLuckScore(won - 0.5*lost);
 					userService.save(user);
