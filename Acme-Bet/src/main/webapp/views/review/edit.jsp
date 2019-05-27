@@ -37,9 +37,7 @@
 	<form:errors path="score" cssClass="error" />
 	<br/>
 	
-	<jstl:if test="${listrequest}">
 	<acme:select code="review.counselor" path="counselor" items="${counselors}" itemLabel="userAccount.username"/>
-	</jstl:if>
 	<jstl:if test="${review.id!=0}">
 		<acme:checkbox code="review.publish" path="isFinal"/>
 	</jstl:if>
