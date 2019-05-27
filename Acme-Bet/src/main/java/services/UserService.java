@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,5 +72,10 @@ public class UserService {
 	public User findByPrincipal(){
 		return this.userRepository.findByUserAccount(LoginService.getPrincipal());
 	}
+
+	public Collection<User> getUsersWMoreBets(){
+		return this.userRepository.getUsersWMoreBets();
+	}
+	
 
 }

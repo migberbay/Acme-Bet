@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -100,6 +101,54 @@ public class BetService {
 	        return saltStr;
 	}
 
+	
+	public Double getAvgBetsPerBetPool(){
+		Double res = this.betRepository.getAvgBetsPerBetPool();
+		if(res==null)res=0d;
+		return res;
+	}
+
+	public Integer getMinBetsPerBetPool(){
+		Integer res = this.betRepository.getMinBetsPerBetPool();
+		if(res==null)res=0;
+		return res;
+	}
+	
+	public Integer getMaxBetsPerBetPool(){
+		Integer res = this.betRepository.getMaxBetsPerBetPool();
+		if(res==null)res=0;
+		return res;
+	}
+	
+	public Double getStdevBetsPerBetPool(){
+		Double res = this.betRepository.getStdevBetsPerBetPool();
+		if(res==null)res=0d;
+		return res;
+	}
+	
+	public Double getAvgBetsPerUser(){
+		Double res = this.betRepository.getAvgBetsPerUser();
+		if(res==null)res=0d;
+		return res;
+	}
+
+	public Integer getMinBetsPerUser(){
+		Integer res = this.betRepository.getMinBetsPerUser();
+		if(res==null)res=0;
+		return res;
+	}
+	
+	public Integer getMaxBetsPerUser(){
+		Integer res = this.betRepository.getMaxBetsPerUser();
+		if(res==null)res=0;
+		return res;
+	}
+	
+	public Double getStdevBetsPerUser(){
+		Double res = this.betRepository.getStdevBetsPerUser();
+		if(res==null)res=0d;
+		return res;
+	}
 
 
 }

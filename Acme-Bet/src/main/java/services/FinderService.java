@@ -197,5 +197,28 @@ public class FinderService {
 		return finder;
 	}
 
+	public Double getAvgResultsPerFinder(){
+		Double res = finderRepository.getAvgResultsPerFinder();
+		if(res==null)res=0d;
+		return res;
+	}
+
+	public Integer getMinResultsPerFinder(){
+		Integer res = finderRepository.getMinResultsPerFinder();
+		if(res==null)res=0;
+		return res;
+	}
+	
+	public Integer getMaxResultsPerFinder(){
+		Integer res = finderRepository.getMaxResultsPerFinder();
+		if(res==null)res=0;
+		return res;
+	}
+	
+	public Double getStdevResultsPerFinder(){
+		Double res = finderRepository.getStdevResultsPerFinder();
+		if(res==null)res=0d;
+		return res;
+	}
 
 }

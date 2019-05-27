@@ -34,7 +34,7 @@ import forms.ConfigurationForm;
 
 @Controller
 @RequestMapping("/admin/")
-public class AdminConfigurationController extends AbstractController {
+public class ConfigurationAdminController extends AbstractController {
 	
 	@Autowired
 	private ConfigurationService configurationService;
