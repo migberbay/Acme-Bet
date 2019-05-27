@@ -9,8 +9,12 @@ import org.springframework.web.servlet.ModelAndView;
 import services.BetPoolService;
 import services.BetService;
 import services.BookmakerService;
+import services.CounselorService;
 import services.FinderService;
 import services.HelpRequestService;
+import services.ReviewService;
+import services.SponsorService;
+import services.SponsorshipService;
 import services.UserService;
 import controllers.AbstractController;
 
@@ -21,22 +25,34 @@ public class DashboardAdminController extends AbstractController {
 	
 	
 	@Autowired
-	BetPoolService betPoolService;
+	private BetPoolService betPoolService;
 	
 	@Autowired
-	BetService betService;
+	private BetService betService;
 	
 	@Autowired
-	BookmakerService bookmakerService;
+	private BookmakerService bookmakerService;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	FinderService finderService;
+	private FinderService finderService;
 	
 	@Autowired
-	HelpRequestService helpRequestService;
+	private HelpRequestService helpRequestService;
+	
+	@Autowired
+	private ReviewService reviewService;
+	
+	@Autowired
+	private SponsorService sponsorService;
+	
+	@Autowired
+	private SponsorshipService sponsorshipService;
+	
+	@Autowired
+	private CounselorService counselorService;
 
 	//DASHBOARD--------------------------------------------------------
 	@RequestMapping(value="/dashboard", method=RequestMethod.GET)
@@ -64,10 +80,23 @@ public class DashboardAdminController extends AbstractController {
 		res.addObject("minHelpRequestsPerUser", helpRequestService.getMinHelpRequestsPerUser());
 		res.addObject("maxHelpRequestsPerUser", helpRequestService.getMaxHelpRequestsPerUser());
 		res.addObject("stdevHelpRequestsPerUser", Math.round(helpRequestService.getStdevHelpRequestsPerUser()*100.0d/100.0d));
+
+		res.addObject("avgReviewsPerUser", Math.round(reviewService.getAvgReviewsPerUser()*100.0d/100.0d));
+		res.addObject("minReviewsPerUser", reviewService.getMinReviewsPerUser());
+		res.addObject("maxReviewsPerUser", reviewService.getMaxReviewsPerUser());
+		res.addObject("stdevReviewsPerUser", Math.round(reviewService.getStdevReviewsPerUser()*100.0d/100.0d));
+
+		res.addObject("avgSponsorshipsPerSponsor", Math.round(sponsorshipService.getAvgSponsorshipsPerSponsor()*100.0d/100.0d));
+		res.addObject("minSponsorshipsPerSponsor", sponsorshipService.getMinSponsorshipsPerSponsor());
+		res.addObject("maxSponsorshipsPerSponsor", sponsorshipService.getMaxSponsorshipsPerSponsor());
+		res.addObject("stdevSponsorshipsPerSponsor", Math.round(sponsorshipService.getStdevSponsorshipsPerSponsor()*100.0d/100.0d));
 		
 		res.addObject("maxBetPoolsBookmakers", bookmakerService.getBookmakersWMoreBetPools());
 		res.addObject("maxBetsUsers", userService.getUsersWMoreBets());
 		res.addObject("maxRequestsUsers", userService.getUsersWMoreRequests());
+		
+		res.addObject("highestAvgScoreCounselor", counselorService.getHighestAvgScoreCounselor());
+		res.addObject("topInActivatedSponsorships", sponsorService.topInActivatedSponsorships());
 
 		return res;
 	}

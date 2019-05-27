@@ -66,4 +66,16 @@ public class CounselorService {
 	public 	Collection<Counselor> getSolvedCounselorsByUser(Integer userId){
 		return this.counselorRepository.getSolvedCounselorsByUser(userId);
 	}
+	
+	public Counselor getHighestAvgScoreCounselor(){
+		Collection<Object> quer;
+		Counselor res = new Counselor();
+		quer = this.counselorRepository.getHighestAvgScoreCounselor();
+		for(Object o: quer){
+			Object[] n = (Object[]) o;
+			res=(Counselor)n[0];
+			break;
+		}
+		return res;
+	}
 }

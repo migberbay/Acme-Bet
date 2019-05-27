@@ -117,54 +117,29 @@ public class SponsorshipService {
 		
 		return result;
 	}
-//	
-//	public Double getAvgSponsorshipsPerSponsor(){
-//		Double res = sponsorshipRepository.getAvgSponsorshipsPerSponsor();
-//		if(res==null)res=0d;
-//		return res;
-//	}
-//	
-//	public Integer getMinSponsorshipsPerSponsor(){
-//		Integer res = sponsorshipRepository.getMinSponsorshipsPerSponsor();
-//		if(res==null)res=0;
-//		return res;
-//	}
-//	
-//	public Integer getMaxSponsorshipsPerSponsor(){
-//		Integer res = sponsorshipRepository.getMaxSponsorshipsPerSponsor();
-//		if(res==null)res=0;
-//		return res;
-//	}
-//
-//	public Double getStdevSponsorshipsPerSponsor(){
-//		Double res = sponsorshipRepository.getStdevSponsorshipsPerSponsor();
-//		if(res==null)res=0d;
-//		return res;
-//	}
 	
+	public Double getAvgSponsorshipsPerSponsor(){
+		Double res = sponsorshipRepository.getAvgSponsorshipsPerSponsor();
+		if(res==null)res=0d;
+		return res;
+	}
 	
+	public Integer getMinSponsorshipsPerSponsor(){
+		Integer res = sponsorshipRepository.getMinSponsorshipsPerSponsor();
+		if(res==null)res=0;
+		return res;
+	}
 	
-//	public Double getAvgSponsorshipsPerPosition(){
-//		Double res = sponsorshipRepository.getAvgSponsorshipsPerPosition();
-//		if(res==null)res=0d;
-//		return res;
-//	}
-//	
-//	public Integer getMinSponsorshipsPerPosition(){
-//		Integer res = sponsorshipRepository.getMinSponsorshipsPerPosition();
-//		if(res==null)res=0;
-//		return res;
-//	}
-//	
-//	public Integer getMaxSponsorshipsPerPosition(){
-//		Integer res = sponsorshipRepository.getMaxSponsorshipsPerPosition();
-//		if(res==null)res=0;
-//		return res;
-//	}
-//
-//	public Double getStdevSponsorshipsPerPosition(){
-//		Double res = sponsorshipRepository.getStdevSponsorshipsPerPosition();
-//		if(res==null)res=0d;
-//		return res;
-//	}
+	public Integer getMaxSponsorshipsPerSponsor(){
+		Integer res = sponsorshipRepository.getMaxSponsorshipsPerSponsor();
+		if(res==null)res=0;
+		return res;
+	}
+
+	public Double getStdevSponsorshipsPerSponsor(){
+		Double res = sponsorshipRepository.getStdevSponsorshipsPerSponsor();
+		if(res==null)res=0d;
+		return res;
+	}
+
 }

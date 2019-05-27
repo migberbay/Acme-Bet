@@ -18,35 +18,19 @@ public interface SponsorshipRepository extends JpaRepository<Sponsorship, Intege
 	@Query("select s from Sponsorship s where s.betPool = ?1")
 	Collection<Sponsorship> findByBetPool(BetPool betpool);
 	
-//	@Query("select s from Sponsorship s where s.provider.id = ?1")
-//	Collection<Sponsorship> findByProviderId(int id);
-//	
-//	@Query("select s from Sponsorship s where s.position.id = ?1")
-//	Collection<Sponsorship> findByPositionId(int id);
+
+	@Query("select avg(s.sponsorships.size) from Sponsor s")
+	Double getAvgSponsorshipsPerSponsor();
 	
-//	@Query("select avg(p.sponsorships.size) from Provider p")
-//	Double getAvgSponsorshipsPerProvider();
-//	
-//	@Query("select min(p.sponsorships.size) from Provider p")
-//	Integer getMinSponsorshipsPerProvider();
-//	
-//	@Query("select max(p.sponsorships.size) from Provider p")
-//	Integer getMaxSponsorshipsPerProvider();
-//
-//	@Query("select avg(p.sponsorships.size) from Provider p")
-//	Double getStdevSponsorshipsPerProvider();
-//	
-//	@Query("select avg(p.sponsorships.size) from Position p")
-//	Double getAvgSponsorshipsPerPosition();
-//	
-//	@Query("select min(p.sponsorships.size) from Position p")
-//	Integer getMinSponsorshipsPerPosition();
-//	
-//	@Query("select max(p.sponsorships.size) from Position p")
-//	Integer getMaxSponsorshipsPerPosition();
-//
-//	@Query("select avg(p.sponsorships.size) from Position p")
-//	Double getStdevSponsorshipsPerPosition();
+	@Query("select min(s.sponsorships.size) from Sponsor s")
+	Integer getMinSponsorshipsPerSponsor();
+	
+	@Query("select max(s.sponsorships.size) from Sponsor s")
+	Integer getMaxSponsorshipsPerSponsor();
+
+	@Query("select avg(s.sponsorships.size) from Sponsor s")
+	Double getStdevSponsorshipsPerSponsor();
+
 
 }
 
