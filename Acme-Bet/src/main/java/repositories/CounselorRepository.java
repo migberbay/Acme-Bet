@@ -17,4 +17,6 @@ public interface CounselorRepository extends JpaRepository<Counselor, Integer>{
 	
 	@Query("select distinct h.counselor from HelpRequest h where h.status='SOLVED' and h.user.id=?1")
 	Collection<Counselor> getSolvedCounselorsByUser(Integer userId);
+	
+
 }

@@ -18,4 +18,7 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	@Query("select distinct u from User u where u.bets.size = (select max(u1.bets.size) from User u1)")
 	Collection<User> getUsersWMoreBets();
 	
+	@Query("select distinct u from User u where u.helpRequests.size = (select max(u1.helpRequests.size) from User u1)")
+	Collection<User> getUsersWMoreRequests();
+	
 }

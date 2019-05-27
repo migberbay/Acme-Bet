@@ -19,30 +19,35 @@
 				<th><spring:message code="admin.betsPerBetPool"/></th>
 				<th><spring:message code="admin.betsPerUser"/></th>
 				<th><spring:message code="admin.resultsPerFinder"/></th>
+				<th><spring:message code="admin.helpRequestsPerUser"/></th>
 			</tr>
 			<tr>
 				<td><spring:message code="admin.average"/></td>
 				<td><jstl:out value="${avgBetsPerBetPool}"/></td>
 				<td><jstl:out value="${avgBetsPerUser}"/></td>
-				<td><jstl:out value="${avgResultsPerFinder}"/></td>				
+				<td><jstl:out value="${avgResultsPerFinder}"/></td>			
+				<td><jstl:out value="${avgHelpRequestsPerUser}"/></td>		
 			</tr>
 			<tr>
 				<td><spring:message code="admin.minimum"/></td>
 				<td><jstl:out value="${minBetsPerBetPool}"/></td>
 				<td><jstl:out value="${minBetsPerUser}"/></td>
 				<td><jstl:out value="${minResultsPerFinder}"/></td>	
+				<td><jstl:out value="${minHelpRequestsPerUser}"/></td>	
 			</tr>	
 			<tr>
 				<td><spring:message code="admin.maximum"/></td>
 				<td><jstl:out value="${maxBetsPerBetPool}"/></td>
 				<td><jstl:out value="${maxBetsPerUser}"/></td>
 				<td><jstl:out value="${maxResultsPerFinder}"/></td>	
+				<td><jstl:out value="${maxHelpRequestsPerUser}"/></td>	
 			</tr>
 			<tr>
 				<td><spring:message code="admin.stdv"/></td>
 				<td><jstl:out value="${stdevBetsPerBetPool}"/></td>
 				<td><jstl:out value="${stdevBetsPerUser}"/></td>
 				<td><jstl:out value="${stdevResultsPerFinder}"/></td>	
+				<td><jstl:out value="${stdevHelpRequestsPerUser}"/></td>	
 			</tr>
 	</table>
 	
@@ -62,6 +67,16 @@
 	<jstl:if test="${empty maxBetsUsers}"><spring:message code="admin.empty"/></jstl:if>
 	<table style="width:'100%' border='0' align='center' ">
 		<jstl:forEach var="i" items="${maxBetsUsers}">
+		<tr>
+			<td><jstl:out value="${i.name}"/> <jstl:out value="${i.surnames}"/> (<a href="actor/show.do?actorId=${i.id}"><jstl:out value="${i.userAccount.username}"/></a>)</td>
+		</tr>			
+		</jstl:forEach>
+	</table>
+	
+	<b><spring:message code="admin.maxRequestsUsers"/></b>
+	<jstl:if test="${empty maxRequestsUsers}"><spring:message code="admin.empty"/></jstl:if>
+	<table style="width:'100%' border='0' align='center' ">
+		<jstl:forEach var="i" items="${maxRequestsUsers}">
 		<tr>
 			<td><jstl:out value="${i.name}"/> <jstl:out value="${i.surnames}"/> (<a href="actor/show.do?actorId=${i.id}"><jstl:out value="${i.userAccount.username}"/></a>)</td>
 		</tr>			

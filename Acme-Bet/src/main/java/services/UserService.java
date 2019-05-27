@@ -77,5 +77,9 @@ public class UserService {
 		return this.userRepository.getUsersWMoreBets();
 	}
 	
+	public Collection<User> getUsersWMoreRequests(){
+		return this.userRepository.getUsersWMoreRequests();
+	}
+	
 
 }

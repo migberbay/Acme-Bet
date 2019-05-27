@@ -10,6 +10,7 @@ import services.BetPoolService;
 import services.BetService;
 import services.BookmakerService;
 import services.FinderService;
+import services.HelpRequestService;
 import services.UserService;
 import controllers.AbstractController;
 
@@ -33,6 +34,9 @@ public class DashboardAdminController extends AbstractController {
 	
 	@Autowired
 	FinderService finderService;
+	
+	@Autowired
+	HelpRequestService helpRequestService;
 
 	//DASHBOARD--------------------------------------------------------
 	@RequestMapping(value="/dashboard", method=RequestMethod.GET)
@@ -56,8 +60,14 @@ public class DashboardAdminController extends AbstractController {
 		res.addObject("maxResultsPerFinder", finderService.getMaxResultsPerFinder());
 		res.addObject("stdevResultsPerFinder", Math.round(finderService.getStdevResultsPerFinder()*100.0d/100.0d));
 
+		res.addObject("avgHelpRequestsPerUser", Math.round(helpRequestService.getAvgHelpRequestsPerUser()*100.0d/100.0d));
+		res.addObject("minHelpRequestsPerUser", helpRequestService.getMinHelpRequestsPerUser());
+		res.addObject("maxHelpRequestsPerUser", helpRequestService.getMaxHelpRequestsPerUser());
+		res.addObject("stdevHelpRequestsPerUser", Math.round(helpRequestService.getStdevHelpRequestsPerUser()*100.0d/100.0d));
+		
 		res.addObject("maxBetPoolsBookmakers", bookmakerService.getBookmakersWMoreBetPools());
 		res.addObject("maxBetsUsers", userService.getUsersWMoreBets());
+		res.addObject("maxRequestsUsers", userService.getUsersWMoreRequests());
 
 		return res;
 	}

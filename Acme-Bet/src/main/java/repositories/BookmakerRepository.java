@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import security.UserAccount;
 import domain.Bookmaker;
+import domain.User;
 
 @Repository
 public interface BookmakerRepository extends JpaRepository<Bookmaker, Integer>{

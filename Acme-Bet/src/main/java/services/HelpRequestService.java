@@ -8,6 +8,7 @@ import java.util.Random;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -147,6 +148,29 @@ public class HelpRequestService {
 		return res;
 	}
 
+	public Double getAvgHelpRequestsPerUser(){
+		Double res = this.helpRequestRepository.getAvgHelpRequestsPerUser();
+		if(res==null)res=0d;
+		return res;
+	}
+
+	public Integer getMinHelpRequestsPerUser(){
+		Integer res = this.helpRequestRepository.getMinHelpRequestsPerUser();
+		if(res==null)res=0;
+		return res;
+	}
+	
+	public Integer getMaxHelpRequestsPerUser(){
+		Integer res = this.helpRequestRepository.getMaxHelpRequestsPerUser();
+		if(res==null)res=0;
+		return res;
+	}
+	
+	public Double getStdevHelpRequestsPerUser(){
+		Double res = this.helpRequestRepository.getStdevHelpRequestsPerUser();
+		if(res==null)res=0d;
+		return res;
+	}
 
 
 }
