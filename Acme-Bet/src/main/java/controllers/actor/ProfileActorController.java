@@ -7,11 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,7 +35,6 @@ import domain.Admin;
 import domain.Bookmaker;
 import domain.Counselor;
 import domain.CreditCard;
-import domain.HelpRequest;
 import domain.Review;
 import domain.SocialProfile;
 import domain.Sponsor;
@@ -110,8 +107,8 @@ public class ProfileActorController extends AbstractController {
 		Authority sponsorauth = new Authority();
 		sponsorauth.setAuthority("SPONSOR");
 
-		
 		Actor principal;
+		
 		try {
 			principal = actorService.getByUserAccount(LoginService.getPrincipal());
 		} catch (Exception e) {
@@ -127,18 +124,23 @@ public class ProfileActorController extends AbstractController {
 			result.addObject("actor", actor); // actor que se va a mostrar
 			result.addObject("logged", false); // flag para permitir editar
 			
-			if (principal == null) {
-				
-			}else if (principal.getUserAccount().getAuthorities().contains(adminAuth)) {
-				result.addObject("principalIsAdmin", true);
+			if (principal != null) {
+				if (principal.getUserAccount().getAuthorities().contains(adminAuth)) {
+					result.addObject("principalIsAdmin", true);
+					
+					if (actor.getUserAccount().getAuthorities().contains(userAuth)) {
+					result.addObject("actorIsUser", true);
+					}
+				}
 			}
 			
 			if (actor.getUserAccount().getAuthorities().contains(counselorAuth)) {
-				Counselor counselor = counselorService.findOne(actor.getId());
-				Collection<Review> reviews = reviewService.findReviewsByCounselor(counselor.getId());
-				result.addObject("reviews",reviews);
+				Collection<Review> reviews = reviewService.findReviewsByCounselor(actorId);
+				System.out.println(reviews);
+				result.addObject("reviews", reviews);
 			}
-
+			
+			
 			result.addObject("socialProfiles", socialProfiles);
 
 		} else {//accedemos a nuestro perfil
@@ -165,10 +167,11 @@ public class ProfileActorController extends AbstractController {
 			
 			if (actor.getUserAccount().getAuthorities().contains(counselorAuth)) {
 				Counselor counselor = counselorService.findOne(actor.getId());
-				Collection<Review> reviews = reviewService.findReviewsByCounselor(counselor.getId());
 				result.addObject("isCounselor", true);
+				Collection<Review> reviews = reviewService.findReviewsByCounselor(actor.getId());
+				System.out.println(reviews);
+				result.addObject("reviews", reviews);
 				result.addObject("actor", counselor);
-				result.addObject("reviews",reviews);
 			}
 			
 			if (actor.getUserAccount().getAuthorities().contains(sponsorauth)) {
