@@ -1,7 +1,6 @@
 package services;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
@@ -15,8 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.HelpRequestRepository;
-import security.LoginService;
-import domain.Actor;
 import domain.Category;
 import domain.HelpRequest;
 import domain.Message;
@@ -135,20 +132,18 @@ public class HelpRequestService {
 
 	public Message reconstructMessage(Message message, BindingResult bindingResult) {
 		Message res;
+		
 		res = message;
 		res.setFlagSpam(false);
 		res.setMoment(new Date());
 		res.setTags(new ArrayList<String>());
-		System.out.println("que");
 		res.setSender(counselorService.findByPrincipal());
-		System.out.println("no");
+		
 		validator.validate(res, bindingResult);
-		System.out.println("quejjj");
 		if(bindingResult.hasErrors()){
-			System.out.println("sfjaoifj");
-			System.out.println(bindingResult.getFieldErrors());
 			throw new ValidationException();
 		}
+		
 		return res;
 	}
 
