@@ -45,6 +45,7 @@ public class UserService {
 		res.setBlockedCounselors(new ArrayList<Counselor>());
 		res.setReviews(new ArrayList<Review>());
 		res.setHelpRequests(new ArrayList<HelpRequest>());
+		res.setLuckScore(0.0);
 		
 		return res;
 	}
