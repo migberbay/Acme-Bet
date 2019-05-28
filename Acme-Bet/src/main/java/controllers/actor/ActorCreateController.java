@@ -136,6 +136,7 @@ public class ActorCreateController extends AbstractController {
 		}else{
 		res = new ModelAndView("actor/register");
 		
+		
 		res.addObject("registerForm",form);
 		res.addObject("message", messageCode);
 		res.addObject("months", months);

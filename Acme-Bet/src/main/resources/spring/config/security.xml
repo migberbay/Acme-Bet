@@ -42,9 +42,10 @@
 
 		<security:intercept-url pattern="/welcome/**" access="permitAll" /> 
 		<security:intercept-url pattern="/message/**" access="permitAll" /> 
+		<security:intercept-url pattern="/actor/register.do" access="isAnonymous()"/>
 		<security:intercept-url pattern="/actor/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/socialProfile/**" access="isAuthenticated()" /> 
-		<security:intercept-url pattern="/actor/register.do" access="isAnonymous()"/>
+		
 	
 		<security:intercept-url pattern="/betPool/list.do" access="permitAll" />
 		<security:intercept-url pattern="/betPool/show.do" access="permitAll" />
@@ -55,10 +56,13 @@
 		
 		<security:intercept-url pattern="/bet/user/**" access="hasRole('USER')" />
 		<security:intercept-url pattern="/helpRequest/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/review/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/finder/user/filter.do" access="hasRole('USER')" />
 		
 		<security:intercept-url pattern="/helpRequest/counselor/**" access="hasRole('COUNSELOR')" />
 		
 		<security:intercept-url pattern="/helpRequest/show.do" access="hasRole('COUNSELOR') || hasRole('USER')" />
+		<security:intercept-url pattern="/review/show.do" access="hasRole('COUNSELOR') || hasRole('USER')" />
 		
 		<security:intercept-url pattern="/betPool/bookmaker/**" access="hasRole('BOOKMAKER')" />
 		<security:intercept-url pattern="/Petition/bookmaker/**" access="hasRole('BOOKMAKER')" />

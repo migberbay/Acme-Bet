@@ -306,6 +306,7 @@
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
 		<property name="funds" value="50000.0" />
+		<property name="luckScore" value="0.0" />
 		<property name="userAccount" ref="userAccount5" />
 		<property name="creditCard" ref="creditCard5" />
 		<property name="socialProfiles">
@@ -341,6 +342,7 @@
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
 		<property name="funds" value="50000.0" />
+		<property name="luckScore" value="0.0" />
 		<property name="userAccount" ref="userAccount6" />
 		<property name="creditCard" ref="creditCard6" />
 		<property name="socialProfiles">
@@ -376,6 +378,7 @@
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
 		<property name="funds" value="50000.0" />
+		<property name="luckScore" value="0.0" />
 		<property name="userAccount" ref="userAccount7" />
 		<property name="creditCard" ref="creditCard7" />
 		<property name="socialProfiles">
@@ -411,6 +414,7 @@
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
 		<property name="funds" value="50000.0" />
+		<property name="luckScore" value="0.0" />
 		<property name="userAccount" ref="userAccount8" />
 		<property name="creditCard" ref="creditCard8" />
 		<property name="socialProfiles">
@@ -445,6 +449,7 @@
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
 		<property name="funds" value="50000.0" />
+		<property name="luckScore" value="0.0" />
 		<property name="userAccount" ref="userAccount9" />
 		<property name="creditCard" ref="creditCard9" />
 		<property name="socialProfiles">
@@ -480,7 +485,7 @@
 		<property name="address" value="calle falsa 123" />
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
-		<property name="funds" value="0.0" />
+		<property name="funds" value="10.0" />
 		<property name="userAccount" ref="userAccount10" />
 		<property name="creditCard" ref="creditCard10" />
 		<property name="socialProfiles">
@@ -503,7 +508,7 @@
 		<property name="address" value="calle falsa 123" />
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
-		<property name="funds" value="0.0" />
+		<property name="funds" value="10.0" />
 		<property name="userAccount" ref="userAccount11" />
 		<property name="creditCard" ref="creditCard11" />
 		<property name="socialProfiles">
@@ -526,7 +531,7 @@
 		<property name="address" value="calle falsa 123" />
 		<property name="isSuspicious" value="false" />
 		<property name="isBanned" value="false" />
-		<property name="funds" value="0.0" />
+		<property name="funds" value="10.0" />
 		<property name="userAccount" ref="userAccount12" />
 		<property name="creditCard" ref="creditCard12" />
 		<property name="socialProfiles">
@@ -879,7 +884,7 @@
 	
 	<bean id="betPool3" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
-		<property name="title" value="title bet pool 3" />
+		<property name="title" value="title bet pool 3 (10.0 - 50.0)" />
 		<property name="description" value="description bet pool 3" />
 		<property name="minRange" value="10" />
 		<property name="maxRange" value="49.99" />
@@ -921,7 +926,7 @@
 	
 	<bean id="betPool4" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
-		<property name="title" value="title bet pool 3" />
+		<property name="title" value="title bet pool 3 (50.0 - 100.0)" />
 		<property name="description" value="description bet pool 3" />
 		<property name="minRange" value="50" />
 		<property name="maxRange" value="99.99" />
@@ -964,7 +969,7 @@
 	<bean id="betPool5" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
 		<property name="title" value="title bet pool 3" />
-		<property name="description" value="description bet pool 3" />
+		<property name="description" value="description bet pool 3 (100.0 - 500.0)" />
 		<property name="minRange" value="100" />
 		<property name="maxRange" value="499.99" />
 		<property name="moment" value="2018/07/07 18:00" />
@@ -1005,7 +1010,7 @@
 	
 	<bean id="betPool6" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
-		<property name="title" value="title bet pool 3" />
+		<property name="title" value="title bet pool 3 (500.0 - 10000.0)" />
 		<property name="description" value="description bet pool 3" />
 		<property name="minRange" value="499.99" />
 		<property name="maxRange" value="10000" />
@@ -1045,26 +1050,423 @@
 		</property>
 	</bean>
 	
-	<!-- SPONSORSHIP -->
+	<!-- BETS -->
+	
+	<bean id="bet1" class="domain.Bet">
+		<property name="ticker" value="190707-67GIJE" />
+		<property name="amount" value="499.99" />
+		<property name="moment" value="20/05/2010 18:00" />
+		<property name="winner" value="winner1" />
+		<property name="isAccepted" value="true" />
+		<property name="user" ref="user1" />
+		<property name="betPool" ref="betPool1" />
+	</bean>
+	
+	<bean id="bet2" class="domain.Bet">
+		<property name="ticker" value="190807-67GIFL" />
+		<property name="amount" value="39.99" />
+		<property name="moment" value="20/05/2010 18:00" />
+		<property name="winner" value="winner2" />
+		<property name="isAccepted" value="false" />
+		<property name="user" ref="user2" />
+		<property name="betPool" ref="betPool2" />
+	</bean>
+	
+	<bean id="bet3" class="domain.Bet">
+		<property name="ticker" value="190907-67GIWM" />
+		<property name="amount" value="199.99" />
+		<property name="moment" value="20/05/2010 18:00" />
+		<property name="winner" value="winner3" />
+		<property name="isAccepted" value="false" />
+		<property name="user" ref="user3" />
+		<property name="betPool" ref="betPool3" />
+	</bean>
+	
+	<bean id="bet4" class="domain.Bet">
+		<property name="ticker" value="190807-67GIJE" />
+		<property name="amount" value="699.99" />
+		<property name="moment" value="20/05/2010 18:00" />
+		<property name="winner" value="winner4" />
+		<property name="isAccepted" value="true" />
+		<property name="user" ref="user1" />
+		<property name="betPool" ref="betPool4" />
+	</bean>
+	
+	<bean id="bet5" class="domain.Bet">
+		<property name="ticker" value="190607-67GIJE" />
+		<property name="amount" value="699.99" />
+		<property name="moment" value="20/05/2010 18:00" />
+		<property name="winner" value="winner5" />
+		<property name="isAccepted" value="false" />
+		<property name="user" ref="user2" />
+		<property name="betPool" ref="betPool5" />
+	</bean>
+	
+	<bean id="bet6" class="domain.Bet">
+		<property name="ticker" value="190507-67GIJE" />
+		<property name="amount" value="699.99" />
+		<property name="moment" value="20/05/2010 18:00" />
+		<property name="winner" value="winner6" />
+		<property name="isAccepted" value="false" />
+		<property name="user" ref="user3" />
+		<property name="betPool" ref="betPool6" />
+	</bean>
+	
+	<!-- PETITIONS -->
+	
+	<bean id="petition1" class="domain.Petition">
+		<property name="status" value="PENDING" />
+		<property name="rejectReason" value="" />
+		<property name="user" ref="user1" />
+		<property name="bet" ref="bet1" />
+	</bean>
+	
+	<bean id="petition2" class="domain.Petition">
+		<property name="status" value="ACCEPTED" />
+		<property name="rejectReason" value="" />
+		<property name="user" ref="user2" />
+		<property name="bet" ref="bet2" />
+	</bean>
+	
+	<bean id="petition3" class="domain.Petition">
+		<property name="status" value="REJECTED" />
+		<property name="rejectReason" value="reject reason" />
+		<property name="user" ref="user3" />
+		<property name="bet" ref="bet3" />
+	</bean>
+	
+	<!-- REVIEWS -->
+	
+	<bean id="review1" class="domain.Review">
+		<property name="description" value="description1" />
+		<property name="moment" value="10/10/2010 12:30" />
+		<property name="score" value="6.5" />
+		<property name="isFinal" value="true" />
+		<property name="user" ref="user1" />
+		<property name="counselor" ref="counselor1" />
+		<property name="attachments">
+			<list>
+				<value>http://www.link1.com</value>
+				<value>http://www.link2.com</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="review2" class="domain.Review">
+		<property name="description" value="description2" />
+		<property name="moment" value="10/10/2010 12:30" />
+		<property name="score" value="7.5" />
+		<property name="isFinal" value="false" />
+		<property name="user" ref="user2" />
+		<property name="counselor" ref="counselor2" />
+		<property name="attachments">
+			<list>
+				<value>http://www.link3.com</value>
+				<value>http://www.link4.com</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="review3" class="domain.Review">
+		<property name="description" value="description3" />
+		<property name="moment" value="10/10/2010 12:30" />
+		<property name="score" value="8.5" />
+		<property name="isFinal" value="false" />
+		<property name="user" ref="user3" />
+		<property name="counselor" ref="counselor3" />
+		<property name="attachments">
+			<list>
+				<value>http://www.link5.com</value>
+				<value>http://www.link6.com</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- HELP REQUESTS -->
+	
+	<bean id="helpRequest1" class="domain.HelpRequest">
+		<property name="status" value="OPEN" />
+		<property name="description" value="description1" />
+		<property name="moment" value="10/10/2010 12:30" />
+		<property name="ticker" value="190707-67GIJE" />
+		<property name="user" ref="user1" />
+		<property name="counselor" ref="counselor1" />
+		<property name="category" ref="category1" />
+		<property name="betPool" ref="betPool1" />
+		<property name="attachments">
+			<list>
+				<value>http://www.link1.com</value>
+				<value>http://www.link2.com</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="helpRequest2" class="domain.HelpRequest">
+		<property name="status" value="PENDING" />
+		<property name="description" value="description2" />
+		<property name="moment" value="10/10/2010 12:30" />
+		<property name="ticker" value="190707-67GDFE" />
+		<property name="user" ref="user2" />
+		<property name="counselor" ref="counselor2" />
+		<property name="category" ref="category2" />
+		<property name="betPool" ref="betPool2" />
+		<property name="attachments">
+			<list>
+				<value>http://www.link3.com</value>
+				<value>http://www.link4.com</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="helpRequest3" class="domain.HelpRequest">
+		<property name="status" value="SOLVED" />
+		<property name="description" value="description3" />
+		<property name="moment" value="10/10/2010 12:30" />
+		<property name="ticker" value="190707-67GKHE" />
+		<property name="user" ref="user3" />
+		<property name="counselor" ref="counselor3" />
+		<property name="category" ref="category3" />
+		<property name="betPool" ref="betPool3" />
+		<property name="attachments">
+			<list>
+				<value>http://www.link5.com</value>
+				<value>http://www.link6.com</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- CURRICULAS -->
+	
+	<bean id="curricula1" class="domain.Curricula">
+		<property name="ticker" value="180707-67GIJE" />
+		<property name="bookmaker" ref="bookmaker1" />
+		<property name="personalRecord" ref="personalRecord1" />
+		<property name="educationRecords">
+			<list>
+				<ref bean="educationRecord1" />
+			</list>
+		</property>
+		<property name="endorserRecords">
+			<list>
+				<ref bean="endorserRecord1" />
+			</list>
+		</property>
+		<property name="professionalRecords">
+			<list>
+				<ref bean="professionalRecord1" />
+			</list>
+		</property>
+		<property name="miscellaneousRecords">
+			<list>
+				<ref bean="miscellaneousRecord1" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="curricula2" class="domain.Curricula">
+		<property name="ticker" value="180707-67KLJE" />
+		<property name="bookmaker" ref="bookmaker2" />
+		<property name="personalRecord" ref="personalRecord2" />
+		<property name="educationRecords">
+			<list>
+				<ref bean="educationRecord2" />
+			</list>
+		</property>
+		<property name="endorserRecords">
+			<list>
+				<ref bean="endorserRecord2" />
+			</list>
+		</property>
+		<property name="professionalRecords">
+			<list>
+				<ref bean="professionalRecord2" />
+			</list>
+		</property>
+		<property name="miscellaneousRecords">
+			<list>
+				<ref bean="miscellaneousRecord2" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="curricula3" class="domain.Curricula">
+		<property name="ticker" value="180707-67GDSE" />
+		<property name="bookmaker" ref="bookmaker3" />
+		<property name="personalRecord" ref="personalRecord3" />
+		<property name="educationRecords">
+			<list>
+				<ref bean="educationRecord3" />
+			</list>
+		</property>
+		<property name="endorserRecords">
+			<list>
+				<ref bean="endorserRecord3" />
+			</list>
+		</property>
+		<property name="professionalRecords">
+			<list>
+				<ref bean="professionalRecord3" />
+			</list>
+		</property>
+		<property name="miscellaneousRecords">
+			<list>
+				<ref bean="miscellaneousRecord3" />
+			</list>
+		</property>
+	</bean>
+	
+	
+	<!--  PERSONAL RECORDS -->
+	
+	<bean id="personalRecord1" class="domain.PersonalRecord">
+		<property name="fullName" value="Personal Record 1" />
+		<property name="photo" value="http://www.photo.com" />
+		<property name="email" value="personal@email.com" />
+		<property name="phone" value="635785645" />
+		<property name="linkedInUrl" value="http://www.link.com" />
+	</bean>
+	
+	<bean id="personalRecord2" class="domain.PersonalRecord">
+		<property name="fullName" value="Personal Record 2" />
+		<property name="photo" value="http://www.photo.com" />
+		<property name="email" value="personal@email.com" />
+		<property name="phone" value="635785645" />
+		<property name="linkedInUrl" value="http://www.link.com" />
+	</bean>
+	
+	<bean id="personalRecord3" class="domain.PersonalRecord">
+		<property name="fullName" value="Personal Record 3" />
+		<property name="photo" value="http://www.photo.com" />
+		<property name="email" value="personal@email.com" />
+		<property name="phone" value="635785645" />
+		<property name="linkedInUrl" value="http://www.link.com" />
+	</bean>
+	
+	<!--  EDUCATION RECORDS -->
+	
+	<bean id="educationRecord1" class="domain.EducationRecord">
+		<property name="diplomaTitle" value="Education Record 1" />
+		<property name="startDate" value="20/05/2005 12:30" />
+		<property name="endDate" value="25/05/2010 13:30" />
+		<property name="institution" value="Institution 1" />
+		<property name="attachment" value="http://attachment.com" />
+		<property name="comments" value="Comment 1" />
+	</bean>
+	
+	<bean id="educationRecord2" class="domain.EducationRecord">
+		<property name="diplomaTitle" value="Education Record 2" />
+		<property name="startDate" value="20/05/2005 12:20" />
+		<property name="endDate" value="25/05/2010 13:20" />
+		<property name="institution" value="Institution 2" />
+		<property name="attachment" value="http://attachment.com" />
+		<property name="comments" value="Comment 2" />
+	</bean>
+	
+	<bean id="educationRecord3" class="domain.EducationRecord">
+		<property name="diplomaTitle" value="Education Record 3" />
+		<property name="startDate" value="20/05/2005 12:30" />
+		<property name="endDate" value="25/05/2010 13:30" />
+		<property name="institution" value="Institution 3" />
+		<property name="attachment" value="http://attachment.com" />
+		<property name="comments" value="Comment 3" />
+	</bean>
+	
+	<!--  ENDORSER RECORDS -->
+	
+	<bean id="endorserRecord1" class="domain.EndorserRecord">
+		<property name="endorserName" value="Endorser Record 1" />
+		<property name="email" value="personal@email.com" />
+		<property name="phone" value="635785645" />	
+		<property name="linkedInProfile" value="http://www.link.com" />	
+		<property name="comments" value="Comment 1" />
+	</bean>
+	
+	<bean id="endorserRecord2" class="domain.EndorserRecord">
+		<property name="endorserName" value="Endorser Record 2" />
+		<property name="email" value="personal@email.com" />
+		<property name="phone" value="635785645" />	
+		<property name="linkedInProfile" value="http://www.link.com" />	
+		<property name="comments" value="Comment 2" />
+	</bean>
+	
+	<bean id="endorserRecord3" class="domain.EndorserRecord">
+		<property name="endorserName" value="Endorser Record 3" />
+		<property name="email" value="personal@email.com" />
+		<property name="phone" value="635785645" />	
+		<property name="linkedInProfile" value="http://www.link.com" />	
+		<property name="comments" value="Comment 3" />
+	</bean>
+	
+	<!--  PROFESSIONAL RECORDS -->
+	
+	<bean id="professionalRecord1" class="domain.ProfessionalRecord">
+		<property name="companyName" value="Professional Record 1" />
+		<property name="startDate" value="20/05/2005 12:30" />
+		<property name="endDate" value="25/05/2010 13:30" />
+		<property name="role" value="Role 1" />
+		<property name="attachment" value="http://attachment.com" />
+		<property name="comments" value="Comment 1" />
+	</bean>
+	
+	<bean id="professionalRecord2" class="domain.ProfessionalRecord">
+		<property name="companyName" value="Professional Record 2" />
+		<property name="startDate" value="20/05/2005 12:30" />
+		<property name="endDate" value="25/05/2010 13:30" />
+		<property name="role" value="Role 2" />
+		<property name="attachment" value="http://attachment.com" />
+		<property name="comments" value="Comment 2" />
+	</bean>
+	
+	<bean id="professionalRecord3" class="domain.ProfessionalRecord">
+		<property name="companyName" value="Professional Record 3" />
+		<property name="startDate" value="20/05/2005 12:30" />
+		<property name="endDate" value="25/05/2010 13:30" />
+		<property name="role" value="Role 3" />
+		<property name="attachment" value="http://attachment.com" />
+		<property name="comments" value="Comment 3" />
+	</bean>
+	
+	<!--  MISCELLANEOUS RECORDS -->
+	
+	<bean id="miscellaneousRecord1" class="domain.MiscellaneousRecord">
+		<property name="title" value="Miscellaneous Record 1" />
+		<property name="attachment" value="http://attachment.com" />
+		<property name="comments" value="Comment 1" />
+	</bean>
+	
+	<bean id="miscellaneousRecord2" class="domain.MiscellaneousRecord">
+		<property name="title" value="Miscellaneous Record 2" />
+		<property name="attachment" value="http://attachment.com" />
+		<property name="comments" value="Comment 2" />
+	</bean>
+	
+	<bean id="miscellaneousRecord3" class="domain.MiscellaneousRecord">
+		<property name="title" value="Miscellaneous Record 3" />
+		<property name="attachment" value="http://attachment.com" />
+		<property name="comments" value="Comment 3" />
+	</bean>
+	
+	<!-- SPONSORSHIP -->	
+	
 	<bean id="sponsorship1" class="domain.Sponsorship">
-		<property name="banner" value="http://www.pics.com/asjda" />
-		<property name="link" value="http://www.juntadeandalucia.com" />
+		<property name="banner" value="https://www.trivantis.com/wp-content/uploads/2012/11/test-review-banner1.png" />
+		<property name="link" value="https://www.3djuegos.com/trucos-juegos/0/todos/" />
 		<property name="isActivated" value="True"/>
 		<property name="sponsor" ref="sponsor1" />
 		<property name="betPool" ref="betPool4" />
 	</bean>
 	
 	<bean id="sponsorship2" class="domain.Sponsorship">
-		<property name="banner" value="http://www.pics.com/asjda" />
-		<property name="link" value="http://www.juntadeandalucia.com" />
+		<property name="banner" value="https://image.jimcdn.com/app/cms/image/transf/dimension=990x10000:format=jpg/path/safeff283135903fb/image/i20a93875e12c4be9/version/1524056946/image.jpg" />
+		<property name="link" value="https://www.3djuegos.com/novedades/analisis/juegos/0f0f0f0/fecha/" />
 		<property name="isActivated" value="True"/>
 		<property name="sponsor" ref="sponsor2" />
 		<property name="betPool" ref="betPool5" />
 	</bean>
 	
 	<bean id="sponsorship3" class="domain.Sponsorship">
-		<property name="banner" value="http://www.pics.com/asjda" />
-		<property name="link" value="http://www.juntadeandalucia.com" />
+		<property name="banner" value="http://apps.testinsane.com/mindmaps/Content/images/Mindmap%20Apps%20Website%20Banner%202.jpg" />
+		<property name="link" value="https://www.3djuegos.com/novedades/analisis/juegos/0f0f0f0/fecha/" />
 		<property name="isActivated" value="True"/>
 		<property name="sponsor" ref="sponsor3" />
 		<property name="betPool" ref="betPool6" />

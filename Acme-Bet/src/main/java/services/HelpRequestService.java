@@ -1,7 +1,6 @@
 package services;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
@@ -9,14 +8,13 @@ import java.util.Random;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.HelpRequestRepository;
-import security.LoginService;
-import domain.Actor;
 import domain.Category;
 import domain.HelpRequest;
 import domain.Message;
@@ -106,6 +104,7 @@ public class HelpRequestService {
 		
 		validator.validate(result, binding);
 		if(binding.hasErrors()){
+			System.out.println("uwu");
 			System.out.println(binding.getFieldErrors());
 			throw new ValidationException();
 		}
@@ -132,27 +131,46 @@ public class HelpRequestService {
 	        return saltStr;
 	}
 
-	public Message reconstructMessage(HelpRequest request, Message message, BindingResult bindingResult) {
+	public Message reconstructMessage(Message message, BindingResult bindingResult) {
 		Message res;
+		
 		res = message;
 		res.setFlagSpam(false);
 		res.setMoment(new Date());
 		res.setTags(new ArrayList<String>());
-		res.setRecipient(request.getUser());
-		System.out.println("que");
 		res.setSender(counselorService.findByPrincipal());
-		String s = "HELP from "+counselorService.findByPrincipal().getUserAccount().getUsername();
-		res.getTags().add(request.getTicker()); res.getTags().add(s);
-		System.out.println("no");
+		
 		validator.validate(res, bindingResult);
-		System.out.println("quejjj");
 		if(bindingResult.hasErrors()){
-			System.out.println("sfjaoifj");
 			throw new ValidationException();
 		}
+		
 		return res;
 	}
 
+	public Double getAvgHelpRequestsPerUser(){
+		Double res = this.helpRequestRepository.getAvgHelpRequestsPerUser();
+		if(res==null)res=0d;
+		return res;
+	}
+
+	public Integer getMinHelpRequestsPerUser(){
+		Integer res = this.helpRequestRepository.getMinHelpRequestsPerUser();
+		if(res==null)res=0;
+		return res;
+	}
+	
+	public Integer getMaxHelpRequestsPerUser(){
+		Integer res = this.helpRequestRepository.getMaxHelpRequestsPerUser();
+		if(res==null)res=0;
+		return res;
+	}
+	
+	public Double getStdevHelpRequestsPerUser(){
+		Double res = this.helpRequestRepository.getStdevHelpRequestsPerUser();
+		if(res==null)res=0d;
+		return res;
+	}
 
 
 }

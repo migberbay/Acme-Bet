@@ -22,13 +22,6 @@
 <form:form action="warranty/admin/edit.do" modelAttribute="warranty">
 	
 	<security:authorize access="hasRole('ADMIN')">
-	
-		<form:hidden path="id"/>
-		<form:hidden path="version"/>
-		
-		<jstl:if test="${warranty.id == 0}">
-			<form:hidden path="isFinal"/>
-		</jstl:if>
 				
 		<acme:textbox code="warranty.title" path="title"/>
 		<br />	
@@ -36,7 +29,7 @@
 		<br />
 		<acme:textbox code="warranty.laws" path="laws"/>
 		<br />
-		<jstl:if test="${warranty.id != 0}">
+		<jstl:if test="${create == false}">
 			<acme:checkbox code="warranty.isFinal" path="isFinal"/>
 			<br />
 		</jstl:if>

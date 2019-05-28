@@ -3,8 +3,9 @@ package controllers.user;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.validation.ValidationException;
 
-import org.hibernate.metamodel.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;

@@ -2,25 +2,30 @@ package services;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.SponsorshipRepository;
 import security.LoginService;
+import domain.BetPool;
 import domain.Sponsorship;
 
 @Service
 @Transactional
 public class SponsorshipService {
 	
-	//Managed repository
+	//Managed repository ----------------------------------------------------------------------------
+	
 	@Autowired
 	private SponsorshipRepository sponsorshipRepository;
 	
-	//Supporting services
+	//Supporting services ----------------------------------------------------------------------------
 	
 	@Autowired
 	private SponsorService sponsorService;
@@ -75,6 +80,11 @@ public class SponsorshipService {
 		ss.setIsActivated(res);
 		this.save(ss);
 	}
+	
+	public Collection<Sponsorship> findByBetPool(BetPool betPool){
+		return this.sponsorshipRepository.findByBetPool(betPool);
+	}
+	
 //	
 //	public Collection<Sponsorship> findByPosition(Position position) {
 //		Collection<Sponsorship> sponsorships;
@@ -84,75 +94,52 @@ public class SponsorshipService {
 //		return sponsorships;
 //	}
 //	
-//	public Sponsorship reconstruct(Sponsorship sponsorship, BindingResult binding) {
-//		Sponsorship result;
-//		
-//		if(sponsorship.getId()==0) {
-//			result = sponsorship;
-//			result.setSponsor(this.sponsorService.findByPrincipal());
-//
-//		} else {
-//			result = this.sponsorshipRepository.findOne(sponsorship.getId());
-//			result.setBanner(sponsorship.getBanner());
-//			result.setTarget(sponsorship.getTarget());
-//			result.setPosition(sponsorship.getPosition());
-//		}
-//		validator.validate(result, binding);
-//		if(binding.hasErrors()) {
-//			throw new ValidationException();
-//		}
-//		
-//		return result;
-//		
-//	}
-//	
-//	public Double getAvgSponsorshipsPerSponsor(){
-//		Double res = sponsorshipRepository.getAvgSponsorshipsPerSponsor();
-//		if(res==null)res=0d;
-//		return res;
-//	}
-//	
-//	public Integer getMinSponsorshipsPerSponsor(){
-//		Integer res = sponsorshipRepository.getMinSponsorshipsPerSponsor();
-//		if(res==null)res=0;
-//		return res;
-//	}
-//	
-//	public Integer getMaxSponsorshipsPerSponsor(){
-//		Integer res = sponsorshipRepository.getMaxSponsorshipsPerSponsor();
-//		if(res==null)res=0;
-//		return res;
-//	}
-//
-//	public Double getStdevSponsorshipsPerSponsor(){
-//		Double res = sponsorshipRepository.getStdevSponsorshipsPerSponsor();
-//		if(res==null)res=0d;
-//		return res;
-//	}
+	public Sponsorship reconstruct(Sponsorship sponsorship, int id, BindingResult binding) {
+		Sponsorship result;
+		
+		if(id==0) {
+			result = sponsorship;
+			result.setSponsor(this.sponsorService.findByPrincipal());
+			result.setIsActivated(true);
+
+		} else {
+			result = this.sponsorshipRepository.findOne(id);
+			result.setBanner(sponsorship.getBanner());
+			result.setBetPool(sponsorship.getBetPool());
+			result.setIsActivated(sponsorship.getIsActivated());
+			result.setLink(sponsorship.getLink());
+		}
+		
+		validator.validate(result, binding);
+		if(binding.hasErrors()) {
+			throw new ValidationException();
+		}
+		
+		return result;
+	}
 	
+	public Double getAvgSponsorshipsPerSponsor(){
+		Double res = sponsorshipRepository.getAvgSponsorshipsPerSponsor();
+		if(res==null)res=0d;
+		return res;
+	}
 	
+	public Integer getMinSponsorshipsPerSponsor(){
+		Integer res = sponsorshipRepository.getMinSponsorshipsPerSponsor();
+		if(res==null)res=0;
+		return res;
+	}
 	
-//	public Double getAvgSponsorshipsPerPosition(){
-//		Double res = sponsorshipRepository.getAvgSponsorshipsPerPosition();
-//		if(res==null)res=0d;
-//		return res;
-//	}
-//	
-//	public Integer getMinSponsorshipsPerPosition(){
-//		Integer res = sponsorshipRepository.getMinSponsorshipsPerPosition();
-//		if(res==null)res=0;
-//		return res;
-//	}
-//	
-//	public Integer getMaxSponsorshipsPerPosition(){
-//		Integer res = sponsorshipRepository.getMaxSponsorshipsPerPosition();
-//		if(res==null)res=0;
-//		return res;
-//	}
-//
-//	public Double getStdevSponsorshipsPerPosition(){
-//		Double res = sponsorshipRepository.getStdevSponsorshipsPerPosition();
-//		if(res==null)res=0d;
-//		return res;
-//	}
+	public Integer getMaxSponsorshipsPerSponsor(){
+		Integer res = sponsorshipRepository.getMaxSponsorshipsPerSponsor();
+		if(res==null)res=0;
+		return res;
+	}
+
+	public Double getStdevSponsorshipsPerSponsor(){
+		Double res = sponsorshipRepository.getStdevSponsorshipsPerSponsor();
+		if(res==null)res=0d;
+		return res;
+	}
+
 }

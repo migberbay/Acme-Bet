@@ -27,21 +27,19 @@
 			<b>Funds</b>: <jstl:out value="${actor.funds}"/> <br/>
 			<b>Fare</b>: <jstl:out value="${actor.fare}"/> <br/>
 		</jstl:if> 
-		
-<%-- 		<jstl:if test="${isCompany and actor.auditScore == null}">
-			<b>Audit Score</b>: NIL <br/>
-		</jstl:if>
-		
-		<jstl:if test="${isProvider}">
-			<b><spring:message code="actor.sponsor.sponsorship.fare"/></b> <jstl:out value="${debt}"/><br/>
-		</jstl:if>  --%>
+
 		
 	</div>
 	<br/>
 	
-<%--  	<jstl:if test="${principalIsAdmin}">
-			<b>Spammer:</b> <jstl:out value="${actor.isSpammer}"/><br/>
-		</jstl:if>  --%>
+  		<jstl:if test="${principalIsAdmin}">
+			<b>Suspicious:</b> <jstl:out value="${actor.isSuspicious}"/><br/>
+			
+			<jstl:if test="${actorIsUser}">
+			<b>Luck score:</b> <jstl:out value="${actor.luckScore}"/><br/>
+			</jstl:if>
+			
+		</jstl:if>  
 		
 		<br>
 		
@@ -58,7 +56,7 @@
 			
 		</jstl:if>
 		
-		<h3><spring:message code="actor.socialProfile"/>:</h3> 
+	<h3><spring:message code="actor.socialProfile"/>:</h3> 
 		
 		<jstl:if test="${logged}">
 			<a href="socialProfile/create.do"> <spring:message code="actor.create" /> </a><br>
@@ -75,12 +73,28 @@
 		</jstl:if>
 		    <display:column titleKey="actor.socialProfile.nick" property="nick" />
 		    <display:column titleKey="actor.socialProfile.socialNetwork" property="socialNetwork" />
-		    <display:column titleKey="actor.socialProfile.link" property="link" />
-		    
-		</display:table>
+		    <display:column titleKey="actor.socialProfile.link" property="link" />	
+	</display:table>
 		<br>
 		
 		
+	<jstl:if test="${reviews.isEmpty() == false}">
+		<h3><spring:message code="actor.reviews"/>:</h3> 
+		<display:table name="reviews" id="row" requestURI="actor/show.do" pagesize="5">
+		<display:column>
+			<a href="review/show.do?reviewId=${row.id}"><spring:message code="review.show"/></a><br/>
+		</display:column>
+		<display:column titleKey="review.description" property="description" />
+		<spring:message code="review.moment.format" var="formatMoment"/>
+		<display:column titleKey="review.moment" property="moment" format="{0,date,${formatMoment} }"/>
+		<display:column titleKey="review.score" property="score"/>
+		<display:column titleKey="review.user">
+			<a href="actor/show.do?actorId=${row.user.id}"><jstl:out value="${row.user.userAccount.username}"/></a>
+		</display:column>
+	</display:table>
+			
+	</jstl:if>
+
 	<jstl:if test="${logged}">
 				<a href="actor/delete.do" onclick="confirmLeave();">delete ALL data</a><br>
 				<a href="actor/generateData.do"> <spring:message code="actor.generate" /> </a> <br>

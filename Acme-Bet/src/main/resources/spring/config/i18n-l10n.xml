@@ -34,6 +34,8 @@
 		<value>/views/category/messages</value>
 		<value>/views/helpRequest/messages</value>
 		<value>/views/petition/messages</value>
+		<value>/views/finder/messages</value>
+		<value>/views/review/messages</value>
 		
 		<value>/views/error/messages</value>
 	</util:list>

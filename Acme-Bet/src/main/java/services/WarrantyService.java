@@ -3,10 +3,14 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.WarrantyRepository;
 import security.LoginService;
@@ -23,6 +27,8 @@ public class WarrantyService {
 	
 	//Supporting Services ---------------------------------------------------------------------
 	
+	@Autowired
+	private Validator validator;
 	
 	//Simple CRUD methods ---------------------------------------------------------------------
 	
@@ -59,6 +65,27 @@ public class WarrantyService {
 	
 	//Other business methods --------------------------------------------------------------
 	
-
+	public Warranty reconstruct(Warranty warranty, int id, BindingResult binding) {
+		Warranty result;
+		
+		if(id==0) {
+			result = warranty;
+			result.setIsFinal(false);
+		} else {
+			result = this.warrantyRepository.findOne(id);
+			result.setIsFinal(warranty.getIsFinal());
+			result.setLaws(warranty.getLaws());
+			result.setTerms(warranty.getTerms());
+			result.setTitle(warranty.getTitle());
+		}
+		
+		validator.validate(result, binding);
+		if(binding.hasErrors()) {
+			throw new ValidationException();
+		}
+		
+		return result;
+		
+	}
 
 }

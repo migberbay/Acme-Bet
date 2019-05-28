@@ -25,6 +25,7 @@
 					<li class="arrow"></li>
 					<li><a href="admin/configuration.do"><spring:message code="master.page.configuration" /></a></li>
 					<li><a href="admin/dashboard.do"><spring:message code="master.page.dashboard" /></a></li>
+					<li><a href="admin/listActors.do"><spring:message code="master.page.actors.list" /></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message	code="master.page.category" /></a>
@@ -38,6 +39,7 @@
 		</security:authorize>
 		
 		<security:authorize access="hasRole('USER')">
+		<li><a class="fNiv" href="finder/user/filter.do"><spring:message code="master.page.finder" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.user" /></a>
 				<ul>
 					<li class="arrow"></li>
@@ -51,7 +53,15 @@
 					<li><a href="helpRequest/user/create.do"><spring:message code="master.page.helpRequest.create" /></a></li>
 				</ul>
 			</li>
+			<li><a class="fNiv"><spring:message	code="master.page.review" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="review/user/list.do"><spring:message code="master.page.review.list" /></a></li>
+					<li><a href="review/user/create.do"><spring:message code="master.page.review.create" /></a></li>
+				</ul>
+			</li>
 		</security:authorize>
+		
 		
 		<security:authorize access="hasRole('BOOKMAKER')">
 			<li><a class="fNiv"><spring:message	code="master.page.bookmaker" /></a>

@@ -23,5 +23,17 @@ public interface HelpRequestRepository extends JpaRepository<HelpRequest, Intege
 
 	@Query("select h from HelpRequest h where h.status = 'OPEN'")
 	Collection<HelpRequest> getOpenRequests();
+	
+	@Query("select avg(u.helpRequests.size) from User u")
+	Double getAvgHelpRequestsPerUser();
+
+	@Query("select min(u.helpRequests.size) from User u")
+	Integer getMinHelpRequestsPerUser();
+	
+	@Query("select max(u.helpRequests.size) from User u")
+	Integer getMaxHelpRequestsPerUser();
+	
+	@Query("select stddev(u.helpRequests.size) from User u")
+	Double getStdevHelpRequestsPerUser();
 }
 

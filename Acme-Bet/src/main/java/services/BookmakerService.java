@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,4 +63,8 @@ public class BookmakerService {
 		return this.bookmakerRepository.findByUserAccount(LoginService.getPrincipal());
 	}
 
+	public Collection<Bookmaker> getBookmakersWMoreBetPools(){
+		return this.bookmakerRepository.getBookmakersWMoreBetPools();
+	}
+	
 }

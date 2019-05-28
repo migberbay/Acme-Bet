@@ -34,6 +34,8 @@
 		<value>/views/category/tiles.xml</value>
 		<value>/views/helpRequest/tiles.xml</value>
 		<value>/views/petition/tiles.xml</value>
+		<value>/views/finder/tiles.xml</value>
+		<value>/views/review/tiles.xml</value>
 		
 		<value>/views/error/tiles.xml</value>
 	</util:list>

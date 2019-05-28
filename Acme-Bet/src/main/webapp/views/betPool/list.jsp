@@ -17,13 +17,19 @@
 	
 	<display:table name="betPools" id="row" requestURI="${requestURI}" pagesize="5">
 		<display:column titleKey="pool.action" >
-			<a href="betPool/show.do?betPoolId=${row.id}">show</a><br>
-			<jstl:if test="${isUser}">
-			<a href="bet/user/create.do?betPoolId=${row.id}">bet</a>
+				<a href="betPool/show.do?betPoolId=${row.id}">show</a><br>
+				
+			<jstl:if test="${isUser and date.before(row.endDate) and date.after(row.startDate) and row.winners.isEmpty()}">
+				<a href="bet/user/create.do?betPoolId=${row.id}">bet</a>
 			</jstl:if>
+			
 			<jstl:if test="${isOwner and row.isFinal == false}">
-			<a href="betPool/bookmaker/edit.do?betPoolId=${row.id}">edit</a><br>
-			<a href="betPool/bookmaker/delete.do?betPoolId=${row.id}">delete</a>
+				<a href="betPool/bookmaker/edit.do?betPoolId=${row.id}">edit</a><br>
+				<a href="betPool/bookmaker/delete.do?betPoolId=${row.id}">delete</a>
+			</jstl:if>
+			
+			<jstl:if test="${isOwner and row.isFinal and date.after(row.endDate) and row.winners.isEmpty()}">
+				<a href="betPool/bookmaker/selectWinners.do?betPoolId=${row.id}">chooseWinners</a><br>
 			</jstl:if>
 			
 		</display:column>

@@ -34,16 +34,19 @@ public class SocialProfileServiceTest extends AbstractTest {
 	@Test
 	public void driverCreateSocialProfile(){
 		
-		final Object testingData[][] = {{"company1", null},
-										{"company2", null},
-										{"company3", null},
+		final Object testingData[][] = {{"bookmaker1", null},
+										{"bookmaker2", null},
+										{"bookmaker3", null},
 										{"admin",    null},
-										{"rookie1",  null},
-										{"rookie2",  null},
-										{"rookie3",  null},
-										{"rookie4",  null},
-										{"rookie5",  null},
-										{"rookie6",  null}};
+										{"counselor1",  null},
+										{"counselor2",  null},
+										{"counselor3",  null},
+										{"user1",  null},
+										{"user2",  null},
+										{"user3",  null}, 
+										{"sponsor1", null},
+										{"sponsor2", null},
+										{"sponsor3", null}};
 		
 		for(int i = 0; i < testingData.length; i++){
 			templateCreateSocialProfile((String) testingData[i][0], (Class<?>)testingData[i][1]);
@@ -104,13 +107,13 @@ public class SocialProfileServiceTest extends AbstractTest {
 	@Test
 	public void driverSaveSocialProfile(){
 		
-		Object testingData[][] = {{"company1", "nick", "socialNetwork", "https://www.linksocial.com", null},
-								  {"company2", "nick", "socialNetwork", "https://www.linksocial.com", null},
-								  {"company3", "nick", "socialNetwork", "https://www.linksocial.com", null},
+		Object testingData[][] = {{"counselor1", "nick", "socialNetwork", "https://www.linksocial.com", null},
+								  {"bookmaker1", "nick", "socialNetwork", "https://www.linksocial.com", null},
+								  {"sponsor1", "nick", "socialNetwork", "https://www.linksocial.com", null},
 								  {"admin", "", "", "", javax.validation.ConstraintViolationException.class},
-								  {"rookie1", "", "socialNetwork", "https://www.linksocial.com", javax.validation.ConstraintViolationException.class},
-								  {"rookie2", "nick", "", "https://www.linksocial.com",          javax.validation.ConstraintViolationException.class},
-								  {"rookie3", "nick", "socialNetwork", "link",                   javax.validation.ConstraintViolationException.class}};
+								  {"sponsor1", "", "socialNetwork", "https://www.linksocial.com", javax.validation.ConstraintViolationException.class},
+								  {"sponsor2", "nick", "", "https://www.linksocial.com",          javax.validation.ConstraintViolationException.class},
+								  {"sponsor3", "nick", "socialNetwork", "link",                   javax.validation.ConstraintViolationException.class}};
 		
 		for(int i = 0; i < testingData.length; i++){
 			templateSaveSocialProfile((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], 
@@ -175,9 +178,10 @@ public class SocialProfileServiceTest extends AbstractTest {
 	@Test
 	public void driverUpdateSocialProfile(){
 		
-		Object testingData[][] = {{"company1", "nick", "socialNetwork", "https://www.linksocial.com", null},
-								  {"company2", "nick", "socialNetwork", "https://www.linksocial.com", null},
-								  {"company3", "nick", "socialNetwork", "https://www.linksocial.com", null}};
+		Object testingData[][] = {{"counselor1", "nick", "socialNetwork", "https://www.linksocial.com", null},
+								  {"bookmaker1", "nick", "socialNetwork", "https://www.linksocial.com", null},
+								  {"sponsor1",   "nick", "socialNetwork", "https://www.linksocial.com", null}, 
+								  {"user1",      "nick", "socialNetwork", "https://www.linksocial.com", null}};
 		
 		for(int i = 0; i < testingData.length; i++){
 			templateUpdateSocialProfile((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], 
@@ -229,7 +233,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 	@Test(expected = org.springframework.dao.DataIntegrityViolationException.class)
 	public void testDeleteIncorrectAuthenticated() {
 		
-		authenticate("rookie1");
+		authenticate("counselor1");
 		
 		SocialProfile socialProfile = (SocialProfile) socialProfileService.findAll().toArray()[0];
 		
@@ -244,12 +248,12 @@ public class SocialProfileServiceTest extends AbstractTest {
 	public void driverDeleteSocialProfile(){
 		
 		Object testingData[][] = {{"admin", null}};
-//								  {"company1", org.springframework.dao.DataIntegrityViolationException.class},
-//								  {"company2", org.springframework.dao.DataIntegrityViolationException.class},
-//								  {"company3", org.springframework.dao.DataIntegrityViolationException.class},
-//								  {"rookie1",  org.springframework.dao.DataIntegrityViolationException.class},
-//								  {"rookie2",  org.springframework.dao.DataIntegrityViolationException.class},
-//								  {"rookie3",  org.springframework.dao.DataIntegrityViolationException.class}};
+//								  {"bookmaker1", org.springframework.dao.DataIntegrityViolationException.class},
+//								  {"bookmaker2", org.springframework.dao.DataIntegrityViolationException.class},
+//								  {"bookmaker3", org.springframework.dao.DataIntegrityViolationException.class},
+//								  {"counselor1",  org.springframework.dao.DataIntegrityViolationException.class},
+//								  {"counselor2",  org.springframework.dao.DataIntegrityViolationException.class},
+//								  {"counselor3",  org.springframework.dao.DataIntegrityViolationException.class}};
 		
 		for(int i = 0; i < testingData.length; i++){
 			templateDeleteSocialProfile((String) testingData[i][0], (Class<?>)testingData[i][1]);

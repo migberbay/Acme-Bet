@@ -9,7 +9,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 	    
-	    <div>
+<div>
 		    <b><spring:message code="helpRequest.description"/>:</b> <jstl:out value="${helpRequest.description}"   /> <br/> 
 		    <b><spring:message code="helpRequest.attachments" />:</b> 
 		    <jstl:forEach var="x" items="${helpRequest.attachments}">
@@ -30,7 +30,7 @@
 			 <a href="actor/show.do?actorId=${helpRequest.counselor.id}"><jstl:out value="${helpRequest.counselor.userAccount.username}" /></a> <br/>
 			 
 			 <b><spring:message code="helpRequest.betPool" />:</b> 
-			 <a href="betPool/show.do?actorId=${helpRequest.betPool.id}"><jstl:out value="${helpRequest.betPool.title}" /></a> <br/>
+			 <a href="betPool/show.do?betPoolId=${helpRequest.betPool.id}"><jstl:out value="${helpRequest.betPool.title}" /></a> <br/>
 		</div>
 		
 		<br/>

@@ -1,5 +1,6 @@
 package controllers.counselor;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.ValidationException;
@@ -8,19 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-
-import services.BetPoolService;
-import services.CategoryService;
-import services.HelpRequestService;
 import services.CounselorService;
+import services.HelpRequestService;
 import services.MessageService;
 import controllers.AbstractController;
-
 import domain.HelpRequest;
 import domain.Message;
 
@@ -136,24 +134,22 @@ public class HelpRequestCounselorController extends AbstractController {
 	// Save answer -----------------------------------------------------------------
 
 	@RequestMapping(value = "/answer", params = "save", method = RequestMethod.POST)
-	public ModelAndView answer(Message m, BindingResult bindingResult) {
+	public ModelAndView answer(@ModelAttribute("m") Message m, BindingResult bindingResult) {
 		ModelAndView result;
 		try {
-			System.out.println("uwu");
-			Message savedM = helpRequestService.reconstructMessage(this.request,m, bindingResult);
+			m.setRecipient(this.request.getUser());
+			m.setTags(new ArrayList<String>());
+			String s = "HELP from "+counselorService.findByPrincipal().getUserAccount().getUsername();
+			m.getTags().add(request.getTicker()); m.getTags().add(s);
+			Message savedM = helpRequestService.reconstructMessage(m, bindingResult);
 			messageService.save(savedM);
 			this.request.setStatus("PENDING");
 			this.request.setCounselor(counselorService.findByPrincipal());
-			System.out.println("qué");
 			helpRequestService.save(this.request);
-			System.out.println("no");
 			result = new ModelAndView("redirect:list.do");
 		} catch (ValidationException oops) {
-			System.out.println("11");
-			oops.printStackTrace();
 			result = this.createEditModelAndView(m);
 		} catch (Throwable e) {
-			System.out.println("12");
 			result = this.createEditModelAndView(m);
 		}
 		

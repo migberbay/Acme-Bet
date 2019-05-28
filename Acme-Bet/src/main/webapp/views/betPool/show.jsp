@@ -19,6 +19,17 @@
 	<b><spring:message code="pool.startDate"/>:</b> <fmt:formatDate pattern = "${format}" value = "${betPool.startDate}" /><br>
 	<b><spring:message code="pool.endDate"/>:</b> <fmt:formatDate pattern = "${format}" value = "${betPool.endDate}" /><br>
 	<b><spring:message code="pool.resultDate"/>:</b> <fmt:formatDate pattern = "${format}" value = "${betPool.resultDate}" /><br>
+	<br>
+<jstl:choose>
+    <jstl:when test="${sponsorship == null}">
+       	<a href=#><img src='<spring:message code="pool.banner"/>' height="100" width="1000"/></a>
+        <br />
+    </jstl:when>    
+    <jstl:otherwise>
+    	<a href="${sponsorship.link}" target="_blank"> <img src="${sponsorship.banner}" height="100" width="1000"/></a><br/>
+    </jstl:otherwise>
+</jstl:choose>
+	
 	<display:table name="betPool.participants" id="row" requestURI="betPool/show.do" pagesize="5">
 		<display:column titleKey="pool.participants">
 			<jstl:out value="${row}"></jstl:out>

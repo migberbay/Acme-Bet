@@ -1,6 +1,7 @@
 package controllers.admin;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -20,17 +21,20 @@ import security.LoginService;
 import services.ActorService;
 import services.ConfigurationService;
 import services.MessageService;
+import services.UserService;
 import services.WordService;
 import controllers.AbstractController;
 import domain.Actor;
+import domain.Bet;
 import domain.Configuration;
 import domain.Message;
+import domain.User;
 import domain.Word;
 import forms.ConfigurationForm;
 
 @Controller
 @RequestMapping("/admin/")
-public class AdminConfigurationController extends AbstractController {
+public class ConfigurationAdminController extends AbstractController {
 	
 	@Autowired
 	private ConfigurationService configurationService;
@@ -40,6 +44,9 @@ public class AdminConfigurationController extends AbstractController {
 	
 	@Autowired
 	private ActorService actorService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private MessageService messageService;
@@ -152,8 +159,8 @@ public class AdminConfigurationController extends AbstractController {
 	@RequestMapping(value="/listActors", method=RequestMethod.GET)
 	public ModelAndView listActors(){
 		ModelAndView res;
-		Authority companyAuth = new Authority();
-		companyAuth.setAuthority("COMPANY");
+		Authority userAuth = new Authority();
+		userAuth.setAuthority(Authority.USER);
 		if (!LoginService.hasRole("ADMIN")) {
 			res = new ModelAndView("error/access");
 		}else{
@@ -165,16 +172,16 @@ public class AdminConfigurationController extends AbstractController {
 				
 			}
 		}
+		res.addObject("userAuth", userAuth);
 		res.addObject("actors",actorService.findAll());
-		res.addObject("companyAuth",companyAuth);
 		return res;
 	}
 	
 	@RequestMapping(value="/computeSpammers", method=RequestMethod.GET)
 	public ModelAndView computeSpammers(){
 		ModelAndView res;
-		Authority companyAuth = new Authority();
-		companyAuth.setAuthority("COMPANY");
+		Authority userAuth = new Authority();
+		userAuth.setAuthority(Authority.USER);
 		if (!LoginService.hasRole("ADMIN")) {
 			res = new ModelAndView("error/access");
 		}else{
@@ -208,49 +215,46 @@ public class AdminConfigurationController extends AbstractController {
 				
 			}
 		}
-		res.addObject("companyAuth",companyAuth);
+		res.addObject("userAuth", userAuth);
 		res.addObject("actors",actorService.findAll());
 		return res;
 	}
-	/*
+	
 	@RequestMapping(value="/computeScore", method=RequestMethod.GET)
 	public ModelAndView computeScore(){
 		ModelAndView res;
-		Authority companyAuth = new Authority();
-		companyAuth.setAuthority("COMPANY");
+		Authority userAuth = new Authority();
+		userAuth.setAuthority(Authority.USER);
 		if (!LoginService.hasRole("ADMIN")) {
 			res = new ModelAndView("error/access");
 		}else{
-		Collection<Company> companies = companyService.findAll();
-			try {
-				for (Company company : companies) {
-					Collection<Audit> audits = auditService.getAuditsPerCompany(company);
-					System.out.println(audits);
-					if(!audits.isEmpty()){
-						Double cont = 0.;
-						for (Audit audit : audits) {
-							cont += audit.getScore();
-						}
-						Double aux = (cont/audits.size())/10.0;
-						System.out.println(cont+"/"+audits.size()+"/10 = "+aux);
-						company.setAuditScore(aux);
-						companyService.save(company);
+		Collection<User> users = userService.findAll();
+			try {				
+				for (User user : users) {
+					System.out.println(user.getBets().size());
+					Double won = 0.;
+					Double lost = 0.;
+					for (Bet bet : user.getBets()) {
+						System.out.println(bet.getWinner()+ " "+ bet.getBetPool().getWinners());
+						if(bet.getBetPool().getWinners().contains(bet.getWinner())){
+							won++;
+						}else{lost++;}
 					}
+					user.setLuckScore(won - 0.5*lost);
+					userService.save(user);
 				}
-				
 				res = new ModelAndView("admin/listActors");
 				res.addObject("computedScore",true);
 			} catch (Throwable e) {
 				e.printStackTrace();
 				res = new ModelAndView("redirect:listActors.do");
-				
 			}
 		}
-		res.addObject("companyAuth",companyAuth);
+		res.addObject("userAuth", userAuth);
 		res.addObject("actors",actorService.findAll());
 		return res;
 	}
-	*/
+	
 	@RequestMapping(value="/banActor", method=RequestMethod.GET)
 	public ModelAndView banActor(@RequestParam int actorId){
 		ModelAndView res;
@@ -297,7 +301,8 @@ public class AdminConfigurationController extends AbstractController {
 			}
 		}
 		return res;
-	}/*
+	}
+	/*
 	
 	@RequestMapping(value="/notifyUpdate", method=RequestMethod.GET)
 	public ModelAndView notifyUpdate(){

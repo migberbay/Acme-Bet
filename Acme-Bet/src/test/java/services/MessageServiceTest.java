@@ -29,8 +29,8 @@ public class MessageServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreateAndSave() {
-		authenticate("rookie1");
-		Actor actor = actorService.findOne(getEntityId("rookie1"));
+		authenticate("bookmaker1");
+		Actor actor = actorService.findOne(getEntityId("bookmaker1"));
 
 		Message m = messageService.create(actor);
 		m.setBody("body");
@@ -48,8 +48,8 @@ public class MessageServiceTest extends AbstractTest {
 
 	@Test
 	public void testDelete() {
-		authenticate("rookie1");
-		Actor actor = actorService.findOne(getEntityId("rookie1"));
+		authenticate("bookmaker1");
+		Actor actor = actorService.findOne(getEntityId("bookmaker1"));
 
 		Message m = messageService.create(actor);
 		m.setBody("body");
@@ -73,7 +73,7 @@ public class MessageServiceTest extends AbstractTest {
 
 	@Test
 	public void driverMessage() {
-		Object testingData[][] = { { "rookie1", null }, { null, null } };
+		Object testingData[][] = { { "bookmaker1", null }, { null, null } };
 		for (int i = 0; i < testingData.length; i++) {
 			templateMessage((String) testingData[i][0],
 					(Class<?>) testingData[i][1]);
@@ -85,7 +85,7 @@ public class MessageServiceTest extends AbstractTest {
 		try {
 			authenticate(o);
 
-			Actor actor = actorService.findOne(getEntityId("rookie1"));
+			Actor actor = actorService.findOne(getEntityId("bookmaker1"));
 
 			Message m = messageService.create(actor);
 			m.setBody("body");

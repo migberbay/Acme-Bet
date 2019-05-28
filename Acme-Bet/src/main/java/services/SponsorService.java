@@ -2,6 +2,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,6 +61,15 @@ public class SponsorService {
 	
 	public Sponsor findByPrincipal(){
 		return this.sponsorRepository.findByUserAccount(LoginService.getPrincipal());
+	}
+	
+	public Collection<Sponsor> topInActivatedSponsorships(){
+		ArrayList<Sponsor> res = (ArrayList<Sponsor>) sponsorRepository.topInActivatedSponsorships();
+		List<Sponsor> sub = res;
+		if(res.size()>5){
+			sub = res.subList(0, 4);
+			}
+		return sub;
 	}
 
 }

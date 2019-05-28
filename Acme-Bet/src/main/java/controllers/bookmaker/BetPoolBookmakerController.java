@@ -1,12 +1,15 @@
 package controllers.bookmaker;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.BetPoolService;
@@ -17,8 +20,9 @@ import services.WarrantyService;
 import controllers.AbstractController;
 import domain.Bet;
 import domain.BetPool;
+import domain.User;
 import forms.BetPoolForm;
-import forms.BettingForm;
+import forms.WinnersForm;
 
 @Controller
 @RequestMapping("betPool/bookmaker")
@@ -46,6 +50,7 @@ public class BetPoolBookmakerController extends AbstractController {
 			ModelAndView result = new ModelAndView("betPool/list");
 			result.addObject("betPools", betPoolService.getPoolsByPrincipal());
 			result.addObject("isOwner", true);
+			result.addObject("date", new Date());
 			result.addObject("requestURI","betPool/bookmaker/list.do");
 			return result;
 		}
@@ -88,6 +93,103 @@ public class BetPoolBookmakerController extends AbstractController {
 			return list();
 		}
 	
+	//Winners -----------------------------------------------------------
+		
+		@RequestMapping(value = "/selectWinners", method = RequestMethod.GET)
+		public ModelAndView selectWinners(Integer betPoolId) {
+			BetPool pool = betPoolService.findOne(betPoolId);
+			ModelAndView res;
+			if(pool.getWinners().isEmpty()){
+				res = new ModelAndView("betPool/selectWinners");
+				WinnersForm form = new WinnersForm();
+				form.setBetPoolId(betPoolId);
+				Collection<String> possibles = new ArrayList<>();
+				
+				possibles.add("TIE");
+				possibles.add("NO CONTEST");
+				possibles.addAll(pool.getParticipants());
+				
+				res.addObject("possibles", possibles);
+				res.addObject("form",form);
+			}else{
+				res = new ModelAndView("error/access");
+			}
+			
+			return res;
+		}
+		
+		@RequestMapping(value = "/selectWinners", method = RequestMethod.POST, params = "save")
+		public ModelAndView saveWinners(@ModelAttribute("form") WinnersForm form, BindingResult binding) {
+			ModelAndView res;
+			
+			BetPool pool = betPoolService.findOne(form.getBetPoolId());
+			Date date = new Date(System.currentTimeMillis()+120000);
+			
+			System.out.println(date);
+			pool.setStartDate(date);
+			pool.setEndDate(date);
+			pool.setResultDate(date);
+			
+			Collection<Bet> bets = new ArrayList<>();
+			for (Bet bet : pool.getBets()) {
+				if(bet.getIsAccepted()){bets.add(bet);}
+			}
+			pool.setBets(bets);
+			
+			Collection<String> winners = form.getWinners();
+			if (winners == null) {
+				res = selectWinners(form.getBetPoolId());
+				res.addObject("isEmpty", true);
+			}else{
+				res = new ModelAndView("redirect:/betPool/show.do?betPoolId="+form.getBetPoolId());
+				
+			if (winners.contains("NO CONTEST")){
+				for (Bet bet : pool.getBets()) {
+					User user = bet.getUser();
+					user.setFunds(bet.getAmount()+user.getFunds());
+					userService.save(user);
+				}
+				pool.getWinners().add("NO CONTEST");
+			}else if (winners.contains("TIE")) {
+				Double totalbets = 0.0;
+				for (Bet bet : pool.getBets()) {
+					totalbets=bet.getAmount()+totalbets;
+				}
+				
+				for (Bet bet : pool.getBets()) {
+					User user = bet.getUser();
+					Double size = new Double(pool.getBets().size());
+					user.setFunds(user.getFunds()+ (totalbets/size));
+					userService.save(user);
+				}
+				pool.getWinners().add("TIE");
+			}else{
+				winners.remove("TIE");
+				winners.remove("NO CONTEST");
+				//this should not appear anyway but i like to cover for myself.
+				for (String winner : winners) {
+					double totaluserwinners = 0.0;
+					double totalbetted = 0.0;
+						for (Bet bet : pool.getBets()) {
+							if(bet.getWinner().equals(winner)){totaluserwinners++;}
+							totalbetted = totalbetted + bet.getAmount();
+						}
+						for (Bet bet : pool.getBets()) {
+							if(bet.getWinner().equals(winner)){
+								User user = bet.getUser();
+								user.setFunds(user.getFunds()+(totalbetted/(totaluserwinners*winners.size())));
+								userService.save(user);
+						}
+					}
+				}
+			}
+			pool.getWinners().addAll(winners);
+		}
+			
+			betPoolService.save(pool);
+			
+			return res;
+		}
 	//Save ---------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
@@ -98,10 +200,21 @@ public class BetPoolBookmakerController extends AbstractController {
 		"\n"+form.getStartDate() + "\n"+form.getTitle() + "\n"+form.getCategory() + "\n"+form.getWarranty()+ "\n"+form.getIsFinal());
 		
 		BetPool pool = betPoolService.reconstruct(form,binding);
+		Boolean dateIncorrectOrder = true;
+		Boolean minimumParticipants = false;
 		
-			if (binding.hasErrors()) {
+		if (pool.getEndDate().after(pool.getStartDate()) && 
+			pool.getEndDate().before(pool.getResultDate())){dateIncorrectOrder = false;}
+		
+		if (pool.getParticipants().size()<2) {
+			minimumParticipants = true;
+		}
+		
+			if (binding.hasErrors() || dateIncorrectOrder || minimumParticipants) {
 				System.out.println(binding);
 				res = createEditModelAndView(form);
+				res.addObject("dateIncorrectOrder", dateIncorrectOrder);
+				res.addObject("minimumParticipants", minimumParticipants);
 			}else {
 				try {
 				if (pool.getIsFinal()) {

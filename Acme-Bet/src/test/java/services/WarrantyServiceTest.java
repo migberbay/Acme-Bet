@@ -37,7 +37,7 @@ public class WarrantyServiceTest extends AbstractTest {
 	@Test
 	public void testSave() {
 
-		super.authenticate("bookmaker1");
+		super.authenticate("admin");
 
 		Warranty warranty = warrantyService.create();
 
@@ -62,9 +62,9 @@ public class WarrantyServiceTest extends AbstractTest {
 	@Test
 	public void testUpdate(){
 		
-		super.authenticate("bookmaker1");
+		super.authenticate("admin");
 		
-		Warranty warranty = (Warranty) warrantyService.findAll().toArray()[0];
+		Warranty warranty = (Warranty) warrantyService.findAll().toArray()[1];
 		
 		warranty.setTitle("Updated title warranty");
 		warranty.setTerms("Updated terms warranty");
@@ -79,9 +79,9 @@ public class WarrantyServiceTest extends AbstractTest {
 	@Test
 	public void testDelete() {
 
-		super.authenticate("bookmaker1");
+		super.authenticate("admin");
 
-		Warranty warranty = (Warranty) warrantyService.findAll().toArray()[0];
+		Warranty warranty = (Warranty) warrantyService.findAll().toArray()[1];
 
 		warrantyService.delete(warranty);
 
