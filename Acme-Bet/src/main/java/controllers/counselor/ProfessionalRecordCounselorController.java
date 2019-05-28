@@ -106,6 +106,7 @@ public class ProfessionalRecordCounselorController extends AbstractController {
 
 		if (curricula.getCounselor().equals(logged)) {
 			try {
+				curricula.getProfessionalRecords().remove(professionalRecord);
 				this.professionalRecordService.delete(professionalRecord);
 				result = new ModelAndView(
 						"redirect:/curricula/counselor/show.do?counselorId="

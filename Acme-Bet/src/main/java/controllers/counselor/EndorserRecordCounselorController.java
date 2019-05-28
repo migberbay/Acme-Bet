@@ -106,6 +106,7 @@ public class EndorserRecordCounselorController extends AbstractController {
 
 		if (curricula.getCounselor().equals(logged)) {
 			try {
+				curricula.getEndorserRecords().remove(endorserRecord);
 				this.endorserRecordService.delete(endorserRecord);
 				result = new ModelAndView(
 						"redirect:/curricula/counselor/show.do?counselorId="

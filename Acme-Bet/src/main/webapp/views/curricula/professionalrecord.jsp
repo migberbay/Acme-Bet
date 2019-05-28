@@ -28,8 +28,12 @@
 	
 	<acme:textbox code="record.companyName" path="companyName"/>
 	<acme:textbox code="record.role" path="role"/>
-	<acme:textbox code="record.startDate" path="startDate"/>
-	<acme:textbox code="record.endDate" path="endDate"/>
+	<spring:message code = "record.startDate"/>
+	<input type= "datetime-local" name="startDate">
+	<form:errors path="startDate" cssClass="error" /><br>
+	<spring:message code = "record.endDate"/>
+	<input type= "datetime-local" name="endDate">
+	<form:errors path="endDate" cssClass="error" /><br>
 	<acme:textbox code="record.attachment" path="attachment"/>
 	<acme:textbox code="record.comments" path="comments"/>
 

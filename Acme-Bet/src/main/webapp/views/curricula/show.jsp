@@ -11,6 +11,8 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<spring:message code="record.dateformat" var = "format"/>
+
  <jstl:choose>
 
 	<jstl:when test="${curricula!=null}">
@@ -75,9 +77,7 @@
 			<display:column property="institution" title="${institutionHeader}"
 				sortable="false" />
 				
-			<spring:message code="educationRecord.startDate" var="startDateHeader" />
-			<display:column property="startDate" title="${startDateHeader}"
-				sortable="false" />	
+			<b><spring:message code="educationRecord.startDate"/></b> <fmt:formatDate pattern = "${format}" value = "${educationRecord.startDate}" /><br>
 				
 			<spring:message code="educationRecord.endDate" var="endDateHeader" />
 			<display:column property="endDate" title="${endDateHeader}"

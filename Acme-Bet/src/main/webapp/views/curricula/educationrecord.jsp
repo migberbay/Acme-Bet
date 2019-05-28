@@ -26,10 +26,16 @@
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
 	
+	
+	
 	<acme:textbox code="record.diplomaTitle" path="diplomaTitle"/>
 	<acme:textbox code="record.institution" path="institution"/>
-	<acme:textbox code="record.startDate" path="startDate"/>
-	<acme:textbox code="record.endDate" path="endDate"/>
+	<spring:message code = "record.startDate"/>
+	<input type= "datetime-local" name="startDate">
+	<form:errors path="startDate" cssClass="error" /><br>
+	<spring:message code = "record.endDate"/>
+	<input type= "datetime-local" name="endDate">
+	<form:errors path="endDate" cssClass="error" /><br>
 	<acme:textbox code="record.attachment" path="attachment"/>
 	<acme:textbox code="record.comments" path="comments"/>
 

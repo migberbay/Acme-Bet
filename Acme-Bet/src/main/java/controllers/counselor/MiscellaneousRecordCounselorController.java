@@ -106,6 +106,7 @@ public class MiscellaneousRecordCounselorController extends AbstractController {
 
 		if (curricula.getCounselor().equals(logged)) {
 			try {
+				curricula.getMiscellaneousRecords().remove(miscellaneousRecord);
 				this.miscellaneousRecordService.delete(miscellaneousRecord);
 				result = new ModelAndView(
 						"redirect:/curricula/counselor/show.do?counselorId="
