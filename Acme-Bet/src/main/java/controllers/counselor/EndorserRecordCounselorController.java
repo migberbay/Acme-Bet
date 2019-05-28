@@ -82,7 +82,7 @@ public class EndorserRecordCounselorController extends AbstractController {
 						"redirect:/curricula/counselor/show.do?counselorId="
 								+ logged.getId());
 				result.addObject("curricula", curricula);
-				result.addObject("requestURI", "history/brotherhood/show.do");
+				result.addObject("requestURI", "curricula/counselor/show.do");
 				result.addObject("isOwner",
 						curricula.getCounselor().equals(logged));
 				result.addObject("counselorId", logged.getId());

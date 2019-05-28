@@ -53,10 +53,14 @@ public class EducationRecordService {
 		Assert.notNull(a);
 		EducationRecord result;
 		
-		curricula = this.curriculaService.findOne(curricula.getId());
+		
 		result = this.educationRecordRepository.save(a);
-		curricula.getEducationRecords().add(a);
-		this.curriculaService.save(curricula);
+		
+		if(a.getId() == 0) {
+			this.educationRecordRepository.flush();
+			curricula.getEducationRecords().add(a);
+			this.curriculaService.save(curricula);
+		}
 		
 		return result;
 	}

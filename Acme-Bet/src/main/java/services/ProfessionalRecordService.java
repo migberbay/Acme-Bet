@@ -53,11 +53,14 @@ public class ProfessionalRecordService {
 		Assert.notNull(a);
 		ProfessionalRecord result;
 		
-		curricula = this.curriculaService.findOne(curricula.getId());
 		result = this.professionalRecordRepository.save(a);
-		curricula.getProfessionalRecords().add(a);
-		this.curriculaService.save(curricula);
 		
+		if(a.getId() == 0) {
+			this.professionalRecordRepository.flush();
+			curricula.getProfessionalRecords().add(a);
+			this.curriculaService.save(curricula);
+			
+		}
 		return result;
 	}
 	

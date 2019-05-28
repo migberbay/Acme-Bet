@@ -48,11 +48,14 @@ public class MiscellaneousRecordService {
 		Assert.notNull(a);
 		MiscellaneousRecord result;
 		
-		curricula = this.curriculaService.findOne(curricula.getId());
 		result = this.miscellaneousRecordRepository.save(a);
-		curricula.getMiscellaneousRecords().add(a);
-		this.curriculaService.save(curricula);
 		
+		if(a.getId() == 0) {
+			this.miscellaneousRecordRepository.flush();
+			curricula.getMiscellaneousRecords().add(a);
+			this.curriculaService.save(curricula);
+			
+		}
 		return result;
 	}
 	

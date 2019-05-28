@@ -52,10 +52,13 @@ public class EndorserRecordService {
 		Assert.notNull(a);
 		EndorserRecord result;
 		
-		curricula = this.curriculaService.findOne(curricula.getId());
 		result = this.endorserRecordRepository.save(a);
-		curricula.getEndorserRecords().add(a);
-		this.curriculaService.save(curricula);
+		
+		if(a.getId() == 0) {
+			this.endorserRecordRepository.flush();
+			curricula.getEndorserRecords().add(a);
+			this.curriculaService.save(curricula);
+		}
 		
 		return result;
 	}

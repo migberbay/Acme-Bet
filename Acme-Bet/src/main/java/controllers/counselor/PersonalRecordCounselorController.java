@@ -64,7 +64,7 @@ public class PersonalRecordCounselorController extends AbstractController {
 		return result;
 	}
 	
-	
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final PersonalRecord personalRecord, BindingResult binding) {
 		ModelAndView result;
 		Counselor logged = this.counselorService.findByPrincipal();

@@ -20,8 +20,6 @@
 		
 		<b><spring:message code="curricula.ticker"/>:</b> <jstl:out value="${curricula.ticker}"/><br>
 		
-		<spring:message>code=</spring:message>
-		
 		<display:table pagesize="5" class="displaytag" name="personalRecord" requestURI="${requestURI}" id="row">
 			
 		<spring:message code="personalRecord.fullName" var="fullNameHeader" />
