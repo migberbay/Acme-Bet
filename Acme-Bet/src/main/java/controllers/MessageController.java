@@ -222,7 +222,10 @@ public class MessageController extends AbstractController {
 		res.addObject("isAdmin",actorService.getByUserAccount(LoginService.getPrincipal()).getUserAccount().getAuthorities().contains(adminAuth));
 		//res.addObject("notificationIsSent",configurationService.find().getNotificationIsSent());
 		res.addObject("message", messageCode);
-
+		
+		principal.setMessagesLastSeen(new Date(System.currentTimeMillis()-1000));
+		actorService.save(principal);
+		
 		return res;
 	}
 	

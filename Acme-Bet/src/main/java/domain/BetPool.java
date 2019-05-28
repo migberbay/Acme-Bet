@@ -36,13 +36,14 @@ public class BetPool extends DomainEntity {
 	private Date moment;
 	private String description;
 	private Collection<String> participants;
-	private Collection<String> winners;
+	private String winner;
 	private Double minRange;
 	private Double maxRange;
 	private Date startDate;
 	private Date endDate;
 	private Date resultDate;
 	private Boolean isFinal;
+	private String groupCode;
 	
 	
 	// Getters and Setters ---------------------------------------------------
@@ -87,12 +88,11 @@ public class BetPool extends DomainEntity {
 		this.participants = participants;
 	}
 	
-	@ElementCollection
-	public Collection<String> getWinners() {
-		return winners;
+	public String getWinner() {
+		return winner;
 	}
-	public void setWinners(Collection<String> winners) {
-		this.winners = winners;
+	public void setWinner(String winner) {
+		this.winner = winner;
 	}
 	@NotNull
 	public Double getMinRange() {
@@ -150,9 +150,16 @@ public class BetPool extends DomainEntity {
 		this.isFinal = isFinal;
 	}
 	
+	public String getGroupCode() {
+		return groupCode;
+	}
+	public void setGroupCode(String groupCode) {
+		this.groupCode = groupCode;
+	}
+	
 	
 	//Relationships--------------------------------------------------------------------
-	
+
 	private Bookmaker bookmaker;
 	private Warranty warranty;
 	private Category category;

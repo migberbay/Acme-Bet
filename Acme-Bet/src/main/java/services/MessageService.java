@@ -133,6 +133,10 @@ public class MessageService {
 	public Collection<Message> findByRecipientAndEmptyTags(Actor recipient){
 		return messageRepository.findByRecipientAndEmptyTags(recipient);
 	}
+	
+	public Collection<Message> findByRecipientAndMoment(Actor recipient, Date date){
+		return messageRepository.findByRecipientAndMoment(recipient, date);
+	}
 	public Boolean hasSpam(List<Word> spamWords, Message m) {
 		Boolean res = false;
 		

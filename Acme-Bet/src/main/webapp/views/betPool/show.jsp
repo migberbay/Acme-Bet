@@ -36,11 +36,8 @@
 		</display:column>
 	</display:table>
 	
-	<display:table name="betPool.winners" id="row" requestURI="betPool/show.do" pagesize="5">
-		<display:column titleKey="pool.winners">
-			<jstl:out value="${row}"></jstl:out>
-		</display:column>
-	</display:table>
+	
+	<h3><spring:message code="pool.winners"/>: <jstl:out value="${betPool.winner}"/></h3>
 	
 	<display:table name="betPool.bets" id="row" requestURI="betPool/show.do" pagesize="5">
 		<display:column titleKey="pool.user">

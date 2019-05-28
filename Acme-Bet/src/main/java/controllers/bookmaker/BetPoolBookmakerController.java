@@ -99,7 +99,7 @@ public class BetPoolBookmakerController extends AbstractController {
 		public ModelAndView selectWinners(Integer betPoolId) {
 			BetPool pool = betPoolService.findOne(betPoolId);
 			ModelAndView res;
-			if(pool.getWinners().isEmpty()){
+			if(pool.getWinner() == null){
 				res = new ModelAndView("betPool/selectWinners");
 				WinnersForm form = new WinnersForm();
 				form.setBetPoolId(betPoolId);
@@ -122,52 +122,65 @@ public class BetPoolBookmakerController extends AbstractController {
 		public ModelAndView saveWinners(@ModelAttribute("form") WinnersForm form, BindingResult binding) {
 			ModelAndView res;
 			
-			BetPool pool = betPoolService.findOne(form.getBetPoolId());
-			Date date = new Date(System.currentTimeMillis()+120000);
+			BetPool betPool = betPoolService.findOne(form.getBetPoolId());
+			System.out.println(betPool.getGroupCode());
+			Collection<BetPool> pools = betPoolService.getPoolsByCode(betPool.getGroupCode());
+			System.out.println(pools);
+			Date date = new Date(System.currentTimeMillis()+5000);
 			
 			System.out.println(date);
-			pool.setStartDate(date);
-			pool.setEndDate(date);
-			pool.setResultDate(date);
-			
-			Collection<Bet> bets = new ArrayList<>();
-			for (Bet bet : pool.getBets()) {
-				if(bet.getIsAccepted()){bets.add(bet);}
+			for (BetPool pool : pools) {
+				pool.setStartDate(date);
+				pool.setEndDate(date);
+				pool.setResultDate(date);
 			}
-			pool.setBets(bets);
+
+			// verificamos que las apuestas estan aceptadas (eliminamos las no aceptadas de las pools de high stakes)
+			for (BetPool pool : pools) {
+				Collection<Bet> bets = new ArrayList<>();
+				for (Bet bet : pool.getBets()) {
+					if(bet.getIsAccepted()){bets.add(bet);}
+				}
+				pool.setBets(bets);
+			}
 			
-			Collection<String> winners = form.getWinners();
-			if (winners == null) {
+			String winner = form.getWinner();
+			
+			if (winner == null) {
 				res = selectWinners(form.getBetPoolId());
 				res.addObject("isEmpty", true);
 			}else{
 				res = new ModelAndView("redirect:/betPool/show.do?betPoolId="+form.getBetPoolId());
 				
-			if (winners.contains("NO CONTEST")){
-				for (Bet bet : pool.getBets()) {
-					User user = bet.getUser();
-					user.setFunds(bet.getAmount()+user.getFunds());
-					userService.save(user);
+			if (winner.equals("NO CONTEST")){
+				for (BetPool pool : pools) {
+					for (Bet bet : pool.getBets()) {
+						User user = bet.getUser();
+						user.setFunds(bet.getAmount()+user.getFunds());
+						userService.save(user);
+					}
+				pool.setWinner("NO CONTEST");
+				betPoolService.save(pool);
 				}
-				pool.getWinners().add("NO CONTEST");
-			}else if (winners.contains("TIE")) {
+			}else if (winner.equals("TIE")) {
 				Double totalbets = 0.0;
-				for (Bet bet : pool.getBets()) {
-					totalbets=bet.getAmount()+totalbets;
+				for (BetPool pool : pools) {
+					for (Bet bet : pool.getBets()) {
+						totalbets=bet.getAmount()+totalbets;
+					}
+					
+					for (Bet bet : pool.getBets()) {
+						User user = bet.getUser();
+						Double size = new Double(pool.getBets().size());
+						user.setFunds(user.getFunds()+ (totalbets/size));
+						userService.save(user);
+					}
+					pool.setWinner("TIE");
+					betPoolService.save(pool);
 				}
 				
-				for (Bet bet : pool.getBets()) {
-					User user = bet.getUser();
-					Double size = new Double(pool.getBets().size());
-					user.setFunds(user.getFunds()+ (totalbets/size));
-					userService.save(user);
-				}
-				pool.getWinners().add("TIE");
 			}else{
-				winners.remove("TIE");
-				winners.remove("NO CONTEST");
-				//this should not appear anyway but i like to cover for myself.
-				for (String winner : winners) {
+				for (BetPool pool : pools) {
 					double totaluserwinners = 0.0;
 					double totalbetted = 0.0;
 						for (Bet bet : pool.getBets()) {
@@ -177,17 +190,15 @@ public class BetPoolBookmakerController extends AbstractController {
 						for (Bet bet : pool.getBets()) {
 							if(bet.getWinner().equals(winner)){
 								User user = bet.getUser();
-								user.setFunds(user.getFunds()+(totalbetted/(totaluserwinners*winners.size())));
+								user.setFunds(user.getFunds()+(totalbetted/totaluserwinners));
 								userService.save(user);
 						}
 					}
-				}
-			}
-			pool.getWinners().addAll(winners);
+					pool.setWinner(winner);
+					betPoolService.save(pool);
+				}	
+			}	
 		}
-			
-			betPoolService.save(pool);
-			
 			return res;
 		}
 	//Save ---------------------------------------------------------------
@@ -201,15 +212,18 @@ public class BetPoolBookmakerController extends AbstractController {
 		
 		BetPool pool = betPoolService.reconstruct(form,binding);
 		Boolean dateIncorrectOrder = true;
-		Boolean minimumParticipants = false;
+		Boolean minimumParticipants = true;
 		
-		if (pool.getEndDate().after(pool.getStartDate()) && 
-			pool.getEndDate().before(pool.getResultDate())){dateIncorrectOrder = false;}
-		
-		if (pool.getParticipants().size()<2) {
-			minimumParticipants = true;
+		if(pool.getEndDate() != null && pool.getStartDate() != null &&  pool.getResultDate() != null){
+			if (pool.getEndDate().after(pool.getStartDate()) && 
+					pool.getEndDate().before(pool.getResultDate())){dateIncorrectOrder = false;}
 		}
 		
+		if (pool.getParticipants() != null) {
+			if (pool.getParticipants().size() >= 2) {
+				minimumParticipants = false;
+			}
+		}
 			if (binding.hasErrors() || dateIncorrectOrder || minimumParticipants) {
 				System.out.println(binding);
 				res = createEditModelAndView(form);
@@ -218,13 +232,22 @@ public class BetPoolBookmakerController extends AbstractController {
 			}else {
 				try {
 				if (pool.getIsFinal()) {
+					String[] tickers ={betPoolService.generateTicker(),betPoolService.generateTicker(),
+							betPoolService.generateTicker(),betPoolService.generateTicker()};
+					String groupCode = tickers[0].split("-")[0].trim();//cogemos solo la primera parte de todos los tickers.
+					groupCode = groupCode + "-";
+					for (int i = 0; i < tickers.length; i++) {
+						groupCode = groupCode + tickers[i].split("-")[1].trim();
+					}
+					
 					Double[] ranges = {10.0, 50.0, 100.0, 500.0, 10000.0};
 					for (int i = 0; i < 4; i++) {
 						BetPool aux = betPoolService.copy(pool);
 						aux.setTitle(pool.getTitle() + " ("+ ranges[i] +"-"+ranges[i+1]+")");
 						aux.setMinRange(ranges[i]);
 						aux.setMaxRange(ranges[i+1]-0.01);
-						aux.setTicker(betPoolService.generateTicker());
+						aux.setTicker(tickers[i]);
+						aux.setGroupCode(groupCode);
 						if(i==3){aux.setMaxRange(ranges[i+1]);}
 						betPoolService.save(aux);
 					}

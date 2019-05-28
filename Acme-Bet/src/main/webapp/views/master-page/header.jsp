@@ -12,6 +12,7 @@
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="page-header" style="background: url(${banner}) center no-repeat; background-size: cover"  onclick="location.href=''">
 </div>
@@ -111,7 +112,7 @@
 					<li><a href="actor/register.do?type=BOOKMAKER"><spring:message code="master.page.registerBookmaker" /></a></li>
 				</ul>
 			<li><a class="fNiv" href="betPool/list.do"><spring:message code="master.page.listPools" /></a></li>
-			</li>
+<!-- 			</li> -->
 		</security:authorize>
 		
 		
@@ -127,6 +128,11 @@
 			</li>
 		</security:authorize>
 	</ul>
+	<jstl:if test="${unseenMesagges != null}">
+		<jstl:if test="${unseenMesagges > 0}">
+		You have <jstl:out value="${unseenMesagges}"/> unseen message(s)!
+		</jstl:if>
+	</jstl:if>
 </div>
 
 <div>

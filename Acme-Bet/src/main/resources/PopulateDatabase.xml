@@ -215,6 +215,7 @@
 		<property name="isBanned" value="false" />
 		<property name="userAccount" ref="userAccount1" />
 		<property name="creditCard" ref="creditCard1" />
+		<property name="messagesLastSeen" value="2018/07/07 18:00" />
 		<property name="socialProfiles">
 			<list>
 				<ref bean="socialProfile1" />
@@ -234,6 +235,7 @@
 		<property name="isBanned" value="false" />
 		<property name="userAccount" ref="userAccount2" />
 		<property name="creditCard" ref="creditCard2" />
+		<property name="messagesLastSeen" value="2018/07/07 18:00" />
 		<property name="socialProfiles">
 			<list>
 				<ref bean="socialProfile2" />
@@ -257,6 +259,7 @@
 		<property name="isBanned" value="false" />
 		<property name="userAccount" ref="userAccount3" />
 		<property name="creditCard" ref="creditCard3" />
+		<property name="messagesLastSeen" value="2018/07/07 18:00" />
 		<property name="socialProfiles">
 			<list>
 				
@@ -280,6 +283,7 @@
 		<property name="isBanned" value="false" />
 		<property name="userAccount" ref="userAccount4" />
 		<property name="creditCard" ref="creditCard4" />
+		<property name="messagesLastSeen" value="2018/07/07 18:00" />
 		<property name="socialProfiles">
 			<list>
 				
@@ -309,6 +313,7 @@
 		<property name="luckScore" value="0.0" />
 		<property name="userAccount" ref="userAccount5" />
 		<property name="creditCard" ref="creditCard5" />
+		<property name="messagesLastSeen" value="2018/07/07 18:00" />
 		<property name="socialProfiles">
 			<list>
 				<ref bean="socialProfile3" />
@@ -345,6 +350,7 @@
 		<property name="luckScore" value="0.0" />
 		<property name="userAccount" ref="userAccount6" />
 		<property name="creditCard" ref="creditCard6" />
+		<property name="messagesLastSeen" value="2018/07/07 18:00" />
 		<property name="socialProfiles">
 			<list>
 				<ref bean="socialProfile4" />
@@ -381,6 +387,7 @@
 		<property name="luckScore" value="0.0" />
 		<property name="userAccount" ref="userAccount7" />
 		<property name="creditCard" ref="creditCard7" />
+		<property name="messagesLastSeen" value="2018/07/07 18:00" />
 		<property name="socialProfiles">
 			<list>
 				<ref bean="socialProfile5" />
@@ -417,6 +424,7 @@
 		<property name="luckScore" value="0.0" />
 		<property name="userAccount" ref="userAccount8" />
 		<property name="creditCard" ref="creditCard8" />
+		<property name="messagesLastSeen" value="2018/07/07 18:00" />
 		<property name="socialProfiles">
 			<list>
 			</list>
@@ -452,6 +460,7 @@
 		<property name="luckScore" value="0.0" />
 		<property name="userAccount" ref="userAccount9" />
 		<property name="creditCard" ref="creditCard9" />
+		<property name="messagesLastSeen" value="2018/07/07 18:00" />
 		<property name="socialProfiles">
 			<list>
 			</list>
@@ -488,6 +497,7 @@
 		<property name="funds" value="10.0" />
 		<property name="userAccount" ref="userAccount10" />
 		<property name="creditCard" ref="creditCard10" />
+		<property name="messagesLastSeen" value="2018/07/07 18:00" />
 		<property name="socialProfiles">
 			<list>
 			</list>
@@ -511,6 +521,7 @@
 		<property name="funds" value="10.0" />
 		<property name="userAccount" ref="userAccount11" />
 		<property name="creditCard" ref="creditCard11" />
+		<property name="messagesLastSeen" value="2018/07/07 18:00" />
 		<property name="socialProfiles">
 			<list>
 			</list>
@@ -534,6 +545,7 @@
 		<property name="funds" value="10.0" />
 		<property name="userAccount" ref="userAccount12" />
 		<property name="creditCard" ref="creditCard12" />
+		<property name="messagesLastSeen" value="2018/07/07 18:00" />
 		<property name="socialProfiles">
 			<list>
 			</list>
@@ -560,6 +572,7 @@
 		<property name="fare" value="0.1" />
 		<property name="userAccount" ref="userAccount13" />
 		<property name="creditCard" ref="creditCard13" />
+		<property name="messagesLastSeen" value="2018/07/07 18:00" />
 		<property name="socialProfiles">
 			<list>
 			</list>
@@ -579,6 +592,7 @@
 		<property name="fare" value="0.1" />
 		<property name="userAccount" ref="userAccount14" />
 		<property name="creditCard" ref="creditCard14" />
+		<property name="messagesLastSeen" value="2018/07/07 18:00" />
 		<property name="socialProfiles">
 			<list>
 			</list>
@@ -598,6 +612,7 @@
 		<property name="fare" value="0.1" />
 		<property name="userAccount" ref="userAccount15" />
 		<property name="creditCard" ref="creditCard15" />
+		<property name="messagesLastSeen" value="2018/07/07 18:00" />
 		<property name="socialProfiles">
 			<list>
 			</list>
@@ -822,10 +837,6 @@
 				<value>participant6</value>
 			</list>
 		</property>
-		<property name="winners">
-			<list>
-			</list>
-		</property>
 		<property name="bets">
 			<list>
 			</list>
@@ -862,10 +873,6 @@
 				<value>participant4</value>
 				<value>participant5</value>
 				<value>participant6</value>
-			</list>
-		</property>
-		<property name="winners">
-			<list>
 			</list>
 		</property>
 		<property name="bets">
@@ -906,10 +913,6 @@
 				<value>participant6</value>
 			</list>
 		</property>
-		<property name="winners">
-			<list>
-			</list>
-		</property>
 		<property name="bets">
 			<list>
 			</list>
@@ -946,10 +949,6 @@
 				<value>participant4</value>
 				<value>participant5</value>
 				<value>participant6</value>
-			</list>
-		</property>
-		<property name="winners">
-			<list>
 			</list>
 		</property>
 		<property name="bets">
@@ -990,10 +989,6 @@
 				<value>participant6</value>
 			</list>
 		</property>
-		<property name="winners">
-			<list>
-			</list>
-		</property>
 		<property name="bets">
 			<list>
 			</list>
@@ -1030,10 +1025,6 @@
 				<value>participant4</value>
 				<value>participant5</value>
 				<value>participant6</value>
-			</list>
-		</property>
-		<property name="winners">
-			<list>
 			</list>
 		</property>
 		<property name="bets">

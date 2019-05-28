@@ -75,6 +75,7 @@ public class ActorService {
 		res.setSocialProfiles(new ArrayList<SocialProfile>());
 		res.setIsBanned(false);
 		res.setIsSuspicious(false);
+		res.setMessagesLastSeen(new Date(System.currentTimeMillis()-1000));
 		
 		return res;
 	}

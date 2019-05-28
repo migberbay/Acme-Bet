@@ -235,8 +235,8 @@ public class ConfigurationAdminController extends AbstractController {
 					Double won = 0.;
 					Double lost = 0.;
 					for (Bet bet : user.getBets()) {
-						System.out.println(bet.getWinner()+ " "+ bet.getBetPool().getWinners());
-						if(bet.getBetPool().getWinners().contains(bet.getWinner())){
+						System.out.println(bet.getWinner()+ " "+ bet.getBetPool().getWinner());
+						if(bet.getBetPool().getWinner().equals(bet.getWinner())){
 							won++;
 						}else{lost++;}
 					}

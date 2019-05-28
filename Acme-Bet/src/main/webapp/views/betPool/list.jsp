@@ -15,23 +15,76 @@
 -->
 	<spring:message code="pool.dateformat" var = "format"/>
 	
+	<jstl:if test="${isOwner}">
 	<display:table name="betPools" id="row" requestURI="${requestURI}" pagesize="5">
 		<display:column titleKey="pool.action" >
-				<a href="betPool/show.do?betPoolId=${row.id}">show</a><br>
+				<a href="betPool/show.do?betPoolId=${row.id}">show</a><br>	
 				
-			<jstl:if test="${isUser and date.before(row.endDate) and date.after(row.startDate) and row.winners.isEmpty()}">
-				<a href="bet/user/create.do?betPoolId=${row.id}">bet</a>
-			</jstl:if>
-			
 			<jstl:if test="${isOwner and row.isFinal == false}">
 				<a href="betPool/bookmaker/edit.do?betPoolId=${row.id}">edit</a><br>
 				<a href="betPool/bookmaker/delete.do?betPoolId=${row.id}">delete</a>
 			</jstl:if>
 			
-			<jstl:if test="${isOwner and row.isFinal and date.after(row.endDate) and row.winners.isEmpty()}">
-				<a href="betPool/bookmaker/selectWinners.do?betPoolId=${row.id}">chooseWinners</a><br>
+			<jstl:if test="${date.after(row.endDate) and row.winner == null}">
+				<a href="betPool/bookmaker/selectWinners.do?betPoolId=${row.id}">Choose Winners</a><br>
 			</jstl:if>
-			
+				
+		</display:column>
+		
+		<display:column property="title" titleKey="pool.title" />
+		<display:column property="ticker" titleKey="pool.ticker" />
+		<display:column titleKey="pool.range">
+		<jstl:out value="${row.minRange}"/> - <jstl:out value="${row.maxRange}"/>
+		</display:column>
+		<display:column titleKey="pool.startDate" property="startDate" format="{0,date,${format} }"/>
+		<display:column titleKey="pool.endDate" property="endDate" format="{0,date,${format} }"/>
+		<display:column titleKey="pool.resultDate" property="resultDate" format="{0,date,${format} }"/>
+	
+	</display:table>
+	</jstl:if>
+	
+	<jstl:if test="${isOwner != true }">
+	<h3>NOT STARTED</h3>
+	<display:table name="betPoolsNotStarted" id="row" requestURI="${requestURI}" pagesize="5">
+		<display:column titleKey="pool.action" >
+				<a href="betPool/show.do?betPoolId=${row.id}">show</a><br>	
+		</display:column>
+		
+		<display:column property="title" titleKey="pool.title" />
+		<display:column property="ticker" titleKey="pool.ticker" />
+		<display:column titleKey="pool.range">
+		<jstl:out value="${row.minRange}"/> - <jstl:out value="${row.maxRange}"/>
+		</display:column>
+		<display:column titleKey="pool.startDate" property="startDate" format="{0,date,${format} }"/>
+		<display:column titleKey="pool.endDate" property="endDate" format="{0,date,${format} }"/>
+		<display:column titleKey="pool.resultDate" property="resultDate" format="{0,date,${format} }"/>
+	
+	</display:table>
+	
+	<h3>IN PROGRESS</h3>
+	<display:table name="betPoolsInProgress" id="row" requestURI="${requestURI}" pagesize="5">
+		<display:column titleKey="pool.action" >
+				<a href="betPool/show.do?betPoolId=${row.id}">show</a><br>
+			<jstl:if test="${isUser and date.before(row.endDate) and date.after(row.startDate) and row.winner == null}">
+				<a href="bet/user/create.do?betPoolId=${row.id}">bet</a>
+			</jstl:if>
+		</display:column>
+	
+		<display:column property="title" titleKey="pool.title" />
+		<display:column property="ticker" titleKey="pool.ticker" />
+		<display:column titleKey="pool.range">
+		<jstl:out value="${row.minRange}"/> - <jstl:out value="${row.maxRange}"/>
+		</display:column>
+		<display:column titleKey="pool.startDate" property="startDate" format="{0,date,${format} }"/>
+		<display:column titleKey="pool.endDate" property="endDate" format="{0,date,${format} }"/>
+		<display:column titleKey="pool.resultDate" property="resultDate" format="{0,date,${format} }"/>
+	
+	</display:table>
+	
+	<h3>ENDED</h3>
+	<display:table name="betPoolsEnded" id="row" requestURI="${requestURI}" pagesize="5">
+		<display:column titleKey="pool.action" >
+				<a href="betPool/show.do?betPoolId=${row.id}">show</a><br>					
 		</display:column>
 		<display:column property="title" titleKey="pool.title" />
 		<display:column property="ticker" titleKey="pool.ticker" />
@@ -43,6 +96,8 @@
 		<display:column titleKey="pool.resultDate" property="resultDate" format="{0,date,${format} }"/>
 	
 	</display:table>
+	</jstl:if>
+	
 	
 	<input type="button" name="back"
 		value="<spring:message code="pool.back" />"
