@@ -1239,7 +1239,7 @@
 	
 	<bean id="curricula1" class="domain.Curricula">
 		<property name="ticker" value="180707-67GIJE" />
-		<property name="bookmaker" ref="bookmaker1" />
+		<property name="counselor" ref="counselor1" />
 		<property name="personalRecord" ref="personalRecord1" />
 		<property name="educationRecords">
 			<list>
@@ -1265,7 +1265,7 @@
 	
 	<bean id="curricula2" class="domain.Curricula">
 		<property name="ticker" value="180707-67KLJE" />
-		<property name="bookmaker" ref="bookmaker2" />
+		<property name="counselor" ref="counselor2" />
 		<property name="personalRecord" ref="personalRecord2" />
 		<property name="educationRecords">
 			<list>
@@ -1291,7 +1291,7 @@
 	
 	<bean id="curricula3" class="domain.Curricula">
 		<property name="ticker" value="180707-67GDSE" />
-		<property name="bookmaker" ref="bookmaker3" />
+		<property name="counselor" ref="counselor3" />
 		<property name="personalRecord" ref="personalRecord3" />
 		<property name="educationRecords">
 			<list>

@@ -64,6 +64,13 @@
 		<security:intercept-url pattern="/helpRequest/show.do" access="hasRole('COUNSELOR') || hasRole('USER')" />
 		<security:intercept-url pattern="/review/show.do" access="hasRole('COUNSELOR') || hasRole('USER')" />
 		
+		<security:intercept-url pattern="/curricula/counselor/**" access="permitAll" />
+		<security:intercept-url pattern="/curricula/personalRecord/**" access="hasRole('COUNSELOR')" />
+		<security:intercept-url pattern="/curricula/educationRecord/**" access="hasRole('COUNSELOR')" />
+		<security:intercept-url pattern="/curricula/professionalRecord/**" access="hasRole('COUNSELOR')" />
+		<security:intercept-url pattern="/curricula/miscellaneousRecord/**" access="hasRole('COUNSELOR')" />
+		<security:intercept-url pattern="/curricula/endorserRecord/**" access="hasRole('COUNSELOR')" />
+		
 		<security:intercept-url pattern="/betPool/bookmaker/**" access="hasRole('BOOKMAKER')" />
 		<security:intercept-url pattern="/Petition/bookmaker/**" access="hasRole('BOOKMAKER')" />
 		

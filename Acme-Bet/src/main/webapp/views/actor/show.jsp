@@ -26,6 +26,10 @@
 		<jstl:if test="${isCounselor}">
 			<b>Funds</b>: <jstl:out value="${actor.funds}"/> <br/>
 			<b>Fare</b>: <jstl:out value="${actor.fare}"/> <br/>
+			<a href="curricula/counselor/show.do?counselorId=${actor.id}"> 
+				<spring:message code="actor.curricula" />
+
+		</a> <br/>
 		</jstl:if> 
 
 		
