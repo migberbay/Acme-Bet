@@ -10,6 +10,8 @@
 
 package controllers;
 
+import java.util.Collection;
+
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,14 +20,24 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
+import services.ActorService;
 import services.ConfigurationService;
+import services.MessageService;
+import domain.Actor;
+import domain.Message;
 
 @Controller
 public class AbstractController {
 
-	
 	@Autowired
 	ConfigurationService configurationService;
+	
+	@Autowired
+	MessageService messageService;
+	
+	@Autowired
+	ActorService actorService;
 	
 	// Panic handler ----------------------------------------------------------
 
@@ -49,5 +61,23 @@ public class AbstractController {
 	@ModelAttribute("systemName")
 	public String getSystemName() {
 		return configurationService.find().getSystemName();
+	}
+	
+	@ModelAttribute("unseenMesagges")
+	public Integer getUnseenMessages() {
+		Actor actor;
+		try {
+			actor = actorService.getByUserAccount(LoginService.getPrincipal());
+		} catch (Exception e) {
+			actor = null;
+		}
+		
+		if (actor == null) {
+			return null;
+		}else{
+			Collection<Message> messages = messageService.findByRecipientAndMoment(actor, actor.getMessagesLastSeen());		
+			System.out.println(messages);
+			return messages.size();
+		}
 	}
 }

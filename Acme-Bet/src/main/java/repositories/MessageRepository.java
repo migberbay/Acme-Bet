@@ -1,6 +1,7 @@
 package repositories;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -31,5 +32,8 @@ public interface MessageRepository extends JpaRepository<Message, Integer>{
 	
 	@Query("select m from Message m where m.recipient = ?1 and m.tags.size=0") 
 	Collection<Message> findByRecipientAndEmptyTags(Actor recipient);
+	
+	@Query("select m from Message m where m.recipient = ?1 and ?2 < m.moment") 
+	Collection<Message> findByRecipientAndMoment(Actor recipient, Date lastSeen);
 	
 }
