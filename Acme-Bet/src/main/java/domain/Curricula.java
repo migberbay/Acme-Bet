@@ -50,11 +50,11 @@ public class Curricula extends DomainEntity {
 	private Collection<MiscellaneousRecord> miscellaneousRecords;
 	private Collection<ProfessionalRecord> professionalRecords;
 	private Collection<EndorserRecord> endorserRecords;
-	private Bookmaker bookmaker;
+	private Counselor counselor;
 
 	
 	@Valid
-	@OneToOne(optional = false)
+	@OneToOne(optional = true, cascade = CascadeType.PERSIST)
 	public PersonalRecord getPersonalRecord() {
 		return this.personalRecord;
 	}
@@ -112,13 +112,13 @@ public class Curricula extends DomainEntity {
 	}
 
 	@Valid
-	@OneToOne(optional = false)
-	public Bookmaker getBookmaker() {
-		return this.bookmaker;
+	@OneToOne(optional = true)
+	public Counselor getCounselor() {
+		return this.counselor;
 	}
 
-	public void setBookmaker(final Bookmaker bookmaker) {
-		this.bookmaker = bookmaker;
+	public void setCounselor(final Counselor counselor) {
+		this.counselor = counselor;
 	}
 
 }

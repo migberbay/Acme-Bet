@@ -5,9 +5,11 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.MiscellaneousRecordRepository;
-import domain.Actor;
+import security.LoginService;
+import domain.Curricula;
 import domain.MiscellaneousRecord;
 
 
@@ -21,6 +23,9 @@ public class MiscellaneousRecordService {
 	private MiscellaneousRecordRepository miscellaneousRecordRepository;
 	
 	//Supporting Services -----
+	
+	@Autowired
+	private CurriculaService curriculaService;
 	
 	//Simple CRUD methods -----
 	
@@ -38,14 +43,39 @@ public class MiscellaneousRecordService {
 		return miscellaneousRecordRepository.findOne(Id);
 	}
 	
-	public MiscellaneousRecord save(MiscellaneousRecord a){
+	public MiscellaneousRecord save(MiscellaneousRecord a, Curricula curricula){
+		Assert.isTrue(LoginService.hasRole("COUNSELOR"));
+		Assert.notNull(a);
+		MiscellaneousRecord result;
 		
-		MiscellaneousRecord saved = miscellaneousRecordRepository.saveAndFlush(a);
-		return saved;
+		curricula = this.curriculaService.findOne(curricula.getId());
+		result = this.miscellaneousRecordRepository.save(a);
+		curricula.getMiscellaneousRecords().add(a);
+		this.curriculaService.save(curricula);
+		
+		return result;
+	}
+	
+	public MiscellaneousRecord trueSave(final MiscellaneousRecord miscellaneousRecord) {
+		Assert.isTrue(LoginService.hasRole("COUNSELOR"));
+		return this.miscellaneousRecordRepository.save(miscellaneousRecord);
 	}
 	
 	public void delete(MiscellaneousRecord a){
+		Assert.notNull(a);
+		Assert.isTrue(a.getId() != 0);
+		Assert.isTrue(this.miscellaneousRecordRepository.exists(a.getId()));
+		
 		miscellaneousRecordRepository.delete(a);
+	}
+	
+	public void pureDelete(MiscellaneousRecord a) {
+		this.miscellaneousRecordRepository.delete(a);
+		this.miscellaneousRecordRepository.flush();
+	}
+	
+	public void flush() {
+		this.miscellaneousRecordRepository.flush();
 	}
 	
 	//Other business methods -----

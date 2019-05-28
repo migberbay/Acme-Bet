@@ -8,7 +8,7 @@ import domain.PersonalRecord;
 @Repository
 public interface PersonalRecordRepository extends JpaRepository<PersonalRecord, Integer>{
 	
-
+	
 
 }
 
