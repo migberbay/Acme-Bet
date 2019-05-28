@@ -42,9 +42,10 @@
 
 		<security:intercept-url pattern="/welcome/**" access="permitAll" /> 
 		<security:intercept-url pattern="/message/**" access="permitAll" /> 
+		<security:intercept-url pattern="/actor/register.do" access="isAnonymous()"/>
 		<security:intercept-url pattern="/actor/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/socialProfile/**" access="isAuthenticated()" /> 
-		<security:intercept-url pattern="/actor/register.do" access="isAnonymous()"/>
+		
 	
 		<security:intercept-url pattern="/betPool/list.do" access="permitAll" />
 		<security:intercept-url pattern="/betPool/show.do" access="permitAll" />
