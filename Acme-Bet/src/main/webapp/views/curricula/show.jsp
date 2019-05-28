@@ -116,7 +116,7 @@
 		<!-- ---------------Listing grid -->
 
 		<h1>
-			<spring:message code="history.professionalRecords" />
+			<spring:message code="curricula.professionalRecords" />
 		</h1>
 
 		<display:table pagesize="5" class="displaytag"
@@ -171,7 +171,7 @@
 		<!-- ---------------Listing grid -->
 
 		<h1>
-			<spring:message code="history.endorserRecords" />
+			<spring:message code="curricula.endorserRecords" />
 		</h1>
 
 		<display:table pagesize="5" class="displaytag"
@@ -221,7 +221,7 @@
 		<!-- ---------------Listing grid -->
 
 		<h1>
-			<spring:message code="history.miscellaneousRecords" />
+			<spring:message code="curricula.miscellaneousRecords" />
 		</h1>
 
 		<display:table pagesize="5" class="displaytag"
