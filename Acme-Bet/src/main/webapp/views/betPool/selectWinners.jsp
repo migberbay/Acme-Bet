@@ -17,7 +17,7 @@
 	<form:hidden path="betPoolId"/>
 	
 	Winners: 
-	<form:select path="winners">
+	<form:select path="winner">
 		<jstl:forEach items="${possibles}" var="x">
 			<form:option value="${x}"/>
 		</jstl:forEach>

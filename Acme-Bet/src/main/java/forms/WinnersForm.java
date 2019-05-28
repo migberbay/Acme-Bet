@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class WinnersForm {
 	
 	private Integer betPoolId;
-	private Collection<String> winners;
+	private String winner;
 
 	@NotNull
 	public Integer getBetPoolId() {
@@ -23,11 +23,11 @@ public class WinnersForm {
 
 	@NotEmpty
 	@ElementCollection
-	public Collection<String> getWinners() {
-		return winners;
+	public String getWinner() {
+		return winner;
 	}
 
-	public void setWinners(Collection<String> winners) {
-		this.winners = winners;
+	public void setWinner(String winner) {
+		this.winner = winner;
 	}
 }

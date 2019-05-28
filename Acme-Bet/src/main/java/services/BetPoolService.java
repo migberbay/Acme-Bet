@@ -71,6 +71,22 @@ public class BetPoolService {
 	public Collection<BetPool> getPoolsByCategory(Category category){
 		return this.betPoolRepository.getPoolsByCategory(category);
 	}
+	
+	public Collection<BetPool> getPoolsNotStarted(){
+		return this.betPoolRepository.getPoolsNotStarted(new Date());
+	}
+	
+	public Collection<BetPool> getPoolsInProgress(){
+		return this.betPoolRepository.getPoolsInProgress(new Date());
+	}
+	
+	public Collection<BetPool> getPoolsEnded(){
+		return this.betPoolRepository.getPoolsEnded(new Date());
+	}
+	
+	public Collection<BetPool>getPoolsByCode(String code){
+		return this.betPoolRepository.getPoolsByCode(code);
+	}
 
 	public BetPool reconstruct(BetPoolForm form, BindingResult binding) {
 		BetPool res;
@@ -126,7 +142,7 @@ public class BetPoolService {
 		res.setTicker(pool.getTicker());
 		res.setTitle(pool.getTitle());
 		res.setWarranty(pool.getWarranty());
-		res.setWinners(pool.getWinners());
+		res.setWinner(pool.getWinner());
 		
 		return res;
 	}

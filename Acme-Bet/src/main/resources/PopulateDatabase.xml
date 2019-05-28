@@ -822,10 +822,6 @@
 				<value>participant6</value>
 			</list>
 		</property>
-		<property name="winners">
-			<list>
-			</list>
-		</property>
 		<property name="bets">
 			<list>
 			</list>
@@ -862,10 +858,6 @@
 				<value>participant4</value>
 				<value>participant5</value>
 				<value>participant6</value>
-			</list>
-		</property>
-		<property name="winners">
-			<list>
 			</list>
 		</property>
 		<property name="bets">
@@ -906,10 +898,6 @@
 				<value>participant6</value>
 			</list>
 		</property>
-		<property name="winners">
-			<list>
-			</list>
-		</property>
 		<property name="bets">
 			<list>
 			</list>
@@ -946,10 +934,6 @@
 				<value>participant4</value>
 				<value>participant5</value>
 				<value>participant6</value>
-			</list>
-		</property>
-		<property name="winners">
-			<list>
 			</list>
 		</property>
 		<property name="bets">
@@ -990,10 +974,6 @@
 				<value>participant6</value>
 			</list>
 		</property>
-		<property name="winners">
-			<list>
-			</list>
-		</property>
 		<property name="bets">
 			<list>
 			</list>
@@ -1030,10 +1010,6 @@
 				<value>participant4</value>
 				<value>participant5</value>
 				<value>participant6</value>
-			</list>
-		</property>
-		<property name="winners">
-			<list>
 			</list>
 		</property>
 		<property name="bets">

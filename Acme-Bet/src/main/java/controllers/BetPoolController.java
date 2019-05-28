@@ -51,6 +51,10 @@ public class BetPoolController extends AbstractController {
 
 		result = new ModelAndView("betPool/list");
 		result.addObject("betPools", betPoolService.findFinal());
+		result.addObject("betPoolsNotStarted", betPoolService.getPoolsNotStarted());
+		result.addObject("betPoolsInProgress", betPoolService.getPoolsInProgress());
+		result.addObject("betPoolsEnded", betPoolService.getPoolsEnded());
+		
 		result.addObject("date", new Date());
 		result.addObject("requestURI","betPool/list.do");
 		result.addObject("isUser", isUser);
