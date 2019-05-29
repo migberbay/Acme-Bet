@@ -76,7 +76,7 @@ public class ReviewService {
 			res = this.create();
 			res = review;
 			res.setIsFinal(false);
-			res.setMoment(new Date());
+			res.setMoment(new Date(System.currentTimeMillis()-1000));
 			res.setUser(userService.findByPrincipal());
 		}else{
 			res = reviewRepository.findOne(review.getId());

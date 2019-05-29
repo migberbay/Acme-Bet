@@ -89,7 +89,7 @@ public class HelpRequestService {
 		if(request.getId()==0){
 			result = request;
 			result.setStatus("OPEN");
-			result.setMoment(new Date());
+			result.setMoment(new Date(System.currentTimeMillis()-1000));
 			result.setUser(userService.findByPrincipal());
 			if(request.getBetPool()!=null)result.setTicker(this.generateTicker(request.getBetPool().getTicker()));
 		}else{
@@ -136,7 +136,7 @@ public class HelpRequestService {
 		
 		res = message;
 		res.setFlagSpam(false);
-		res.setMoment(new Date());
+		res.setMoment(new Date(System.currentTimeMillis()-1000));
 		res.setTags(new ArrayList<String>());
 		res.setSender(counselorService.findByPrincipal());
 		
