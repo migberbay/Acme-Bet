@@ -50,6 +50,7 @@ public class ReviewUserController extends AbstractController {
 		Collection<Review> reviews = reviewService.findReviewsByPrincipal();
 		User user = userService.findByPrincipal();
 		Collection<Counselor> counselors = counselorService.getSolvedCounselorsByUser(user.getId());
+		System.out.println("list " + counselors);
 		if(!user.getReviews().isEmpty()){
 			for(Review r: user.getReviews()){
 				if(counselors.contains(r.getCounselor())){
@@ -57,6 +58,7 @@ public class ReviewUserController extends AbstractController {
 				}
 			}
 		}
+		System.out.println("post for " + counselors);
 		
 		result = new ModelAndView("review/list");
 		result.addObject("moreReviews", !counselors.isEmpty());

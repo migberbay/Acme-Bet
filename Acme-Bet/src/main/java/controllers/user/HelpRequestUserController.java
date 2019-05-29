@@ -114,7 +114,7 @@ public class HelpRequestUserController extends AbstractController {
 	}
 	
 	// Edit --------------------------------------------------------------------
-	
+	/*
 		@RequestMapping(value = "/edit", method = RequestMethod.GET)
 		public ModelAndView edit(@RequestParam int helpRequestId) {
 
@@ -129,7 +129,7 @@ public class HelpRequestUserController extends AbstractController {
 			}
 
 			return result;
-		}
+		}*/
 
 	// Save -----------------------------------------------------------------
 
@@ -151,7 +151,7 @@ public class HelpRequestUserController extends AbstractController {
 	}
 	
 	// Delete -----------------------------------------------------------------
-
+/*
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam int helpRequestId) {
 		ModelAndView result;
@@ -166,7 +166,7 @@ public class HelpRequestUserController extends AbstractController {
 		
 		return result;
 	}
-		
+		*/
 		
 	// Solve -----------------------------------------------------------------
 
