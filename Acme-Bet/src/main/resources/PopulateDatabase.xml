@@ -1464,6 +1464,7 @@
 	</bean>
 	
 	<!-- WARRANTY -->
+	
 		<bean id="warranty1" class="domain.Warranty">
 		<property name="title" value="garantia de satisfaccion del juego." />
 		<property name="terms" value="legales" />
@@ -1476,7 +1477,20 @@
 		</property>
 		</bean>
 		
+		<bean id="warranty2" class="domain.Warranty">
+		<property name="title" value="garantia de las reglas del juego." />
+		<property name="terms" value="legales" />
+		<property name="isFinal" value="false" />
+		<property name="laws">
+			<list>
+				<value>codigo penal art 23.5</value>
+				<value>ley de control de las reglas del juego.</value>
+			</list>
+		</property>
+		</bean>
+		
 	<!-- CATEGORY -->
+	
 	<bean id="category1" class="domain.Category">
 		<property name="spanishName" value="Fútbol" />
 		<property name="englishName" value="Football" />
