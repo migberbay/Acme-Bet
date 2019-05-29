@@ -84,6 +84,12 @@ public class CurriculaService {
 
 		return result;
 	}
+	
+	public Curricula createNotBad() {
+		Curricula c = new Curricula();
+		c.setTicker(this.generateTicker());
+		return c;
+	}
 
 	public Collection<Curricula> findAll() {
 		return curriculaRepository.findAll();
@@ -96,6 +102,12 @@ public class CurriculaService {
 	public Curricula save(Curricula a) {
 		Assert.isTrue(LoginService.hasRole("COUNSELOR"));
 		Assert.notNull(a);
+		Curricula saved = curriculaRepository.saveAndFlush(a);
+
+		return saved;
+	}
+	
+	public Curricula trueSave(Curricula a) {
 		Curricula saved = curriculaRepository.saveAndFlush(a);
 
 		return saved;
@@ -215,30 +227,33 @@ public class CurriculaService {
 		return res;
 	}
 	
-	private String generateTicker(){
-        Date date = new Date(); // your date
-        Calendar n = Calendar.getInstance();
-        n.setTime(date);
-        String t = "";
-        String s = Integer.toString((n.get(Calendar.DAY_OF_MONTH)));
-        String m = Integer.toString(n.get(Calendar.MONTH)+1);
-        if(s.length()==1) s= "0"+Integer.toString((n.get(Calendar.DAY_OF_MONTH)));
-        if(m.length()==1) m = "0"+ Integer.toString(n.get(Calendar.MONTH) +1);
-        t = t + Integer.toString(n.get(Calendar.YEAR) - 2000) + m + s + "-"+ randomWordAndNumber();
+	public String generateTicker(){
+		Date date = new Date(); // your date
+		Calendar n = Calendar.getInstance();
+		n.setTime(date);
+		String t = "";
+		String s = Integer.toString((n.get(Calendar.DAY_OF_MONTH)));
+		String m = Integer.toString(n.get(Calendar.MONTH)+1);
+		if(s.length()==1) s= "0"+Integer.toString((n.get(Calendar.DAY_OF_MONTH)));
+		if(m.length()==1) m = "0"+ Integer.toString(n.get(Calendar.MONTH) +1);
+		t = t + Integer.toString(n.get(Calendar.YEAR) - 2000)
+				+ m
+				+ s
+				+ "-"+ randomWordAndNumber();
 
-        return t;
-    }
-
-    private String randomWordAndNumber(){
-         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            StringBuilder salt = new StringBuilder();
-            Random rnd = new Random();
-            while (salt.length() < 5) { // length of the random string.
-                int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-                salt.append(SALTCHARS.charAt(index));
-            }
-            String saltStr = salt.toString();
-            return saltStr;
-    }
+		return t;
+	}
+	
+	private String randomWordAndNumber(){
+		 String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+	        StringBuilder salt = new StringBuilder();
+	        Random rnd = new Random();
+	        while (salt.length() < 6) { // length of the random string.
+	            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+	            salt.append(SALTCHARS.charAt(index));
+	        }
+	        String saltStr = salt.toString();
+	        return saltStr;
+	}
 
 }
