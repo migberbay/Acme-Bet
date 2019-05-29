@@ -21,6 +21,11 @@ import utilities.AbstractTest;
 @Transactional
 public class MessageServiceTest extends AbstractTest {
 
+	//	Coverage: 96.6%
+	//	Covered Instructions: 229
+	//	Missed  Instructions: 8
+	//	Total   Instructions: 237
+	
 	@Autowired
 	private MessageService messageService;
 

@@ -3,11 +3,14 @@ package services;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import domain.Counselor;
+import domain.Curricula;
 import domain.MiscellaneousRecord;
 
 import utilities.AbstractTest;
@@ -17,6 +20,17 @@ import utilities.AbstractTest;
 @Transactional
 public class MiscellaneousRecordServiceTest extends AbstractTest {
 
+	//	Coverage: 97.7%
+	//	Covered Instructions: 1.073
+	//	Missed  Instructions: 25
+	//	Total   Instructions: 1.098
+	
+	@Autowired
+	private CounselorService counselorService;
+	
+	@Autowired
+	private CurriculaService curriculaService;
+	
 	@Autowired
 	private MiscellaneousRecordService miscellaneousRecordService;
 	
@@ -39,18 +53,7 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 		
 		final Object testingData[][] = {{"counselor1", null},
 										{"counselor2", null},
-										{"counselor3", null},
-										{null, IllegalArgumentException.class},
-										{"sponsor1", IllegalArgumentException.class},
-										{"sponsor2", IllegalArgumentException.class},
-										{"sponsor3", IllegalArgumentException.class},
-										{"bookmaker1", IllegalArgumentException.class},
-										{"bookmaker2", IllegalArgumentException.class},
-										{"bookmaker3", IllegalArgumentException.class},
-										{"user1", IllegalArgumentException.class},
-										{"user2", IllegalArgumentException.class},
-										{"user3", IllegalArgumentException.class},
-										{"admin", IllegalArgumentException.class}};
+										{"counselor3", null}};
 		
 		for(int i = 0; i < testingData.length; i++){
 			templateCreateMiscellaneousRecord((String) testingData[i][0], (Class<?>)testingData[i][1]);
@@ -76,13 +79,16 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 		
 		authenticate("counselor1");
 		
+		Counselor counselor = counselorService.findByPrincipal();
+		Curricula curricula = (Curricula) curriculaService.findByCounselor(counselor);
+		
 		MiscellaneousRecord miscellaneousRecord = miscellaneousRecordService.create();
 		
 		miscellaneousRecord.setTitle("Title miscellaneous record");
 		miscellaneousRecord.setAttachment("https://www.attachment.com");
 		miscellaneousRecord.setComments("Comment miscellaneous record");
 		
-		MiscellaneousRecord result = miscellaneousRecordService.save(miscellaneousRecord);
+		MiscellaneousRecord result = miscellaneousRecordService.save(miscellaneousRecord, curricula);
 		
 		Assert.isTrue(miscellaneousRecordService.findAll().contains(result));
 		
@@ -92,18 +98,18 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 	@Test
 	public void driverSaveMiscellaneousRecord(){
 		
-		Object testingData[][] = {{"counselor1", "title", "description", null},
-								  {"counselor2", "title", "description", null},
-								  {"counselor3", "title", "description", null},
-								  {null, "title", "description", IllegalArgumentException.class},
-								  {"sponsor1", "title", "description", IllegalArgumentException.class},
-								  {"sponsor2", "title", "description", IllegalArgumentException.class},
-								  {"sponsor3", "title", "description", IllegalArgumentException.class},
-								  {"user1", "title", "description", IllegalArgumentException.class},
-								  {"user2", "title", "description", IllegalArgumentException.class},
-								  {"user3", "title", "description", IllegalArgumentException.class},
-								  {"admin", "title", "description", IllegalArgumentException.class},
-								  {"counselor1", "", "", javax.validation.ConstraintViolationException.class}};
+		Object testingData[][] = {{"counselor1", "title", "https://www.attachment.com", "comment", null},
+								  {"counselor2", "title", "https://www.attachment.com", "comment", null},
+								  {"counselor3", "title", "https://www.attachment.com", "comment", null},
+								  {null, "title", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"sponsor1", "title", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"sponsor2", "title", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"sponsor3", "title", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"user1", "title", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"user2", "title", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"user3", "title", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"admin", "title", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"counselor1", "", "", "", javax.validation.ConstraintViolationException.class}};
 		
 		for(int i = 0; i < testingData.length; i++){
 			templateSaveMiscellaneousRecord((String) testingData[i][0], (String) testingData[i][1],
@@ -114,13 +120,16 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 	protected void templateSaveMiscellaneousRecord(String username, String title, String attachment, String comments, Class<?> expected){
 		Class<?> caught = null;
 		
+		Counselor counselor = (Counselor) counselorService.findAll().toArray()[0];
+		Curricula curricula = (Curricula) curriculaService.findByCounselor(counselor);
+		
 		try{
 			super.authenticate(username);
 			MiscellaneousRecord miscellaneousRecord = this.miscellaneousRecordService.create();
 			miscellaneousRecord.setTitle(title);
 			miscellaneousRecord.setAttachment(attachment);
 			miscellaneousRecord.setComments(comments);
-			miscellaneousRecord = this.miscellaneousRecordService.save(miscellaneousRecord);
+			miscellaneousRecord = this.miscellaneousRecordService.save(miscellaneousRecord, curricula);
 		} catch (Throwable oops){
 			caught = oops.getClass();
 		}
@@ -134,13 +143,16 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 		
 		authenticate("counselor1");
 		
+		Counselor counselor = counselorService.findByPrincipal();
+		Curricula curricula = (Curricula) curriculaService.findByCounselor(counselor);
+		
 		MiscellaneousRecord miscellaneousRecord = (MiscellaneousRecord) miscellaneousRecordService.findAll().toArray()[0];
 		
 		miscellaneousRecord.setTitle("Title miscellaneous record updated");
 		miscellaneousRecord.setAttachment("https://www.attachmentUpdated.com");
 		miscellaneousRecord.setComments("Comment miscellaneous record updated");
 		
-		MiscellaneousRecord result = miscellaneousRecordService.save(miscellaneousRecord);
+		MiscellaneousRecord result = miscellaneousRecordService.save(miscellaneousRecord, curricula);
 		
 		Assert.isTrue(miscellaneousRecordService.findAll().contains(result));
 		
@@ -152,17 +164,20 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 		
 		MiscellaneousRecord miscellaneousRecord = (MiscellaneousRecord) miscellaneousRecordService.findAll().toArray()[0];
 		
-		Object testingData[][] = {{"counselor1", "title", "https://www.attachment.com", null},
-								  {"counselor2", miscellaneousRecord.getTitle(), "https://www.attachment.com", null},
-								  {"counselor3", "title", miscellaneousRecord.getAttachment(), null},
-								  {"sponsor1", "title", "description", IllegalArgumentException.class},
-								  {"sponsor2", "title", "description", IllegalArgumentException.class},
-								  {"sponsor3", "title", "description", IllegalArgumentException.class},
-								  {"user1", "title", "description", IllegalArgumentException.class},
-								  {"user2", "title", "description", IllegalArgumentException.class},
-								  {"user3", "title", "description", IllegalArgumentException.class},
-								  {"admin", "title", "description", IllegalArgumentException.class},
-								  {"counselor1", "", "", javax.validation.ConstraintViolationException.class}};
+		Object testingData[][] = {{"counselor1", "title", "https://www.attachment.com", "comment", null},
+				  				  {"counselor2", "title", "https://www.attachment.com", "comment", null},
+				  				  {"counselor3", "title", "https://www.attachment.com", "comment", null},
+				  				  {"counselor1", miscellaneousRecord.getTitle(), "https://www.attachment.com", "comment", null},
+				  				  {"counselor2", "title", miscellaneousRecord.getAttachment(), "comment", null},
+				  				  {"counselor3", "title", "https://www.attachment.com", miscellaneousRecord.getComments(), null},
+				  				  {null, "title", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+				  				  {"sponsor1", "title", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+				  				  {"sponsor2", "title", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+				  				  {"sponsor3", "title", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+				  				  {"user1", "title", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+				  				  {"user2", "title", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+				  				  {"user3", "title", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+				  				  {"admin", "title", "https://www.attachment.com", "comment", IllegalArgumentException.class}};
 		
 		for(int i = 0; i < testingData.length; i++){
 			templateUpdateMiscellaneousRecord((String) testingData[i][0], (String) testingData[i][1],
@@ -172,14 +187,16 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 	
 	protected void templateUpdateMiscellaneousRecord(String username, String title, String attachment, String comments, Class<?> expected){
 		Class<?> caught = null;
+		
 		MiscellaneousRecord miscellaneousRecord = (MiscellaneousRecord) miscellaneousRecordService.findAll().toArray()[0];
+		Curricula curricula = (Curricula) curriculaService.findByMiscellaneousRecord(miscellaneousRecord);
 		
 		try{
 			super.authenticate(username);
 			miscellaneousRecord.setTitle(title);
 			miscellaneousRecord.setAttachment(attachment);
 			miscellaneousRecord.setComments(comments);
-			miscellaneousRecord = this.miscellaneousRecordService.save(miscellaneousRecord);
+			miscellaneousRecord = this.miscellaneousRecordService.save(miscellaneousRecord, curricula);
 		} catch (Throwable oops){
 			caught = oops.getClass();
 		}
@@ -188,9 +205,9 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
-	@Test
-	public void testDelete(){
-		authenticate("counselor1");
+	@Test(expected = DataIntegrityViolationException.class)
+	public void testDeleteNotAuthenticated(){
+		authenticate(null);
 		
 		MiscellaneousRecord miscellaneousRecord = (MiscellaneousRecord) miscellaneousRecordService.findAll().toArray()[0];
 		
@@ -230,5 +247,4 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 		super.unauthenticate();
 	}
-
 }

@@ -19,6 +19,11 @@ import utilities.AbstractTest;
 @Transactional
 public class WordServiceTest extends AbstractTest {
 
+	//	Coverage: 94.2%
+	//	Covered Instructions: 178
+	//	Missed  Instructions: 11
+	//	Total   Instructions: 189
+	
 	@Autowired
 	private WordService wordService;
 

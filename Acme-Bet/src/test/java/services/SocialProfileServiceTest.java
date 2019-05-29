@@ -18,10 +18,14 @@ import utilities.AbstractTest;
 @Transactional
 public class SocialProfileServiceTest extends AbstractTest {
 
+	//	Coverage: 93.6%
+	//	Covered Instructions: 794
+	//	Missed  Instructions: 54
+	//	Total   Instructions: 848
+	
 	@Autowired
 	private SocialProfileService socialProfileService;
 	
-	//	Se comprueba que se crean los social profile correctamente.
 	@Test
 	public void testCreate() {
 		SocialProfile socialProfile = socialProfileService.create();
@@ -67,7 +71,6 @@ public class SocialProfileServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
-	//	Se comprueba que se guardan los social profile correctamente.
 	@Test
 	public void testSave() {
 		
@@ -86,8 +89,6 @@ public class SocialProfileServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
-	//	Se comprueba que si se intenta guardar una social profile 
-	//	sin estar autenticado, salta una Illegal Argument Exception.
 	@Test(expected = IllegalArgumentException.class)
 	public void testSaveNotAuthenticated(){
 		authenticate(null);
@@ -139,7 +140,6 @@ public class SocialProfileServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
-	//	Se comprueba que se editan los social profile correctamente.
 	@Test
 	public void testUpdate() {
 		
@@ -157,8 +157,6 @@ public class SocialProfileServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
-	//	Se comprueba que si se intenta editar una social profile sin rellenar 
-	//	los datos obligatorios, salta una Constraint Violation Exception.
 	@Test(expected = javax.validation.ConstraintViolationException.class)
 	public void testUpdateNoData(){
 		authenticate("admin");
@@ -207,7 +205,6 @@ public class SocialProfileServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
-	//	Se comprueba que se borran los social profile correctamente.
 	@Test
 	public void testDelete() {
 		
@@ -228,8 +225,6 @@ public class SocialProfileServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
-	//	Se comprueba que si un actor intenta borrar los social profile 
-	//	de otro actor, salta una Data Integrity Violation Exception.
 	@Test(expected = org.springframework.dao.DataIntegrityViolationException.class)
 	public void testDeleteIncorrectAuthenticated() {
 		
@@ -248,12 +243,6 @@ public class SocialProfileServiceTest extends AbstractTest {
 	public void driverDeleteSocialProfile(){
 		
 		Object testingData[][] = {{"admin", null}};
-//								  {"bookmaker1", org.springframework.dao.DataIntegrityViolationException.class},
-//								  {"bookmaker2", org.springframework.dao.DataIntegrityViolationException.class},
-//								  {"bookmaker3", org.springframework.dao.DataIntegrityViolationException.class},
-//								  {"counselor1",  org.springframework.dao.DataIntegrityViolationException.class},
-//								  {"counselor2",  org.springframework.dao.DataIntegrityViolationException.class},
-//								  {"counselor3",  org.springframework.dao.DataIntegrityViolationException.class}};
 		
 		for(int i = 0; i < testingData.length; i++){
 			templateDeleteSocialProfile((String) testingData[i][0], (Class<?>)testingData[i][1]);

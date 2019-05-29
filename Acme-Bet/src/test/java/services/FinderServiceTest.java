@@ -18,6 +18,11 @@ import utilities.AbstractTest;
 @Transactional
 public class FinderServiceTest extends AbstractTest {
 
+	//	Coverage: 92.2%
+	//	Covered Instructions: 119 
+	//	Missed  Instructions: 10
+	//	Total   Instructions: 129
+	
 	@Autowired
 	private UserService userService;
 	

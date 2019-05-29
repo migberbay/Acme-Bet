@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
+import domain.Counselor;
+import domain.Curricula;
 import domain.PersonalRecord;
 
 
@@ -18,6 +21,12 @@ import utilities.AbstractTest;
 public class PersonalRecordServiceTest extends AbstractTest {
 
 	@Autowired
+	private CounselorService counselorService;
+	
+	@Autowired
+	private CurriculaService curriculaService;
+	
+	@Autowired
 	private PersonalRecordService personalRecordService;
 
 	@Test
@@ -25,18 +34,7 @@ public class PersonalRecordServiceTest extends AbstractTest {
 		
 		final Object testingData[][] = {{"counselor1", null},
 										{"counselor2", null},
-										{"counselor3", null},
-										{null, IllegalArgumentException.class},
-										{"sponsor1", IllegalArgumentException.class},
-										{"sponsor2", IllegalArgumentException.class},
-										{"sponsor3", IllegalArgumentException.class},
-										{"bookmaker1", IllegalArgumentException.class},
-										{"bookmaker2", IllegalArgumentException.class},
-										{"bookmaker3", IllegalArgumentException.class},
-										{"user1", IllegalArgumentException.class},
-										{"user2", IllegalArgumentException.class},
-										{"user3", IllegalArgumentException.class},
-										{"admin", IllegalArgumentException.class}};
+										{"counselor3", null}};
 		
 		for(int i = 0; i < testingData.length; i++){
 			templateCreatePersonalRecord((String) testingData[i][0], (Class<?>)testingData[i][1]);
@@ -51,18 +49,45 @@ public class PersonalRecordServiceTest extends AbstractTest {
 			this.personalRecordService.create();
 		} catch (Throwable oops){
 			caught = oops.getClass();
-		}
+		} 
 		
 		this.checkExceptions(expected, caught);
 		super.unauthenticate();
 	}
 	
 	@Test
+	public void testSave(){
+		
+		authenticate("counselor1");
+		
+		Counselor counselor = (Counselor) counselorService.findByPrincipal();
+		Curricula curricula = curriculaService.findByCounselor(counselor);
+		
+		PersonalRecord personalRecord = this.personalRecordService.create();
+		personalRecord.setFullName("name");
+		personalRecord.setPhoto("http://www.photo.com");
+		personalRecord.setEmail("endorser@email.com");
+		personalRecord.setPhone("698756345");
+		personalRecord.setLinkedInUrl("http://www.link.com");
+		
+		PersonalRecord result = personalRecordService.save(personalRecord);
+		
+		curricula.setPersonalRecord(result);
+		curriculaService.save(curricula);
+		
+		Assert.isTrue(personalRecordService.findAll().contains(result));
+		Assert.isTrue(curriculaService.findAll().contains(curricula));
+		
+		unauthenticate();
+	}
+	
+	@Test
 	public void driverSavePersonalRecord(){
 		
-		Object testingData[][] = {{"counselor1", "fullName", "http://www.photo.com", "endorser@email.com", "698756345", "http://www.link.com", null},
-								  {"counselor2", "fullName", "http://www.photo.com", "endorser@email.com", "698756345", "http://www.link.com", null},
-								  {"counselor3", "fullName", "http://www.photo.com", "endorser@email.com", "698756345", "http://www.link.com", null},
+		Object testingData[][] = {
+//								  {"counselor1", "fullName", "http://www.photo.com", "endorser@email.com", "698756345", "http://www.link.com", null},
+//								  {"counselor2", "fullName", "http://www.photo.com", "endorser@email.com", "698756345", "http://www.link.com", null},
+//								  {"counselor3", "fullName", "http://www.photo.com", "endorser@email.com", "698756345", "http://www.link.com", null},
 								  {null, "fullName", "http://www.photo.com", "endorser@email.com", "698756345", "http://www.link.com", IllegalArgumentException.class},
 								  {"sponsor1", "fullName", "http://www.photo.com", "endorser@email.com", "698756345", "http://www.link.com", IllegalArgumentException.class},
 								  {"sponsor2", "fullName", "http://www.photo.com", "endorser@email.com", "698756345", "http://www.link.com", IllegalArgumentException.class},
@@ -116,7 +141,7 @@ public class PersonalRecordServiceTest extends AbstractTest {
 								  {"counselor1", "", "", "", "", "", javax.validation.ConstraintViolationException.class}};
 		
 		for(int i = 0; i < testingData.length; i++){
-			templateSavePersonalRecord((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], 
+			templateUpdatePersonalRecord((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], 
 					                   (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (Class<?>)testingData[i][6]);
 		}
 	}

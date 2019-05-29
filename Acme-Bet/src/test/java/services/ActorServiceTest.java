@@ -72,6 +72,8 @@ public class ActorServiceTest extends AbstractTest {
 		credit.setMake("AMEX");
 		credit.setNumber("2534746553427456");
 		
+		Date moment = new Date(System.currentTimeMillis() - 1000);
+		
 		admin.setName("adminName");
 		admin.setSurnames("adminSurname1 adminSurname2");
 		admin.setEmail("admin@email.com");
@@ -79,6 +81,7 @@ public class ActorServiceTest extends AbstractTest {
 		admin.setPhoto("http://www.photo.com");
 		admin.setPhone("612123456");
 		admin.setCreditCard(credit);
+		admin.setMessagesLastSeen(moment);
 		
 		Admin result = actorService.registerAdmin(admin);
 		
@@ -107,6 +110,8 @@ public class ActorServiceTest extends AbstractTest {
 		credit.setMake("AMEX");
 		credit.setNumber("2534746553427456");
 		
+		Date moment = new Date(System.currentTimeMillis() - 1000);
+		
 		bookmaker.setName("bookmakerName");
 		bookmaker.setSurnames("bookmakerSurname1 bookmakerSurname2");
 		bookmaker.setEmail("bookmaker@email.com");
@@ -114,6 +119,7 @@ public class ActorServiceTest extends AbstractTest {
 		bookmaker.setPhoto("http://www.photo.com");
 		bookmaker.setPhone("612123456");
 		bookmaker.setCreditCard(credit);
+		bookmaker.setMessagesLastSeen(moment);
 		
 		Bookmaker result = actorService.registerBookmaker(bookmaker);
 		
@@ -141,6 +147,8 @@ public class ActorServiceTest extends AbstractTest {
 		credit.setNumber("2534746553427456");
 //		creditCardService.save(credit);
 		
+		Date moment = new Date(System.currentTimeMillis() - 1000);
+		
 		user.setName("userName");
 		user.setSurnames("userSurname1 userSurname2");
 		user.setEmail("user@email.com");
@@ -151,6 +159,7 @@ public class ActorServiceTest extends AbstractTest {
 		user.setFunds(0.0);
 		user.setLuckScore(0.0);
 //		userService.save(user);
+		user.setMessagesLastSeen(moment);
 		
 		User result = actorService.registerUser(user);
 		
@@ -176,6 +185,8 @@ public class ActorServiceTest extends AbstractTest {
 		credit.setMake("AMEX");
 		credit.setNumber("2534746553427456");
 		
+		Date moment = new Date(System.currentTimeMillis() - 1000);
+		
 		counselor.setName("counselorName");
 		counselor.setSurnames("counselorSurname1 counselorSurname2");
 		counselor.setEmail("counselor@email.com");
@@ -183,6 +194,7 @@ public class ActorServiceTest extends AbstractTest {
 		counselor.setPhoto("http://www.photo.com");
 		counselor.setPhone("612123456");
 		counselor.setCreditCard(credit);
+		counselor.setMessagesLastSeen(moment);
 		
 		Counselor result = actorService.registerCounselor(counselor);
 		
@@ -208,6 +220,8 @@ public class ActorServiceTest extends AbstractTest {
 		credit.setMake("AMEX");
 		credit.setNumber("2534746553427456");
 		
+		Date moment = new Date(System.currentTimeMillis() - 1000);
+		
 		sponsor.setName("sponsorName");
 		sponsor.setSurnames("sponsorSurname1 sponsorSurname2");
 		sponsor.setEmail("sponsor@email.com");
@@ -215,6 +229,7 @@ public class ActorServiceTest extends AbstractTest {
 		sponsor.setPhoto("http://www.photo.com");
 		sponsor.setPhone("612123456");
 		sponsor.setCreditCard(credit);
+		sponsor.setMessagesLastSeen(moment);
 		
 		Sponsor result = actorService.registerSponsor(sponsor);
 		

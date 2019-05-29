@@ -20,6 +20,11 @@ import utilities.AbstractTest;
 @Transactional
 public class CategoryServiceTest extends AbstractTest {
 
+	//	Coverage: 96.8%
+	//	Covered Instructions: 748 
+	//	Missed  Instructions: 25
+	//	Total   Instructions: 773
+	
 	@Autowired
 	private CategoryService categoryService;
 	

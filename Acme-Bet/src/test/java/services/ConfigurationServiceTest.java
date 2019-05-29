@@ -21,6 +21,11 @@ import utilities.AbstractTest;
 @Transactional
 public class ConfigurationServiceTest extends AbstractTest {
 
+	//	Coverage: 92.6%
+	//	Covered Instructions: 199
+	//	Missed  Instructions: 16
+	//	Total   Instructions: 215
+	
 	@Autowired
 	private ConfigurationService configurationService;
 

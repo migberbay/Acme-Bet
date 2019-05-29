@@ -126,7 +126,7 @@ public class PetitionServiceTest extends AbstractTest {
 										{"bookmaker3", null}};
 		
 		for(int i = 0; i < testingData.length; i++){
-			templateDeletePetition((String) testingData[i][0], (Class<?>)testingData[i][3]);
+			templateDeletePetition((String) testingData[i][0], (Class<?>)testingData[i][1]);
 		}
 	}
 	

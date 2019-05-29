@@ -1,13 +1,20 @@
 package services;
 
+import java.util.Date;
+
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import domain.Counselor;
+import domain.Curricula;
 import domain.ProfessionalRecord;
 
 import utilities.AbstractTest;
@@ -17,6 +24,17 @@ import utilities.AbstractTest;
 @Transactional
 public class ProfessionalRecordServiceTest extends AbstractTest {
 
+	//	Coverage: 88.8%
+	//	Covered Instructions: 930
+	//	Missed  Instructions: 117
+	//	Total   Instructions: 1.047
+	
+	@Autowired
+	private CounselorService counselorService;
+	
+	@Autowired
+	private CurriculaService curriculaService;
+	
 	@Autowired
 	private ProfessionalRecordService professionalRecordService;
 	
@@ -42,18 +60,7 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 		
 		final Object testingData[][] = {{"counselor1", null},
 										{"counselor2", null},
-										{"counselor3", null},
-										{null, IllegalArgumentException.class},
-										{"sponsor1", IllegalArgumentException.class},
-										{"sponsor2", IllegalArgumentException.class},
-										{"sponsor3", IllegalArgumentException.class},
-										{"bookmaker1", IllegalArgumentException.class},
-										{"bookmaker2", IllegalArgumentException.class},
-										{"bookmaker3", IllegalArgumentException.class},
-										{"user1", IllegalArgumentException.class},
-										{"user2", IllegalArgumentException.class},
-										{"user3", IllegalArgumentException.class},
-										{"admin", IllegalArgumentException.class}};
+										{"counselor3", null}};
 		
 		for(int i = 0; i < testingData.length; i++){
 			templateCreateProfessionalRecord((String) testingData[i][0], (Class<?>)testingData[i][1]);
@@ -79,64 +86,116 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 		
 		authenticate("counselor1");
 		
+		Counselor counselor = counselorService.findByPrincipal();
+		Curricula curricula = (Curricula) curriculaService.findByCounselor(counselor);
+		
 		ProfessionalRecord professionalRecord = professionalRecordService.create();
+		
+		Date startDate  = new Date(System.currentTimeMillis() - 10000);
+		Date endDate    = new Date(System.currentTimeMillis() - 10000);
 		
 		professionalRecord.setCompanyName("Title miscellaneous record");
 		professionalRecord.setAttachment("https://www.attachment.com");
 		professionalRecord.setComments("Comment miscellaneous record");
+		professionalRecord.setStartDate(startDate);
+		professionalRecord.setEndDate(endDate);
+		professionalRecord.setRole("developer");
 		
-		ProfessionalRecord result = professionalRecordService.save(professionalRecord);
+		ProfessionalRecord result = professionalRecordService.save(professionalRecord, curricula);
 		
 		Assert.isTrue(professionalRecordService.findAll().contains(result));
 		
 		unauthenticate();
 	}
 	
-	@Test
-	public void driverSaveProfessionalRecord(){
+	@Test(expected = IllegalArgumentException.class)
+	public void testSaveNotAuthenticated() {
 		
-		Object testingData[][] = {{"counselor1", "title", "description", null},
-								  {"counselor2", "title", "description", null},
-								  {"counselor3", "title", "description", null},
-								  {null, "title", "description", IllegalArgumentException.class},
-								  {"sponsor1", "title", "description", IllegalArgumentException.class},
-								  {"sponsor2", "title", "description", IllegalArgumentException.class},
-								  {"sponsor3", "title", "description", IllegalArgumentException.class},
-								  {"user1", "title", "description", IllegalArgumentException.class},
-								  {"user2", "title", "description", IllegalArgumentException.class},
-								  {"user3", "title", "description", IllegalArgumentException.class},
-								  {"admin", "title", "description", IllegalArgumentException.class},
-								  {"counselor1", "", "", javax.validation.ConstraintViolationException.class}};
+		authenticate(null);
 		
-		for(int i = 0; i < testingData.length; i++){
-			templateSaveProfessionalRecord((String) testingData[i][0], (String) testingData[i][1],
-									(String) testingData[i][2], (String) testingData[i][3], (Class<?>)testingData[i][4]);
-		}
+		Counselor counselor = counselorService.findByPrincipal();
+		Curricula curricula = (Curricula) curriculaService.findByCounselor(counselor);
+		
+		ProfessionalRecord professionalRecord = professionalRecordService.create();
+		
+		Date startDate  = new Date(System.currentTimeMillis() - 10000);
+		Date endDate    = new Date(System.currentTimeMillis() - 10000);
+		
+		professionalRecord.setCompanyName("Title miscellaneous record");
+		professionalRecord.setAttachment("https://www.attachment.com");
+		professionalRecord.setComments("Comment miscellaneous record");
+		professionalRecord.setStartDate(startDate);
+		professionalRecord.setEndDate(endDate);
+		professionalRecord.setRole("developer");
+		
+		ProfessionalRecord result = professionalRecordService.save(professionalRecord, curricula);
+		
+		Assert.isTrue(professionalRecordService.findAll().contains(result));
+		
+		unauthenticate();
 	}
 	
-	protected void templateSaveProfessionalRecord(String username, String companyName, String attachment, String comments, Class<?> expected){
-		Class<?> caught = null;
-		ProfessionalRecord professionalRecord;
+	@Test(expected = ConstraintViolationException.class)
+	public void testSaveIncorrectDate() {
 		
-		try{
-			super.authenticate(username);
-			professionalRecord = this.professionalRecordService.create();
-			professionalRecord.setCompanyName(companyName);
-			professionalRecord.setAttachment(attachment);
-			professionalRecord.setComments(comments);
-			professionalRecord = this.professionalRecordService.save(professionalRecord);
-		} catch (Throwable oops){
-			caught = oops.getClass();
-		}
+		authenticate("counselor1");
 		
-		this.checkExceptions(expected, caught);
-		super.unauthenticate();
+		Counselor counselor = counselorService.findByPrincipal();
+		Curricula curricula = (Curricula) curriculaService.findByCounselor(counselor);
+		
+		ProfessionalRecord professionalRecord = professionalRecordService.create();
+		
+		Date startDate  = new Date(System.currentTimeMillis() + 10000);
+		Date endDate    = new Date(System.currentTimeMillis() + 10000);
+		
+		professionalRecord.setCompanyName("Title miscellaneous record");
+		professionalRecord.setAttachment("https://www.attachment.com");
+		professionalRecord.setComments("Comment miscellaneous record");
+		professionalRecord.setStartDate(startDate);
+		professionalRecord.setEndDate(endDate);
+		professionalRecord.setRole("developer");
+		
+		ProfessionalRecord result = professionalRecordService.save(professionalRecord, curricula);
+		
+		Assert.isTrue(professionalRecordService.findAll().contains(result));
+		
+		unauthenticate();
 	}
 	
+	@Test(expected = ConstraintViolationException.class)
+	public void testSaveIncorrectData() {
+		
+		authenticate("counselor1");
+		
+		Counselor counselor = counselorService.findByPrincipal();
+		Curricula curricula = (Curricula) curriculaService.findByCounselor(counselor);
+		
+		ProfessionalRecord professionalRecord = professionalRecordService.create();
+		
+		Date startDate  = new Date(System.currentTimeMillis() - 10000);
+		Date endDate    = new Date(System.currentTimeMillis() - 10000);
+		
+		professionalRecord.setCompanyName("");
+		professionalRecord.setAttachment("https://www.attachment.com");
+		professionalRecord.setComments("Comment miscellaneous record");
+		professionalRecord.setStartDate(startDate);
+		professionalRecord.setEndDate(endDate);
+		professionalRecord.setRole("");
+		
+		ProfessionalRecord result = professionalRecordService.save(professionalRecord, curricula);
+		
+		Assert.isTrue(professionalRecordService.findAll().contains(result));
+		
+		unauthenticate();
+	}
+			
 	@Test 
 	public void testUpdate(){
 		
 		authenticate("counselor1");
+		
+		Counselor counselor = counselorService.findByPrincipal();
+		Curricula curricula = (Curricula) curriculaService.findByCounselor(counselor);
 		
 		ProfessionalRecord professionalRecord = (ProfessionalRecord) professionalRecordService.findAll().toArray()[0];
 		
@@ -144,7 +203,7 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 		professionalRecord.setAttachment("https://www.attachmentUpdated.com");
 		professionalRecord.setComments("Comment professional record updated");
 		
-		ProfessionalRecord result = professionalRecordService.save(professionalRecord);
+		ProfessionalRecord result = professionalRecordService.save(professionalRecord, curricula);
 		
 		Assert.isTrue(professionalRecordService.findAll().contains(result));
 		
@@ -156,35 +215,41 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 		
 		ProfessionalRecord professionalRecord = (ProfessionalRecord) professionalRecordService.findAll().toArray()[0];
 		
-		Object testingData[][] = {{"counselor1", "title", "https://www.attachment.com", null},
-								  {"counselor2", professionalRecord.getCompanyName(), "https://www.attachment.com", null},
-								  {"counselor3", "title", professionalRecord.getAttachment(), null},
-								  {"sponsor1", "title", "description", IllegalArgumentException.class},
-								  {"sponsor2", "title", "description", IllegalArgumentException.class},
-								  {"sponsor3", "title", "description", IllegalArgumentException.class},
-								  {"user1", "title", "description", IllegalArgumentException.class},
-								  {"user2", "title", "description", IllegalArgumentException.class},
-								  {"user3", "title", "description", IllegalArgumentException.class},
-								  {"admin", "title", "description", IllegalArgumentException.class},
-								  {"counselor1", "", "", javax.validation.ConstraintViolationException.class}};
+		Object testingData[][] = {{"counselor1", "companyName", "developer", "https://www.attachment.com", "comment", null},
+								  {"counselor2", professionalRecord.getCompanyName(), "developer", "https://www.attachment.com", "comment", null},
+								  {"counselor3", "companyName", "developer", professionalRecord.getAttachment(), "comment", null},
+								  {"counselor1", "companyName", professionalRecord.getRole(), "https://www.attachment.com", "comment", null},
+								  {"counselor2", "companyName", "developer", "https://www.attachment.com", professionalRecord.getComments(), null},
+								  {"bookmaker1", "companyName", "developer", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"bookmaker2", "companyName", "developer", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"bookmaker3", "companyName", "developer", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"sponsor1", "companyName", "developer", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"sponsor2", "companyName", "developer", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"sponsor3", "companyName", "developer", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"user1", "companyName", "developer", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"user2", "companyName", "developer", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"user3", "companyName", "developer", "https://www.attachment.com", "comment", IllegalArgumentException.class},
+								  {"admin", "companyName", "developer", "https://www.attachment.com", "comment", IllegalArgumentException.class},};
 		
 		for(int i = 0; i < testingData.length; i++){
-			templateUpdateProfessionalRecord((String) testingData[i][0], (String) testingData[i][1],
-											  (String) testingData[i][2], (String) testingData[i][3], (Class<?>)testingData[i][4]);
+			templateUpdateProfessionalRecord((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2],
+											 (String) testingData[i][3], (String) testingData[i][4], (Class<?>)testingData[i][5]);
 		}
 	}
 	
-	protected void templateUpdateProfessionalRecord(String username, String companyName, String attachment, String comments, Class<?> expected){
+	protected void templateUpdateProfessionalRecord(String username, String companyName, String role, String attachment, String comments, Class<?> expected){
 		Class<?> caught = null;
 		
 		ProfessionalRecord professionalRecord = (ProfessionalRecord) professionalRecordService.findAll().toArray()[0];
+		Curricula curricula = (Curricula) curriculaService.findByProfessionalRecord(professionalRecord);
 		
 		try{
 			super.authenticate(username);
 			professionalRecord.setCompanyName(companyName);
 			professionalRecord.setAttachment(attachment);
 			professionalRecord.setComments(comments);
-			professionalRecord = this.professionalRecordService.save(professionalRecord);
+			professionalRecord.setRole(role);
+			professionalRecord = this.professionalRecordService.save(professionalRecord, curricula);
 		} catch (Throwable oops){
 			caught = oops.getClass();
 		}
@@ -193,19 +258,22 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
-	@Test
+	@Test(expected = DataIntegrityViolationException.class)
 	public void testDelete(){
-		authenticate("counselor1");
+		
+		authenticate("bookmaker1");
 		
 		ProfessionalRecord professionalRecord = (ProfessionalRecord) professionalRecordService.findAll().toArray()[0];
 		
 		professionalRecordService.delete(professionalRecord);
 		
 		Assert.isTrue(!professionalRecordService.findAll().contains(professionalRecord));
+		
+		unauthenticate();
 	}
 	
 	@Test
-	public void driverDeleteMiscellaneousRecord(){
+	public void driverDeleteProfessionalRecord(){
 		
 		Object testingData[][] = {{"counselor1", null},
 								  {"counselor2", null},

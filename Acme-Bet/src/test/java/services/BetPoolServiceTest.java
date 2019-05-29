@@ -2,6 +2,8 @@ package services;
 
 import java.util.Date;
 
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,11 @@ import utilities.AbstractTest;
 @Transactional
 public class BetPoolServiceTest extends AbstractTest {
 
+	//	Coverage: 93.6%
+	//	Covered Instructions: 
+	//	Missed  Instructions: 11
+	//	Total   Instructions: 189
+	
 	@Autowired
 	private BetPoolService betPoolService;
 	
@@ -73,6 +80,76 @@ public class BetPoolServiceTest extends AbstractTest {
 		Date startDate  = new Date(System.currentTimeMillis() + 10000);
 		Date endDate    = new Date(System.currentTimeMillis() + 10000);
 		Date resultDate = new Date(System.currentTimeMillis() + 10000);
+		
+		BetPool betPool = betPoolService.create();
+		
+		betPool.setTitle("Title betPool");
+		betPool.setDescription("Description betPool");
+		betPool.setMaxRange(10000.0);
+		betPool.setMinRange(10.0);
+		betPool.setCategory(category);
+		betPool.setWarranty(warranty);
+		betPool.setMoment(moment);
+		betPool.setResultDate(resultDate);
+		betPool.setStartDate(startDate);
+		betPool.setEndDate(endDate);
+		betPool.setBookmaker(bookmaker);
+		
+		BetPool result = betPoolService.save(betPool);
+		
+		Assert.isTrue(betPoolService.findAll().contains(result));
+		
+		unauthenticate();
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSaveIncorrectData(){
+		
+		authenticate("bookamker1");
+		
+		Category category = (Category) categoryService.findAll().toArray()[0];
+		Warranty warranty = (Warranty) warrantyService.findAll().toArray()[0];
+		Bookmaker bookmaker = (Bookmaker) bookmakerService.findAll().toArray()[0];
+		
+		Date moment     = new Date(System.currentTimeMillis() - 1000);
+		Date startDate  = new Date(System.currentTimeMillis() + 10000);
+		Date endDate    = new Date(System.currentTimeMillis() + 10000);
+		Date resultDate = new Date(System.currentTimeMillis() + 10000);
+		
+		BetPool betPool = betPoolService.create();
+		
+		betPool.setTitle("");
+		betPool.setDescription("");
+		betPool.setMaxRange(10000.0);
+		betPool.setMinRange(10.0);
+		betPool.setCategory(category);
+		betPool.setWarranty(warranty);
+		betPool.setMoment(moment);
+		betPool.setResultDate(resultDate);
+		betPool.setStartDate(startDate);
+		betPool.setEndDate(endDate);
+		betPool.setBookmaker(bookmaker);
+		
+		BetPool result = betPoolService.save(betPool);
+		
+		Assert.isTrue(betPoolService.findAll().contains(result));
+		
+		unauthenticate();
+	}
+	
+	@Test(expected = ConstraintViolationException.class)
+	public void testSaveIncorrectDate(){
+		
+		authenticate("bookmaker1");
+		
+		Category category = (Category) categoryService.findAll().toArray()[0];
+		Warranty warranty = (Warranty) warrantyService.findAll().toArray()[0];
+		Bookmaker bookmaker = (Bookmaker) bookmakerService.findAll().toArray()[0];
+		
+		Date moment     = new Date(System.currentTimeMillis() + 1000);
+		Date startDate  = new Date(System.currentTimeMillis() - 10000);
+		Date endDate    = new Date(System.currentTimeMillis() - 10000);
+		Date resultDate = new Date(System.currentTimeMillis() - 10000);
 		
 		BetPool betPool = betPoolService.create();
 		
