@@ -29,6 +29,7 @@ import domain.BetPool;
 import domain.Bookmaker;
 import domain.Counselor;
 import domain.CreditCard;
+import domain.Curricula;
 import domain.SocialProfile;
 import domain.Sponsor;
 import domain.Sponsorship;
@@ -64,6 +65,9 @@ public class ActorService {
 	
 	@Autowired
 	private CreditCardService creditCardService;
+	
+	@Autowired
+	private CurriculaService curriculaService;
 	
 	@Autowired
 	private Validator validator;
@@ -125,6 +129,7 @@ public class ActorService {
 		res.setPhone(actor.getPhone());
 		res.setPhoto(actor.getPhoto());
 		res.setSurnames(actor.getSurnames());
+		res.setMessagesLastSeen(actor.getMessagesLastSeen());
 
 		User saved = userService.save(res);
 		
@@ -151,6 +156,7 @@ public class ActorService {
 		res.setPhone(actor.getPhone());
 		res.setPhoto(actor.getPhoto());
 		res.setSurnames(actor.getSurnames());
+		res.setMessagesLastSeen(actor.getMessagesLastSeen());
 		
 		Bookmaker saved = bookmakerService.save(res);
 	
@@ -178,6 +184,7 @@ public class ActorService {
 		res.setPhone(actor.getPhone());
 		res.setPhoto(actor.getPhoto());
 		res.setSurnames(actor.getSurnames());
+		res.setMessagesLastSeen(actor.getMessagesLastSeen());
 		
 		Sponsor saved = sponsorService.save(res);
 		
@@ -206,6 +213,7 @@ public class ActorService {
 		res.setPhone(actor.getPhone());
 		res.setPhoto(actor.getPhoto());
 		res.setSurnames(actor.getSurnames());
+		res.setMessagesLastSeen(actor.getMessagesLastSeen());
 		
 		Admin saved = adminService.save(res);
 		
@@ -234,8 +242,13 @@ public class ActorService {
 		res.setPhone(actor.getPhone());
 		res.setPhoto(actor.getPhoto());
 		res.setSurnames(actor.getSurnames());
+		res.setMessagesLastSeen(actor.getMessagesLastSeen());
 		
 		Counselor saved = counselorService.save(res);
+		
+		Curricula c = curriculaService.createNotBad();
+		c.setCounselor(saved);
+		curriculaService.trueSave(c);
 		
 		return saved;
 	}

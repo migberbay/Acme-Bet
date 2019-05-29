@@ -47,7 +47,7 @@ public class ProfessionalRecord extends DomainEntity {
 	@Past
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	public Date getStartDate() {
 		return this.startDate;
 	}
@@ -58,7 +58,7 @@ public class ProfessionalRecord extends DomainEntity {
 
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	public Date getEndDate() {
 		return this.endDate;
 	}
