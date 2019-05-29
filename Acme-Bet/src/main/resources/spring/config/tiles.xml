@@ -37,6 +37,7 @@
 		<value>/views/finder/tiles.xml</value>
 		<value>/views/review/tiles.xml</value>
 		<value>/views/curricula/tiles.xml</value>
+		<value>/views/block/tiles.xml</value>
 		
 		<value>/views/error/tiles.xml</value>
 	</util:list>

@@ -71,11 +71,6 @@ public class DashboardAdminController extends AbstractController {
 		res.addObject("maxBetsPerUser", betService.getMaxBetsPerUser());
 		res.addObject("stdevBetsPerUser", Math.round(betService.getStdevBetsPerUser()*100.0d)/100.0d);
 
-		res.addObject("avgResultsPerFinder", Math.round(finderService.getAvgResultsPerFinder()*100.0d/100.0d));
-		res.addObject("minResultsPerFinder", finderService.getMinResultsPerFinder());
-		res.addObject("maxResultsPerFinder", finderService.getMaxResultsPerFinder());
-		res.addObject("stdevResultsPerFinder", Math.round(finderService.getStdevResultsPerFinder()*100.0d/100.0d));
-
 		res.addObject("avgHelpRequestsPerUser", Math.round(helpRequestService.getAvgHelpRequestsPerUser()*100.0d/100.0d));
 		res.addObject("minHelpRequestsPerUser", helpRequestService.getMinHelpRequestsPerUser());
 		res.addObject("maxHelpRequestsPerUser", helpRequestService.getMaxHelpRequestsPerUser());

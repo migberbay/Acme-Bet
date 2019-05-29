@@ -18,6 +18,9 @@ public interface CounselorRepository extends JpaRepository<Counselor, Integer>{
 	@Query("select h.counselor from HelpRequest h where h.status='SOLVED' and h.user.id=?1")
 	Collection<Counselor> getSolvedCounselorsByUser(Integer userId);
 	
+	@Query("select distinct h.counselor from HelpRequest h where (h.status='SOLVED' or h.status='PENDING') and h.user.id=?1")
+	Collection<Counselor> getAnswerCounselorsByUser(Integer userId);
+	
 	@Query("select c,max(1.0*(select avg(r.score) from Review r where r.counselor = c)) from Counselor c")
 	Collection<Object> getHighestAvgScoreCounselor();
 }

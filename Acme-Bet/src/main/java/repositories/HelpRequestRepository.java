@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import domain.Category;
+import domain.Counselor;
 import domain.HelpRequest;
 
 @Repository
@@ -21,8 +22,8 @@ public interface HelpRequestRepository extends JpaRepository<HelpRequest, Intege
 	@Query("select h from HelpRequest h where h.counselor.id = ?1")
 	Collection<HelpRequest> findRequestsByCounselor(int counselorId);
 
-	@Query("select h from HelpRequest h where h.status = 'OPEN'")
-	Collection<HelpRequest> getOpenRequests();
+	@Query("select h from HelpRequest h where h.status = 'OPEN' and ?1 not member of h.user.blockedCounselors")
+	Collection<HelpRequest> getOpenRequests(Counselor counselor);
 	
 	@Query("select avg(u.helpRequests.size) from User u")
 	Double getAvgHelpRequestsPerUser();

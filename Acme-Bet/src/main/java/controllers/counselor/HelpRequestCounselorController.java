@@ -46,7 +46,7 @@ public class HelpRequestCounselorController extends AbstractController {
 	public ModelAndView listOpen() {
 		ModelAndView result;
 		
-		Collection<HelpRequest> helpRequests = helpRequestService.getOpenRequests();
+		Collection<HelpRequest> helpRequests = helpRequestService.getOpenRequests(counselorService.findByPrincipal());
 		String language = "";
 		if(LocaleContextHolder.getLocale().getLanguage().toLowerCase().equals("es")){
 			language ="es";

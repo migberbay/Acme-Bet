@@ -16,6 +16,7 @@ import org.springframework.validation.Validator;
 
 import repositories.HelpRequestRepository;
 import domain.Category;
+import domain.Counselor;
 import domain.HelpRequest;
 import domain.Message;
 
@@ -76,8 +77,8 @@ public class HelpRequestService {
 		return helpRequestRepository.findRequestsByUser(userService.findByPrincipal().getId());
 	}
 	
-	public Collection<HelpRequest> getOpenRequests(){
-		return helpRequestRepository.getOpenRequests();
+	public Collection<HelpRequest> getOpenRequests(Counselor counselor){
+		return helpRequestRepository.getOpenRequests(counselor);
 	}
 	
 	public Collection<HelpRequest> findRequestsByCounselor() {

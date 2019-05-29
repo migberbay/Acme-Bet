@@ -78,4 +78,8 @@ public class CounselorService {
 		}
 		return res;
 	}
+	
+	public Collection<Counselor> getAnswerCounselorsByUser(Integer userId){
+		return this.counselorRepository.getAnswerCounselorsByUser(userId);
+	}
 }

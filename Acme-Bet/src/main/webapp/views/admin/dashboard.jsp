@@ -18,7 +18,6 @@
 				<th><spring:message code="admin.type"/></th>
 				<th><spring:message code="admin.betsPerBetPool"/></th>
 				<th><spring:message code="admin.betsPerUser"/></th>
-				<th><spring:message code="admin.resultsPerFinder"/></th>
 				<th><spring:message code="admin.helpRequestsPerUser"/></th>
 				<th><spring:message code="admin.reviewsPerUser"/></th>
 				<th><spring:message code="admin.sponsorshipsPerSponsor"/></th>
@@ -27,7 +26,6 @@
 				<td><spring:message code="admin.average"/></td>
 				<td><jstl:out value="${avgBetsPerBetPool}"/></td>
 				<td><jstl:out value="${avgBetsPerUser}"/></td>
-				<td><jstl:out value="${avgResultsPerFinder}"/></td>			
 				<td><jstl:out value="${avgHelpRequestsPerUser}"/></td>		
 				<td><jstl:out value="${avgReviewsPerUser}"/></td>	
 				<td><jstl:out value="${avgSponsorshipsPerSponsor}"/></td>	
@@ -36,7 +34,6 @@
 				<td><spring:message code="admin.minimum"/></td>
 				<td><jstl:out value="${minBetsPerBetPool}"/></td>
 				<td><jstl:out value="${minBetsPerUser}"/></td>
-				<td><jstl:out value="${minResultsPerFinder}"/></td>	
 				<td><jstl:out value="${minHelpRequestsPerUser}"/></td>	
 				<td><jstl:out value="${minReviewsPerUser}"/></td>	
 				<td><jstl:out value="${minSponsorshipsPerSponsor}"/></td>	
@@ -45,7 +42,6 @@
 				<td><spring:message code="admin.maximum"/></td>
 				<td><jstl:out value="${maxBetsPerBetPool}"/></td>
 				<td><jstl:out value="${maxBetsPerUser}"/></td>
-				<td><jstl:out value="${maxResultsPerFinder}"/></td>	
 				<td><jstl:out value="${maxHelpRequestsPerUser}"/></td>	
 				<td><jstl:out value="${maxReviewsPerUser}"/></td>	
 				<td><jstl:out value="${maxSponsorshipsPerSponsor}"/></td>	
@@ -54,7 +50,6 @@
 				<td><spring:message code="admin.stdv"/></td>
 				<td><jstl:out value="${stdevBetsPerBetPool}"/></td>
 				<td><jstl:out value="${stdevBetsPerUser}"/></td>
-				<td><jstl:out value="${stdevResultsPerFinder}"/></td>	
 				<td><jstl:out value="${stdevHelpRequestsPerUser}"/></td>	
 				<td><jstl:out value="${stdevReviewsPerUser}"/></td>	
 				<td><jstl:out value="${stdevSponsorshipsPerSponsor}"/></td>	

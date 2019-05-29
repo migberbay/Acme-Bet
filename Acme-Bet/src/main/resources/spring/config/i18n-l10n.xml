@@ -37,6 +37,7 @@
 		<value>/views/finder/messages</value>
 		<value>/views/review/messages</value>
 		<value>/views/curricula/messages</value>
+		<value>/views/block/messages</value>
 		
 		<value>/views/error/messages</value>
 	</util:list>
