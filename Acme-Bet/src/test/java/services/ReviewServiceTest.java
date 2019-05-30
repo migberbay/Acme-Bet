@@ -27,10 +27,10 @@ import utilities.AbstractTest;
 @Transactional
 public class ReviewServiceTest extends AbstractTest {
 
-	//	Coverage: 92.2%
-	//	Covered Instructions: 564
+	//	Coverage: 91.9%
+	//	Covered Instructions: 545
 	//	Missed  Instructions: 48
-	//	Total   Instructions: 612
+	//	Total   Instructions: 593
 	
 	@Autowired
 	private UserService userService;
@@ -81,7 +81,6 @@ public class ReviewServiceTest extends AbstractTest {
 		
 		review.setDescription("Review Description");
 		review.setMoment(moment);
-		review.setIsFinal(false);
 		review.setScore(7.0);
 		review.setUser(user);
 		review.setCounselor(counselor);
@@ -106,7 +105,6 @@ public class ReviewServiceTest extends AbstractTest {
 		
 		review.setDescription("Review Description");
 		review.setMoment(moment);
-		review.setIsFinal(false);
 		review.setScore(7.0);
 		review.setCounselor(counselor);
 		
@@ -131,7 +129,6 @@ public class ReviewServiceTest extends AbstractTest {
 		
 		review.setDescription("");
 		review.setMoment(moment);
-		review.setIsFinal(false);
 		review.setScore(7.0);
 		review.setUser(user);
 		review.setCounselor(counselor);
@@ -157,7 +154,6 @@ public class ReviewServiceTest extends AbstractTest {
 		
 		review.setDescription("Review Description");
 		review.setMoment(moment);
-		review.setIsFinal(false);
 		review.setScore(7.0);
 		review.setUser(user);
 		review.setCounselor(counselor);
@@ -218,7 +214,6 @@ public class ReviewServiceTest extends AbstractTest {
 			super.authenticate(username);
 			review.setDescription(description);
 			review.setScore(score);
-			review.setIsFinal(isFinal);
 			review.setAttachments(attachments);
 			this.reviewService.save(review);
 		} catch (Throwable oops){
