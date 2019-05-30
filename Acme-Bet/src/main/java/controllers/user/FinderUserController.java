@@ -4,6 +4,7 @@ import controllers.AbstractController;
 import domain.Category;
 import domain.Finder;
 import domain.BetPool;
+import domain.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import services.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 @Controller
 @RequestMapping("finder/user/")
@@ -49,8 +52,9 @@ public class FinderUserController extends AbstractController {
 			result = createEditModelAndView(finder);
 		} else {
 			try {
+				System.out.println("filter " + finder.getMinRange());
 				Finder updatedFinder = finderService.save(finder);
-				System.out.println("Bet pools controller: " + updatedFinder.getBetPools() + " con keyword: ("+ updatedFinder.getKeyword()+")");
+				System.out.println("Bet pools controller: " + updatedFinder.getBetPools() + " con keyword: ("+ updatedFinder.getMinRange()+")");
 				result = createEditModelAndView(updatedFinder);
 			} catch (final Throwable oops) {
 				oops.printStackTrace();
@@ -92,7 +96,7 @@ public class FinderUserController extends AbstractController {
 		String cachedMessageCode = null;
 		Collection<Category> categories = categoryService.getPoolCategories();
 		res = new ModelAndView("finder/edit");
-		System.out.println("MOdelandview betpools " + finder.getBetPools() + " y kw " + finder.getKeyword());
+		System.out.println("MOdelandview betpools " + finder.getBetPools() + " y min " + finder.getMinRange());
 		if(finderService.findOne(finder.getId()).getMoment() == null
 				|| finderService.isVoid(finder)
 				|| finderService.isExpired(finder)){
@@ -112,11 +116,17 @@ public class FinderUserController extends AbstractController {
 			language ="en";
 		}
 		
+		List<Double> minRanges = new ArrayList<Double>();
+		minRanges.add(0d);minRanges.add(10d);minRanges.add(50d);minRanges.add(100d);minRanges.add(500d);
+		List<Double> maxRanges = new ArrayList<Double>();
+		maxRanges.add(10d);maxRanges.add(50d);maxRanges.add(100d);maxRanges.add(10000d);
 		res.addObject("cachedMessage", cachedMessageCode);
 		res.addObject("finder",finder);
 		res.addObject("lan",language);
 		res.addObject("betPools", betPools);
 		res.addObject("categories",categories);
+		res.addObject("minRanges",minRanges);
+		res.addObject("maxRanges",maxRanges);
 		res.addObject("message", messageCode);
 
 		return res;

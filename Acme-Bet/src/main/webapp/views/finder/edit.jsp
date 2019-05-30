@@ -38,10 +38,40 @@
 	<security:authorize access="hasRole('USER')">
 	
 	<acme:textbox code="finder.keyword" path="keyword"/>
-	<acme:textbox code="finder.minRange" path="minRange"/>
-	<acme:textbox code="finder.maxRange" path="maxRange"/>
-	<acme:textbox code="finder.openingDate" path="openingDate" placeholder="01/02/2010 12:00"/>
-	<acme:textbox code="finder.endDate" path="endDate" placeholder="01/02/2010 12:00"/>
+	
+	<form:label path="minRange">
+		<spring:message code="finder.minRange" />
+	</form:label>	
+	<form:select path="minRange">
+		<form:option value="0" label="----" />		
+		<form:options items="${minRanges}" />
+	</form:select>
+	<div class="tooltip"><b>?</b>
+  		<span class="tooltiptext"><spring:message code="finder.ranges"/></span>
+	</div>
+	<form:errors path="minRange" cssClass="error" />
+	<br/>
+	
+	<form:label path="maxRange">
+		<spring:message code="finder.maxRange" />
+	</form:label>	
+	<form:select path="maxRange">
+		<form:option value="0" label="----" />		
+		<form:options items="${maxRanges}" />
+	</form:select>
+	<form:errors path="maxRange" cssClass="error" />
+	<br/>
+
+	<spring:message code = "finder.openingDate"/>: 
+	<input type= "datetime-local" name="openingDate" placeholder="YYYY-MM-DDTHH:mm">
+	<form:errors path="openingDate" cssClass="error" /><br>
+	
+	
+	<spring:message code = "finder.endDate"/>: 
+	<input type= "datetime-local" name="endDate" placeholder="YYYY-MM-DDTHH:mm">
+	<form:errors path="endDate" cssClass="error" /><br>
+
+	
 	<jstl:if test="${lan=='es'}">
 		<acme:select code="finder.category" path="category" items ="${categories}" itemLabel="spanishName"/>
 	</jstl:if>
