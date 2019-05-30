@@ -141,6 +141,7 @@ public class HelpRequestCounselorController extends AbstractController {
 			m.setTags(new ArrayList<String>());
 			String s = "HELP from "+counselorService.findByPrincipal().getUserAccount().getUsername();
 			m.getTags().add(request.getTicker()); m.getTags().add(s);
+			System.out.println("ANSWER TAGS " + m.getTags());
 			Message savedM = helpRequestService.reconstructMessage(m, bindingResult);
 			messageService.save(savedM);
 			this.request.setStatus("PENDING");

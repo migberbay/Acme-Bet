@@ -138,7 +138,6 @@ public class HelpRequestService {
 		res = message;
 		res.setFlagSpam(false);
 		res.setMoment(new Date(System.currentTimeMillis()-1000));
-		res.setTags(new ArrayList<String>());
 		res.setSender(counselorService.findByPrincipal());
 		
 		validator.validate(res, bindingResult);

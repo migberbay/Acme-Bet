@@ -1129,36 +1129,6 @@
 	<!-- REVIEWS -->
 	
 	<bean id="review1" class="domain.Review">
-		<property name="description" value="description1" />
-		<property name="moment" value="10/10/2010 12:30" />
-		<property name="score" value="6.5" />
-		<property name="isFinal" value="true" />
-		<property name="user" ref="user1" />
-		<property name="counselor" ref="counselor1" />
-		<property name="attachments">
-			<list>
-				<value>http://www.link1.com</value>
-				<value>http://www.link2.com</value>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="review2" class="domain.Review">
-		<property name="description" value="description2" />
-		<property name="moment" value="10/10/2010 12:30" />
-		<property name="score" value="7.5" />
-		<property name="isFinal" value="false" />
-		<property name="user" ref="user2" />
-		<property name="counselor" ref="counselor2" />
-		<property name="attachments">
-			<list>
-				<value>http://www.link3.com</value>
-				<value>http://www.link4.com</value>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="review3" class="domain.Review">
 		<property name="description" value="description3" />
 		<property name="moment" value="10/10/2010 12:30" />
 		<property name="score" value="8.5" />
