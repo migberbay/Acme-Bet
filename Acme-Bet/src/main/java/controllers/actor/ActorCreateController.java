@@ -131,7 +131,7 @@ public class ActorCreateController extends AbstractController {
 			System.out.println("the user is not logged?");
 		}
 		
-		if (form.getType().equals("ADMIN") && !isAdmin) {
+		if ((form.getType().equals("ADMIN")||form.getType().equals("BOOKMAKER")) && !isAdmin) {
 			return new ModelAndView("error/access");
 		}else{
 		res = new ModelAndView("actor/register");

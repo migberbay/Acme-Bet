@@ -29,6 +29,12 @@
 					<li><a href="admin/listActors.do"><spring:message code="master.page.actors.list" /></a></li>
 				</ul>
 			</li>
+			<li><a class="fNiv"><spring:message	code="master.page.register"/></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="actor/register.do?type=ADMIN"><spring:message code="master.page.registerAdmin" /></a></li>
+					<li><a href="actor/register.do?type=BOOKMAKER"><spring:message code="master.page.registerBookmaker" /></a></li>
+				</ul>
 			<li><a class="fNiv"><spring:message	code="master.page.category" /></a>
 				<ul>
 					<li class="arrow"></li>
@@ -115,7 +121,6 @@
 					<li><a href="actor/register.do?type=USER"><spring:message code="master.page.registerUser" /></a></li>
 					<li><a href="actor/register.do?type=SPONSOR"><spring:message code="master.page.registerSponsor" /></a></li>
 					<li><a href="actor/register.do?type=COUNSELOR"><spring:message code="master.page.registerCounselor" /></a></li>
-					<li><a href="actor/register.do?type=BOOKMAKER"><spring:message code="master.page.registerBookmaker" /></a></li>
 				</ul>
 			<li><a class="fNiv" href="betPool/list.do"><spring:message code="master.page.listPools" /></a></li>
 <!-- 			</li> -->
