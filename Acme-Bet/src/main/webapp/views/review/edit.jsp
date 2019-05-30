@@ -21,9 +21,6 @@
 
 <form:form action="review/user/edit.do" modelAttribute="review">
 
-	<form:hidden path="id"/>
-	<form:hidden path="version"/>
-
 	<security:authorize access="hasRole('USER')">
 	<acme:textarea code="review.description" path="description"/>
 	<acme:textarea code="review.attachments" path="attachments"/>
@@ -37,10 +34,8 @@
 	<form:errors path="score" cssClass="error" />
 	<br/>
 	
-	<acme:select code="review.counselor" path="counselor" items="${counselors}" itemLabel="userAccount.username"/>
-	<jstl:if test="${review.id!=0}">
-		<acme:checkbox code="review.publish" path="isFinal"/>
-	</jstl:if>
+	<acme:select code="review.request" path="helpRequest" items="${requests}" itemLabel="ticker"/>
+
 	<acme:submit name="save" code="review.save"/>
 	<acme:cancel url="review/user/list.do" code="review.cancel"/>
 	<br />	

@@ -91,6 +91,7 @@ public class HelpRequestService {
 			result = request;
 			result.setStatus("OPEN");
 			result.setMoment(new Date(System.currentTimeMillis()-1000));
+			result.setIsReviewed(false);
 			result.setUser(userService.findByPrincipal());
 			if(request.getBetPool()!=null)result.setTicker(this.generateTicker(request.getBetPool().getTicker()));
 		}else{
@@ -170,6 +171,10 @@ public class HelpRequestService {
 		Double res = this.helpRequestRepository.getStdevHelpRequestsPerUser();
 		if(res==null)res=0d;
 		return res;
+	}
+	
+	public 	Collection<HelpRequest> getUnreviewedRequests(Integer userId){
+		return this.helpRequestRepository.getUnreviewedRequests(userId);
 	}
 
 

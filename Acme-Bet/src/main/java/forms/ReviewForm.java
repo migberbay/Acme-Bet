@@ -1,4 +1,4 @@
-package domain;
+package forms;
 
 import java.util.Collection;
 import java.util.Date;
@@ -18,25 +18,14 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Entity
-@Access(AccessType.PROPERTY)
-public class Review extends DomainEntity {
+import domain.HelpRequest;
+
+public class ReviewForm {
 	
 	private String description;
 	private Collection<String> attachments;
-	private Date moment;
 	private Double score;
 	
-	@Past
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	public Date getMoment() {
-		return moment;
-	}
-	
-	public void setMoment(Date moment) {
-		this.moment = moment;
-	}
 	@NotBlank
 	public String getDescription() {
 		return description;
@@ -65,30 +54,18 @@ public class Review extends DomainEntity {
 		this.score = score;
 	}
 
-	//Relationships
-	private User user;
-	private Counselor counselor;
 
-	@Valid
-	@ManyToOne (optional=false)
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
+	private HelpRequest helpRequest;
 	
 	@Valid
-	@ManyToOne (optional=false)
-	public Counselor getCounselor() {
-		return counselor;
+	@NotNull
+	public HelpRequest getHelpRequest() {
+		return helpRequest;
 	}
-	public void setCounselor(Counselor counselor) {
-		this.counselor = counselor;
-	}
-	
 
-	
-	
+	public void setHelpRequest(HelpRequest helpRequest) {
+		this.helpRequest = helpRequest;
+	}
+
 
 }

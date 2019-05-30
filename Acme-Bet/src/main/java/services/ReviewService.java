@@ -17,6 +17,7 @@ import repositories.ReviewRepository;
 import domain.Actor;
 import domain.HelpRequest;
 import domain.Review;
+import forms.ReviewForm;
 
 
 @Service
@@ -70,22 +71,15 @@ public class ReviewService {
 		return this.reviewRepository.findReviewsByCounselor(counselorId);
 	}
 	
-	public Review reconstruct(Review review, BindingResult bindingResult) {
+	public Review reconstruct(ReviewForm review, BindingResult bindingResult) {
 		Review res;
-		if(review.getId()==0){
-			res = this.create();
-			res = review;
-			res.setIsFinal(false);
-			res.setMoment(new Date(System.currentTimeMillis()-1000));
-			res.setUser(userService.findByPrincipal());
-		}else{
-			res = reviewRepository.findOne(review.getId());
-			res.setAttachments(review.getAttachments());
-			res.setCounselor(review.getCounselor());
-			res.setDescription(review.getDescription());
-			res.setIsFinal(review.getIsFinal());
-			res.setScore(review.getScore());
-		}
+		res = this.create();
+		res.setDescription(review.getDescription());
+		res.setAttachments(review.getAttachments());
+		res.setScore(review.getScore());
+		res.setCounselor(review.getHelpRequest().getCounselor());
+		res.setMoment(new Date(System.currentTimeMillis()-1000));
+		res.setUser(userService.findByPrincipal());
 		
 		validator.validate(res, bindingResult);
 		if(bindingResult.hasErrors()){

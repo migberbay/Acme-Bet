@@ -1132,7 +1132,6 @@
 		<property name="description" value="description3" />
 		<property name="moment" value="10/10/2010 12:30" />
 		<property name="score" value="8.5" />
-		<property name="isFinal" value="false" />
 		<property name="user" ref="user3" />
 		<property name="counselor" ref="counselor3" />
 		<property name="attachments">
@@ -1150,6 +1149,7 @@
 		<property name="description" value="description1" />
 		<property name="moment" value="10/10/2010 12:30" />
 		<property name="ticker" value="190707-67GIJE" />
+		<property name="isReviewed" value="false" />
 		<property name="user" ref="user1" />
 		<property name="counselor" ref="counselor1" />
 		<property name="category" ref="category1" />
@@ -1167,6 +1167,7 @@
 		<property name="description" value="description2" />
 		<property name="moment" value="10/10/2010 12:30" />
 		<property name="ticker" value="190707-67GDFE" />
+		<property name="isReviewed" value="false" />
 		<property name="user" ref="user2" />
 		<property name="counselor" ref="counselor2" />
 		<property name="category" ref="category2" />
@@ -1184,6 +1185,7 @@
 		<property name="description" value="description3" />
 		<property name="moment" value="10/10/2010 12:30" />
 		<property name="ticker" value="190707-67GKHE" />
+		<property name="isReviewed" value="false" />
 		<property name="user" ref="user3" />
 		<property name="counselor" ref="counselor3" />
 		<property name="category" ref="category3" />

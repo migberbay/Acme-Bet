@@ -8,17 +8,14 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+	<jstl:if test="${moreReviews eq false}">
+		<b style="color:red"><spring:message code="more.requests.needed" /></b>
+	</jstl:if>
 
 	<display:table name="reviews" id="row" requestURI="review/user/list.do" pagesize="5">
 		
 		<display:column>
 			<a href="review/show.do?reviewId=${row.id}"><spring:message code="review.show"/></a><br/>
-			<security:authorize access="hasRole('USER')">
-			<jstl:if test="${row.isFinal==false}">
-				<a href="review/user/edit.do?reviewId=${row.id}"><spring:message code="review.edit"/></a><br/>
-				<a href="review/user/delete.do?reviewId=${row.id}"><spring:message code="review.delete"/></a><br/>
-			</jstl:if>
-			</security:authorize>
 		</display:column>
 		<display:column titleKey="review.description" property="description" />
 		<spring:message code="review.moment.format" var="formatMoment"/>

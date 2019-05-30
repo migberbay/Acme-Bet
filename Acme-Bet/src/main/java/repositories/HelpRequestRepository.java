@@ -25,6 +25,9 @@ public interface HelpRequestRepository extends JpaRepository<HelpRequest, Intege
 	@Query("select h from HelpRequest h where h.status = 'OPEN' and ?1 not member of h.user.blockedCounselors")
 	Collection<HelpRequest> getOpenRequests(Counselor counselor);
 	
+	@Query("select h from HelpRequest h where h.status = 'SOLVED' and h.isReviewed=false and h.user.id=?1")
+	Collection<HelpRequest> getUnreviewedRequests(Integer userId);
+	
 	@Query("select avg(u.helpRequests.size) from User u")
 	Double getAvgHelpRequestsPerUser();
 

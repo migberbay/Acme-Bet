@@ -16,13 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.CounselorService;
+import services.HelpRequestService;
 import services.ReviewService;
 import services.UserService;
 import controllers.AbstractController;
 
 import domain.Counselor;
+import domain.HelpRequest;
 import domain.Review;
 import domain.User;
+import forms.ReviewForm;
 
 
 @Controller
@@ -38,9 +41,7 @@ public class ReviewUserController extends AbstractController {
 	private UserService userService;
 
 	@Autowired
-	private CounselorService counselorService;
-	
-	private Integer counselorId;
+	private HelpRequestService requestService;
 	// List -------------------------------------------------------------------
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -49,19 +50,10 @@ public class ReviewUserController extends AbstractController {
 		
 		Collection<Review> reviews = reviewService.findReviewsByPrincipal();
 		User user = userService.findByPrincipal();
-		Collection<Counselor> counselors = counselorService.getSolvedCounselorsByUser(user.getId());
-		System.out.println("list " + counselors);
-		if(!user.getReviews().isEmpty()){
-			for(Review r: user.getReviews()){
-				if(counselors.contains(r.getCounselor())){
-					counselors.remove(r.getCounselor());
-				}
-			}
-		}
-		System.out.println("post for " + counselors);
-		
+		Collection<HelpRequest> requests = requestService.getUnreviewedRequests(user.getId());
+
 		result = new ModelAndView("review/list");
-		result.addObject("moreReviews", !counselors.isEmpty());
+		result.addObject("moreReviews", !requests.isEmpty());
 		result.addObject("reviews",reviews);
 		
 		return result;
@@ -73,24 +65,15 @@ public class ReviewUserController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView result;
 		
-		Review review;
-		
-		review = reviewService.create();	
+		ReviewForm review = new ReviewForm();	
 		
 		User user = userService.findByPrincipal();
-		Collection<Counselor> counselors = counselorService.getSolvedCounselorsByUser(user.getId());
-			
-		if(!user.getReviews().isEmpty()){
-			for(Review r: user.getReviews()){
-				if(counselors.contains(r.getCounselor())){
-					counselors.remove(r.getCounselor());
-				}
-			}
-		}
+		Collection<HelpRequest> requests = requestService.getUnreviewedRequests(user.getId());
 		
-		if(!counselors.isEmpty()){
+		if(!requests.isEmpty()){
 			result = this.createEditModelAndView(review);
 		}else{
+			System.out.println("list uwu");
 			result = new ModelAndView("redirect:list.do");
 		}
 		return result;
@@ -123,7 +106,7 @@ public class ReviewUserController extends AbstractController {
 		}
 		return result;
 	}
-	*/
+	
 
 	
 	// Edit --------------------------------------------------------------------
@@ -135,24 +118,21 @@ public class ReviewUserController extends AbstractController {
 			Review review;
 			review = reviewService.findOne(reviewId);	
 			
-			if(review.getIsFinal().equals(false) && review.getUser().equals(userService.findByPrincipal())){
+			if(review.getUser().equals(userService.findByPrincipal())){
 				result = this.createEditModelAndView(review);
 			}else{
 				result = new ModelAndView("error/access");
 			}
 
 			return result;
-		}
+		}*/
 
 	// Save -----------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", params = "save", method = RequestMethod.POST)
-	public ModelAndView edit(Review review, BindingResult bindingResult) {
+	public ModelAndView edit(ReviewForm review, BindingResult bindingResult) {
 		ModelAndView result;
 		try {
-			if(review.getCounselor()==null){
-				review.setCounselor(counselorService.findOne(this.counselorId));
-			}
 			Review saved = reviewService.reconstruct(review, bindingResult);
 			reviewService.save(saved);
 			result = new ModelAndView("redirect:list.do");
@@ -167,7 +147,7 @@ public class ReviewUserController extends AbstractController {
 	}
 	
 	// Delete -----------------------------------------------------------------
-
+/*
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam int reviewId) {
 		ModelAndView result;
@@ -182,39 +162,28 @@ public class ReviewUserController extends AbstractController {
 		
 		return result;
 	}
-
+*/
 	
 	//Helper methods --------------------------------------------------------------------------
 	
-	protected ModelAndView createEditModelAndView(Review review){
+	protected ModelAndView createEditModelAndView(ReviewForm review){
 		ModelAndView res;
 		res = createEditModelAndView(review, null);
 		return res;
 	}
 	
-	protected ModelAndView createEditModelAndView(Review review, String messageCode){
+	protected ModelAndView createEditModelAndView(ReviewForm review, String messageCode){
 		
 		ModelAndView res;
 		res = new ModelAndView("review/edit");
 		List<Integer> scores = new ArrayList<Integer>();
 		User user = userService.findByPrincipal();
 		scores.add(0);scores.add(1);scores.add(2);scores.add(3);scores.add(4);scores.add(5);scores.add(6);scores.add(7);scores.add(8);scores.add(9);scores.add(10);
-		Collection<Counselor> counselors = counselorService.getSolvedCounselorsByUser(user.getId());
-			
-		if(!user.getReviews().isEmpty()){
-			for(Review r: user.getReviews()){
-				if(counselors.contains(r.getCounselor()) && !r.equals(review)){
-					counselors.remove(r.getCounselor());
-				}
-			}
-		}
-		
-		if(this.counselorId!=null){
-			res.addObject("listrequest",true);
-		}
+		Collection<HelpRequest> requests = requestService.getUnreviewedRequests(user.getId());
+
 		res.addObject("review", review);
 		res.addObject("scores",scores);
-		res.addObject("counselors",counselors);
+		res.addObject("requests",requests);
 		res.addObject("message", messageCode);
 
 		return res;

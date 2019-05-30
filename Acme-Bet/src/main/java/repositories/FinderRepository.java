@@ -18,8 +18,7 @@ public interface FinderRepository extends JpaRepository<Finder, Integer>{
 			"((:keyword is null or :keyword like '' ) or " +
 				"(b.title like %:keyword% " +
 				"or b.description like %:keyword% " +
-				"or %:keyword% member of b.participants " +
-				"or b.winner like %:keyword%)) " +
+				"or %:keyword% member of b.participants)) " +
 			"and (:maxRange is null or b.maxRange < :maxRange) " +
 			"and (:minRange is null or b.minRange > :minRange) " +
 			"and (:openingDate is null or b.startDate >= :openingDate) " +

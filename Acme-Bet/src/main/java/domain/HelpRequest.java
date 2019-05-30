@@ -28,6 +28,7 @@ public class HelpRequest extends DomainEntity {
 	private Collection<String> attachments;
 	private Date moment;
 	private String ticker;
+	private Boolean isReviewed;
 	
 	@NotNull
 	@Pattern(regexp="^OPEN|PENDING|SOLVED$")
@@ -74,6 +75,12 @@ public class HelpRequest extends DomainEntity {
 		this.ticker = ticker;
 	}
 	
+	public Boolean getIsReviewed() {
+		return isReviewed;
+	}
+	public void setIsReviewed(Boolean isReviewed) {
+		this.isReviewed = isReviewed;
+	}
 	
 	
 	
