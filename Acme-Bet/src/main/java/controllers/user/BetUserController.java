@@ -42,6 +42,7 @@ public class BetUserController extends AbstractController {
 	public ModelAndView show(@RequestParam int betPoolId) {
 		ModelAndView result;
 
+		
 		BettingForm form = new BettingForm();
 		form.setBetPoolId(betPoolId);
 		result = this.createEditModelAndView(form);

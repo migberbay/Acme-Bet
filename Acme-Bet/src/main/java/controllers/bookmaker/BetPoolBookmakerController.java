@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.BetPoolService;
 import services.BetService;
+import services.BookmakerService;
 import services.CategoryService;
 import services.UserService;
 import services.WarrantyService;
@@ -39,6 +40,9 @@ public class BetPoolBookmakerController extends AbstractController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private BookmakerService bookmakerService;
 	
 	@Autowired
 	private WarrantyService warrantyService;
@@ -75,12 +79,12 @@ public class BetPoolBookmakerController extends AbstractController {
 		@RequestMapping(value = "/edit", method = RequestMethod.GET)
 		public ModelAndView edit(Integer betPoolId) {
 			ModelAndView result;
-
-			BetPoolForm form = betPoolService.build(betPoolService.findOne(betPoolId));
-			result = this.createEditModelAndView(form);
-			
+			BetPool pool = betPoolService.findOne(betPoolId);
+			if (pool.getBookmaker().equals(bookmakerService.findByPrincipal())){
+				BetPoolForm form = betPoolService.build(pool);
+				result = this.createEditModelAndView(form);
+			}else{result = new ModelAndView("error/access");}
 			return result;
-
 		}
 	
 	//Delete -----------------------------------------------------------
@@ -88,18 +92,22 @@ public class BetPoolBookmakerController extends AbstractController {
 		@RequestMapping(value = "/delete", method = RequestMethod.GET)
 		public ModelAndView delete(Integer betPoolId) {
 			BetPool pool = betPoolService.findOne(betPoolId);
-			betPoolService.delete(pool);
+			if (pool.getBookmaker().equals(bookmakerService.findByPrincipal())){
+				betPoolService.delete(pool);
+				
+				return list();
+			}else{return new ModelAndView("error/access");}
 			
-			return list();
 		}
 	
 	//Winners -----------------------------------------------------------
 		
 		@RequestMapping(value = "/selectWinners", method = RequestMethod.GET)
 		public ModelAndView selectWinners(Integer betPoolId) {
+			
 			BetPool pool = betPoolService.findOne(betPoolId);
 			ModelAndView res;
-			if(pool.getWinner() == null){
+			if (pool.getBookmaker().equals(bookmakerService.findByPrincipal())|| pool.getWinner() == null) {
 				res = new ModelAndView("betPool/selectWinners");
 				WinnersForm form = new WinnersForm();
 				form.setBetPoolId(betPoolId);
