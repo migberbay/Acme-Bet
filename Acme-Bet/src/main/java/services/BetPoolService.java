@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,7 +109,7 @@ public class BetPoolService {
 				res.setTitle(form.getTitle());
 				res.setWarranty(form.getWarranty());
 				String[] participants = form.getParticipants().split(",");
-				Collection<String> part = new ArrayList<String>();
+				Collection<String> part = new HashSet<String>();
 				for (int i = 0; i < participants.length; i++) {
 					part.add(participants[i].trim());
 				}
@@ -130,7 +131,7 @@ public class BetPoolService {
 			res.setTitle(form.getTitle());
 			res.setWarranty(form.getWarranty());
 			String[] participants = form.getParticipants().split(",");
-			Collection<String> part = new ArrayList<String>();
+			Collection<String> part = new HashSet<String>();
 			for (int i = 0; i < participants.length; i++) {
 				part.add(participants[i].trim());
 			}

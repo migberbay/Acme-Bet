@@ -101,7 +101,7 @@
 	
 	<input type="button" name="back"
 		value="<spring:message code="pool.back" />"
-		onclick="javascript: window.location.replace('/')" />
+		onclick="javascript: window.location.replace('/Acme-Bet')" />
 	<br />
 <script>
 

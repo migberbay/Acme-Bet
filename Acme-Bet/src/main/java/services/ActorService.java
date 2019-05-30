@@ -30,6 +30,7 @@ import domain.Bookmaker;
 import domain.Counselor;
 import domain.CreditCard;
 import domain.Curricula;
+import domain.Finder;
 import domain.SocialProfile;
 import domain.Sponsor;
 import domain.Sponsorship;
@@ -68,6 +69,9 @@ public class ActorService {
 	
 	@Autowired
 	private CurriculaService curriculaService;
+	
+	@Autowired
+	private FinderService finderService;
 	
 	@Autowired
 	private Validator validator;
@@ -132,6 +136,10 @@ public class ActorService {
 		res.setMessagesLastSeen(actor.getMessagesLastSeen());
 
 		User saved = userService.save(res);
+		
+		Finder f = finderService.create();
+		f.setUser(saved);
+		finderService.save(f);
 		
 		return saved;
 	}
