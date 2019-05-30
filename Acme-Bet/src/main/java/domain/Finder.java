@@ -37,8 +37,8 @@ public class Finder extends DomainEntity {
 	}
 	
 	@Past
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	public Date getMoment() {
 		return moment;
 	}
@@ -63,8 +63,8 @@ public class Finder extends DomainEntity {
 		this.maxRange = maxRange;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	public Date getOpeningDate() {
 		return openingDate;
 	}
@@ -73,8 +73,8 @@ public class Finder extends DomainEntity {
 		this.openingDate = openingDate;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	public Date getEndDate() {
 		return endDate;
 	}
