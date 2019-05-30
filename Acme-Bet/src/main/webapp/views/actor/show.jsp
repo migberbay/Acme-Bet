@@ -43,6 +43,12 @@
 			<b>Luck score:</b> <jstl:out value="${actor.luckScore}"/><br/>
 			</jstl:if>
 			
+			<jstl:if test="${actorIsCounselor}">
+			<a href="curricula/counselor/show.do?counselorId=${actor.id}"> 
+				<spring:message code="actor.curricula" /></a> <br/>
+
+			</jstl:if>
+						
 		</jstl:if>  
 		
 		<br>

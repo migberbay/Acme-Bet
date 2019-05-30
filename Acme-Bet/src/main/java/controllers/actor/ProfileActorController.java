@@ -131,6 +131,10 @@ public class ProfileActorController extends AbstractController {
 					if (actor.getUserAccount().getAuthorities().contains(userAuth)) {
 					result.addObject("actorIsUser", true);
 					}
+					
+					if (actor.getUserAccount().getAuthorities().contains(counselorAuth)) {
+						result.addObject("actorIsCounselor", true);
+					}
 				}
 			}
 			

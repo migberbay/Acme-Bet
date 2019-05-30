@@ -31,10 +31,10 @@
 	<acme:textbox code="record.diplomaTitle" path="diplomaTitle"/>
 	<acme:textbox code="record.institution" path="institution"/>
 	<spring:message code = "record.startDate"/>
-	<input type= "datetime-local" name="startDate">
+	<input type= "datetime-local" name="startDate" placeholder="YYYY-MM-DDTHH:mm">
 	<form:errors path="startDate" cssClass="error" /><br>
 	<spring:message code = "record.endDate"/>
-	<input type= "datetime-local" name="endDate">
+	<input type= "datetime-local" name="endDate" placeholder="YYYY-MM-DDTHH:mm">
 	<form:errors path="endDate" cssClass="error" /><br>
 	<acme:textbox code="record.attachment" path="attachment"/>
 	<acme:textbox code="record.comments" path="comments"/>

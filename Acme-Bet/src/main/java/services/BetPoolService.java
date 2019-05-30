@@ -100,12 +100,23 @@ public class BetPoolService {
 			res.setMoment(new Date(System.currentTimeMillis()-1000));
 			res.setMinRange(10.0);
 			res.setMaxRange(49.99);
+			res.setEndDate(form.getEndDate());
+			res.setResultDate(form.getResultDate());
+			res.setStartDate(form.getStartDate());
 		}
 		
 		res.setCategory(form.getCategory());
 		res.setDescription(form.getDescription());
-		res.setEndDate(form.getEndDate());
-		res.setIsFinal(form.getIsFinal());					
+		res.setIsFinal(form.getIsFinal());	
+		
+		if (res.getId() != 0 &&(form.getEndDate()!= null && form.getResultDate() != null && form.getStartDate() != null)) {
+			res.setEndDate(form.getEndDate());
+			res.setResultDate(form.getResultDate());
+			res.setStartDate(form.getStartDate());
+		}
+		
+		res.setTitle(form.getTitle());
+		res.setWarranty(form.getWarranty());
 		
 		String[] participants = form.getParticipants().split(",");
 		Collection<String> part = new ArrayList<String>();
@@ -114,12 +125,11 @@ public class BetPoolService {
 		}
 		res.setParticipants(part);
 		
-		res.setResultDate(form.getResultDate());
-		res.setStartDate(form.getStartDate());
-		res.setTitle(form.getTitle());
-		res.setWarranty(form.getWarranty());
+		System.out.println("\n" + res);
 		
 		validator.validate(form, binding);
+		
+		System.out.println("validation worked?");
 		
 		return res;
 	}

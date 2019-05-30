@@ -207,23 +207,28 @@ public class BetPoolBookmakerController extends AbstractController {
 	public ModelAndView save(@ModelAttribute("form") BetPoolForm form, BindingResult binding) {
 		ModelAndView res;
 			
-		System.out.println(form.getDescription() + "\n"+form.getEndDate() + "\n"+form.getParticipants() + "\n"+form.getResultDate() +
+		System.out.println(form.getId()+"\n"+form.getDescription() + "\n"+form.getEndDate() + "\n"+form.getParticipants() + "\n"+form.getResultDate() +
 		"\n"+form.getStartDate() + "\n"+form.getTitle() + "\n"+form.getCategory() + "\n"+form.getWarranty()+ "\n"+form.getIsFinal());
 		
 		BetPool pool = betPoolService.reconstruct(form,binding);
 		Boolean dateIncorrectOrder = true;
 		Boolean minimumParticipants = true;
 		
+		System.out.println("1");
 		if(pool.getEndDate() != null && pool.getStartDate() != null &&  pool.getResultDate() != null){
+			System.out.println("1.1");
 			if (pool.getEndDate().after(pool.getStartDate()) && 
 					pool.getEndDate().before(pool.getResultDate())){dateIncorrectOrder = false;}
 		}
-		
+		System.out.println("2");
 		if (pool.getParticipants() != null) {
+			System.out.println("2.1");
 			if (pool.getParticipants().size() >= 2) {
 				minimumParticipants = false;
 			}
 		}
+		
+		System.out.println(binding.hasErrors() +" "+ dateIncorrectOrder +" "+ minimumParticipants);
 			if (binding.hasErrors() || dateIncorrectOrder || minimumParticipants) {
 				System.out.println(binding);
 				res = createEditModelAndView(form);

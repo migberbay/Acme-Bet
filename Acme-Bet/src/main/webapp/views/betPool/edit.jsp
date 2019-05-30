@@ -24,7 +24,7 @@
 	<acme:textbox code="pool.participants" path="participants" placeholder="participant1 , participant2 , ..."/>
 	
 	<spring:message code = "pool.startDate"/>: 
-	<input type= "datetime-local" name="startDate">
+	<input type= "datetime-local" name="startDate" placeholder="YYYY-MM-DDTHH:mm">
 	<div class="tooltip"><b>?</b>
   		<span class="tooltiptext">This is when you allow betting</span>
 	</div>
@@ -32,14 +32,14 @@
 	
 	
 	<spring:message code = "pool.endDate"/>: 
-	<input type= "datetime-local" name="endDate">
+	<input type= "datetime-local" name="endDate" placeholder="YYYY-MM-DDTHH:mm">
 	<div class="tooltip"><b>?</b>
   		<span class="tooltiptext">This is when you end the betting period (shoud be before the event)</span>
 	</div>
 	<form:errors path="endDate" cssClass="error" /><br>
 	
 	<spring:message code = "pool.resultDate"/>: 
-	<input type= "datetime-local" name="resultDate">
+	<input type= "datetime-local" name="resultDate" placeholder="YYYY-MM-DDTHH:mm">
 	<div class="tooltip"><b>?</b>
   		<span class="tooltiptext">This is when you will publish the results</span>
 	</div>
