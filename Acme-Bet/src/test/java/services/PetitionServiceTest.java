@@ -1,5 +1,7 @@
 package services;
 
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,11 @@ import utilities.AbstractTest;
 @Transactional
 public class PetitionServiceTest extends AbstractTest {
 
+	//	Coverage: 95.1%
+	//	Covered Instructions: 425 
+	//	Missed  Instructions: 22
+	//	Total   Instructions: 447
+	
 	@Autowired
 	private PetitionService petitionService;
 	
@@ -88,13 +95,43 @@ public class PetitionServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	@Test(expected = ConstraintViolationException.class)
+	public void testSaveIncorrectData(){
+		
+		authenticate("bookmaker2");
+		
+		User user = (User) userService.findAll().toArray()[0];
+		BetPool betPool = (BetPool) betPoolService.findAll().toArray()[0];
+		
+		Bet bet = betService.create(betPool, user);
+		
+		bet.setAmount(120.5);
+		bet.setWinner("winner");
+		bet.setIsAccepted(true);
+		
+		Bet saved = betService.save(bet);
+		
+		Petition petition = petitionService.create();
+		
+		petition.setStatus("");
+		petition.setRejectReason("");
+		petition.setBet(saved);
+		petition.setUser(user);
+		
+		Petition result = petitionService.save(petition);
+		
+		Assert.isTrue(petitionService.findAll().contains(result));
+		
+		unauthenticate();
+	}
+	
 	@Test
 	public void driverUpdatePetition(){
 		
 		final Object testingData[][] = {{"bookmaker1", "PENDING", "", null},
 										{"bookmaker2", "ACCEPTED", "", null},
 										{"bookmaker3", "REJECTED", "rejectReason", null},
-										{"admin", "REJECTED", "rejectReason", null}};
+										{"bookmaker1", "", "", ConstraintViolationException.class}};
 		
 		for(int i = 0; i < testingData.length; i++){
 			templateUpdatePetition((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>)testingData[i][3]);
@@ -117,6 +154,20 @@ public class PetitionServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 		super.unauthenticate();
 	}
+	
+//	@Test(expected = DataIntegrityViolationException.class)
+//	public void testDeletenotAuthenticated(){
+//		
+//		authenticate(null);
+//		
+//		Petition petition = (Petition) petitionService.findAll().toArray()[0];
+//		
+//		petitionService.delete(petition);
+//		
+//		Assert.isTrue(!petitionService.findAll().contains(petition));
+//		
+//		unauthenticate();
+//	}
 	
 	@Test
 	public void driverDeletePetition(){

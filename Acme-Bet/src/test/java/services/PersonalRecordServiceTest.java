@@ -3,6 +3,7 @@ package services;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,11 @@ import utilities.AbstractTest;
 @Transactional
 public class PersonalRecordServiceTest extends AbstractTest {
 
+	//	Coverage: 97.9%
+	//	Covered Instructions: 1.072
+	//	Missed  Instructions: 23
+	//	Total   Instructions: 1.095
+	
 	@Autowired
 	private CounselorService counselorService;
 	
@@ -166,12 +172,24 @@ public class PersonalRecordServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	@Test(expected = DataIntegrityViolationException.class)
+	public void testDeleteNotAuthenticated(){
+		
+		authenticate(null);
+		
+		PersonalRecord personalRecord = (PersonalRecord) personalRecordService.findAll().toArray()[0];
+		
+		personalRecordService.delete(personalRecord);
+		
+		Assert.isTrue(!personalRecordService.findAll().contains(personalRecord));
+		
+		unauthenticate();
+	}
+	
 	@Test
 	public void driverDeletePersonalRecord(){
 		
-		Object testingData[][] = {{"counselor1", null},
-								  {"counselor2", null},
-								  {"counselor3", null}};
+		Object testingData[][] = {{"bookmaker1", null}};
 		
 		for(int i = 0; i < testingData.length; i++){
 			templateDeletePersonalRecord((String) testingData[i][0], (Class<?>)testingData[i][1]);

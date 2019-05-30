@@ -7,6 +7,7 @@ import javax.validation.ConstraintViolationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +25,10 @@ import utilities.AbstractTest;
 @Transactional
 public class BetPoolServiceTest extends AbstractTest {
 
-	//	Coverage: 93.6%
-	//	Covered Instructions: 
-	//	Missed  Instructions: 11
-	//	Total   Instructions: 189
+	//	Coverage: 68.8%
+	//	Covered Instructions: 338 
+	//	Missed  Instructions: 153
+	//	Total   Instructions: 491
 	
 	@Autowired
 	private BetPoolService betPoolService;
@@ -189,32 +190,62 @@ public class BetPoolServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
-
-	@Test
-	public void driverDeleteBetPool(){
+	@Test(expected = ConstraintViolationException.class)
+	public void testUpdateIncorrectData(){
 		
-		Object testingData[][] = {{"bookmaker1", null},
-								  {"bookmaker2", null},
-								  {"bookmaker3", null}};
-		
-		for(int i = 0; i < testingData.length; i++){
-			templateDeleteBetPool((String) testingData[i][0], (Class<?>)testingData[i][1]);
-		}
-	}
-	
-	protected void templateDeleteBetPool(String username, Class<?> expected){
-		Class<?> caught = null;
+		authenticate("bookmaker1");
 		
 		BetPool betPool = (BetPool) betPoolService.findAll().toArray()[0];
 		
-		try{
-			super.authenticate(username);
-			this.betPoolService.delete(betPool);
-		} catch (Throwable oops){
-			caught = oops.getClass();
-		}
+		betPool.setTitle("");
+		betPool.setDescription("");
 		
-		this.checkExceptions(expected, caught);
-		super.unauthenticate();
+		BetPool result = betPoolService.save(betPool);
+		
+		Assert.isTrue(betPoolService.findAll().contains(result));
+		
+		unauthenticate();
 	}
+	
+	@Test(expected = DataIntegrityViolationException.class)
+	public void testDeleteNotAuthenticated(){
+		
+		authenticate(null);
+		
+		BetPool betPool = (BetPool) betPoolService.findAll().toArray()[0];
+		
+	    betPoolService.delete(betPool);
+		
+		Assert.isTrue(!betPoolService.findAll().contains(betPool));
+		
+		unauthenticate();
+	}
+	
+//	@Test
+//	public void driverDeleteBetPool(){
+//		
+//		Object testingData[][] = {{"bookmaker1", null},
+//								  {"bookmaker2", null},
+//								  {"bookmaker3", null}};
+//		
+//		for(int i = 0; i < testingData.length; i++){
+//			templateDeleteBetPool((String) testingData[i][0], (Class<?>)testingData[i][1]);
+//		}
+//	}
+//	
+//	protected void templateDeleteBetPool(String username, Class<?> expected){
+//		Class<?> caught = null;
+//		
+//		BetPool betPool = (BetPool) betPoolService.findAll().toArray()[0];
+//		
+//		try{
+//			super.authenticate(username);
+//			this.betPoolService.delete(betPool);
+//		} catch (Throwable oops){
+//			caught = oops.getClass();
+//		}
+//		
+//		this.checkExceptions(expected, caught);
+//		super.unauthenticate();
+//	}
 }

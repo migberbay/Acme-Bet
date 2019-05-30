@@ -1,5 +1,7 @@
 package services;
 
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,11 @@ import utilities.AbstractTest;
 @Transactional
 public class BetServiceTest extends AbstractTest {
 
+	//	Coverage: 99.1%
+	//	Covered Instructions: 463 
+	//	Missed  Instructions: 4
+	//	Total   Instructions: 467
+	
 	@Autowired
 	private BetService betService;
 	
@@ -60,8 +67,9 @@ public class BetServiceTest extends AbstractTest {
 	public void driverSaveBet(){
 		
 		final Object testingData[][] = {{"user1", "winner", 120.5, false, null},
-										{"user2", "winner", 120.5, false, null},
-										{"user3", "winner", 120.5, false, null}};
+										{"user2", "winner", 120.5, true, null},
+										{"user3", "winner", 120.5, false, null},
+										{"user1", "", 120.0, true, ConstraintViolationException.class}};
 		
 		for(int i = 0; i < testingData.length; i++){
 			templateSaveBet((String) testingData[i][0], (String) testingData[i][1], (Double) testingData[i][2], (Boolean) testingData[i][3], (Class<?>)testingData[i][4]);
@@ -89,37 +97,38 @@ public class BetServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
-//	@Test
-//	public void driverUpdateBet(){
-//		
-//		final Object testingData[][] = {{"user1", "winner", 120.5, false, null},
-//										{"user2", "winner", 120.5, false, null},
-//										{"user3", "winner", 120.5, false, null}};
-//		
-//		for(int i = 0; i < testingData.length; i++){
-//			templateUpdateBet((String) testingData[i][0], (String) testingData[i][1], (Double) testingData[i][2], (Boolean) testingData[i][3], (Class<?>)testingData[i][4]);
-//		}
-//	}
-//	
-//	protected void templateUpdateBet(String username, String winner, Double amount, Boolean isAccepted, Class<?> expected){
-//		Class<?> caught = null;
-//
-//		Bet bet = (Bet) betService.findAll().toArray()[0];
-//		
-//		try{
-//			super.authenticate(username);
-//			bet.setWinner(winner);
-//			bet.setAmount(amount);
-//			bet.setIsAccepted(isAccepted);
-//			betService.save(bet);
-//		} catch (Throwable oops){
-//			caught = oops.getClass();
-//		}
-//		
-//		this.checkExceptions(expected, caught);
-//		super.unauthenticate();
-//	}
-//	
+	@Test
+	public void driverUpdateBet(){
+		
+		final Object testingData[][] = {{"user1", "winner", 120.5, false, null},
+										{"user2", "winner", 120.5, false, null},
+										{"user3", "winner", 120.5, false, null},
+										{"user1", "", 120.0, true, ConstraintViolationException.class}};
+		
+		for(int i = 0; i < testingData.length; i++){
+			templateUpdateBet((String) testingData[i][0], (String) testingData[i][1], (Double) testingData[i][2], (Boolean) testingData[i][3], (Class<?>)testingData[i][4]);
+		}
+	}
+	
+	protected void templateUpdateBet(String username, String winner, Double amount, Boolean isAccepted, Class<?> expected){
+		Class<?> caught = null;
+
+		Bet bet = (Bet) betService.findAll().toArray()[0];
+		
+		try{
+			super.authenticate(username);
+			bet.setWinner(winner);
+			bet.setAmount(amount);
+			bet.setIsAccepted(isAccepted);
+			betService.save(bet);
+		} catch (Throwable oops){
+			caught = oops.getClass();
+		}
+		
+		this.checkExceptions(expected, caught);
+		super.unauthenticate();
+	}
+	
 //	@Test
 //	public void driverDeleteBet(){
 //		
@@ -147,4 +156,5 @@ public class BetServiceTest extends AbstractTest {
 //		this.checkExceptions(expected, caught);
 //		super.unauthenticate();
 //	}
+	
 }

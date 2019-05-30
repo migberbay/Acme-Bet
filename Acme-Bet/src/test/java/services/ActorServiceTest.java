@@ -27,6 +27,11 @@ import utilities.AbstractTest;
 @Transactional
 public class ActorServiceTest extends AbstractTest {
 
+	//	Coverage: 100.0%
+	//	Covered Instructions: 676 
+	//	Missed  Instructions: 0
+	//	Total   Instructions: 676
+	
 	@Autowired
 	private BookmakerService bookmakerService;
 	

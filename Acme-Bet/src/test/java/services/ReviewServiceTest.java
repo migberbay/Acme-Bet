@@ -27,10 +27,10 @@ import utilities.AbstractTest;
 @Transactional
 public class ReviewServiceTest extends AbstractTest {
 
-	//	Coverage: 92.5%
-	//	Covered Instructions: 642
-	//	Missed  Instructions: 52
-	//	Total   Instructions: 694
+	//	Coverage: 92.2%
+	//	Covered Instructions: 564
+	//	Missed  Instructions: 48
+	//	Total   Instructions: 612
 	
 	@Autowired
 	private UserService userService;
@@ -243,30 +243,30 @@ public class ReviewServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
-	@Test
-	public void driverDeleteReview(){
-		
-		final Object testingData[][] = {{"user1",  null},
-										{"user2",  null},
-										{"user3",  null}};
-		
-		for(int i = 0; i < testingData.length; i++){
-			templateDeleteReview((String) testingData[i][0], (Class<?>)testingData[i][1]);
-		}
-	}
-	
-	protected void templateDeleteReview(String username, Class<?> expected){
-		Class<?> caught = null;
-
-		Review review = (Review) reviewService.findAll().toArray()[0];
-		try{
-			super.authenticate(username);
-			this.reviewService.delete(review);
-		} catch (Throwable oops){
-			caught = oops.getClass();
-		}
-		
-		this.checkExceptions(expected, caught);
-		super.unauthenticate();
-	}
+//	@Test
+//	public void driverDeleteReview(){
+//		
+//		final Object testingData[][] = {{"user1",  null},
+//										{"user2",  null},
+//										{"user3",  null}};
+//		
+//		for(int i = 0; i < testingData.length; i++){
+//			templateDeleteReview((String) testingData[i][0], (Class<?>)testingData[i][1]);
+//		}
+//	}
+//	
+//	protected void templateDeleteReview(String username, Class<?> expected){
+//		Class<?> caught = null;
+//
+//		Review review = (Review) reviewService.findAll().toArray()[0];
+//		try{
+//			super.authenticate(username);
+//			this.reviewService.delete(review);
+//		} catch (Throwable oops){
+//			caught = oops.getClass();
+//		}
+//		
+//		this.checkExceptions(expected, caught);
+//		super.unauthenticate();
+//	}
 }
