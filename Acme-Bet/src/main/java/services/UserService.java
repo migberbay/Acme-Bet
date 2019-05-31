@@ -30,6 +30,8 @@ public class UserService {
 	
 	//Supporting Services -----
 	
+	@Autowired
+	private ConfigurationService configurationService;
 	//Simple CRUD methods -----
 	
 	public User create(UserAccount ua){
@@ -40,7 +42,7 @@ public class UserService {
 		res.setSocialProfiles(new ArrayList<SocialProfile>());
 		res.setUserAccount(ua);
 		
-		res.setFunds(0.0);
+		res.setFunds(configurationService.find().getFreeFunds());
 		res.setBets(new ArrayList<Bet>());
 		res.setBlockedCounselors(new ArrayList<Counselor>());
 		res.setReviews(new ArrayList<Review>());
