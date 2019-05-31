@@ -38,10 +38,10 @@ public class CurriculaCounselorController extends AbstractController {
 		}
 
 		Curricula curricula = this.curriculaService.findByCounselor(counselor);
-		Boolean hasCurricula = true;
+		Boolean hasPersonalRecord = true;
 
-		if (curricula == null) {
-			hasCurricula = false;
+		if (curricula.getPersonalRecord() == null) {
+			hasPersonalRecord = false;
 		}
 
 		Boolean isOwner = false;
@@ -66,7 +66,7 @@ public class CurriculaCounselorController extends AbstractController {
 		result.addObject("miscellaneousRecords", curricula.getMiscellaneousRecords());
 		result.addObject("professionalRecords", curricula.getProfessionalRecords());
 		result.addObject("isOwner", isOwner);
-		result.addObject("hasCurricula", hasCurricula);
+		result.addObject("hasPersonalRecord", hasPersonalRecord);
 		
 		return result;
 		

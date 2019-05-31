@@ -15,7 +15,7 @@
 
  <jstl:choose>
 
-	<jstl:when test="${curricula!=null}">
+	<jstl:when test="${curricula.personalRecord!=null}">
 		<h1>
 			<spring:message code="curricula.personalRecord" />
 		</h1>
@@ -275,13 +275,13 @@
 
 	<jstl:otherwise>
 	
-	<jstl:if test="${isOwner == true and hasCurricula == false}">
+	<jstl:if test="${isOwner == true and hasPersonalRecord == false}">
 	<spring:message code="curricula.personalRecord.new" var="personalRecord" />
 		<input type="button" name="personalRecord" value="${personalRecord}"
 			onclick="javascript:relativeRedir('curricula/personalRecord/create.do');" />
 	</jstl:if>
 	
-	<jstl:if test="${isOwner == false and hasCurricula == false}">
+	<jstl:if test="${isOwner == false and hasPersonalRecord == false}">
 		This counselor doesn't have a curricula yet, come back later.
 	</jstl:if>	
 	</jstl:otherwise>

@@ -57,13 +57,10 @@ public class PersonalRecordService {
 		Assert.notNull(a);
 		
 		Counselor counselor = this.counselorService.findByPrincipal();
-		Curricula curricula = new Curricula();
-
-		curricula = this.curriculaService.findByCounselor(counselor);
+		Curricula curricula = this.curriculaService.findByCounselor(counselor);
 
 		if(a.getId() == 0) {
-		curricula = this.curriculaService.create();
-		curricula.setPersonalRecord(null);
+		curricula.setPersonalRecord(a);
 		this.curriculaService.flush();
 		curricula.setCounselor(counselor);
 		}
