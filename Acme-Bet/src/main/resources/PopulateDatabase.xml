@@ -813,7 +813,7 @@
 	</bean>
 	
 	<!-- BET POOLS -->
-	<!-- <bean id="betPool1" class="domain.BetPool">
+	<bean id="betPool1" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
 		<property name="title" value="title bet pool 1" />
 		<property name="description" value="description bet pool 1" />
@@ -887,7 +887,7 @@
 			<list>
 			</list>
 		</property>
-	</bean> -->
+	</bean> 
 	
 	<bean id="betPool3" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
