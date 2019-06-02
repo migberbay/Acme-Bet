@@ -813,7 +813,7 @@
 	</bean>
 	
 	<!-- BET POOLS -->
-	<!-- <bean id="betPool1" class="domain.BetPool">
+	<bean id="betPool1" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
 		<property name="title" value="title bet pool 1" />
 		<property name="description" value="description bet pool 1" />
@@ -842,10 +842,6 @@
 			</list>
 		</property>
 		<property name="helpRequests">
-			<list>
-			</list>
-		</property>
-		<property name="finders">
 			<list>
 			</list>
 		</property>
@@ -883,11 +879,7 @@
 			<list>
 			</list>
 		</property>
-				<property name="finders">
-			<list>
-			</list>
-		</property>
-	</bean> -->
+	</bean> 
 	
 	<bean id="betPool3" class="domain.BetPool">
 		<property name="ticker" value="180707-67GIJE" />
@@ -918,10 +910,6 @@
 			</list>
 		</property>
 		<property name="helpRequests">
-			<list>
-			</list>
-		</property>
-				<property name="finders">
 			<list>
 			</list>
 		</property>
@@ -959,10 +947,6 @@
 			<list>
 			</list>
 		</property>
-				<property name="finders">
-			<list>
-			</list>
-		</property>
 	</bean>
 	
 	<bean id="betPool5" class="domain.BetPool">
@@ -997,10 +981,6 @@
 			<list>
 			</list>
 		</property>
-				<property name="finders">
-			<list>
-			</list>
-		</property>
 	</bean>
 	
 	<bean id="betPool6" class="domain.BetPool">
@@ -1032,10 +1012,6 @@
 			</list>
 		</property>
 		<property name="helpRequests">
-			<list>
-			</list>
-		</property>
-				<property name="finders">
 			<list>
 			</list>
 		</property>

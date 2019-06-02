@@ -133,9 +133,9 @@ public class FinderService {
 		System.out.println("void");
 		System.out.println(finder.getCategory());
 		result = (finder.getKeyword() == null || finder.getKeyword() == "")
-				&& finder.getMinRange() == null && finder.getMaxRange() == null
-				&& finder.getOpeningDate() == null && finder.getEndDate() == null
-				&& (finder.getCategory()==null);
+				&& (finder.getMinRange() == null || finder.getMinRange()==0d)
+				&& (finder.getMaxRange() == null || finder.getMaxRange()==0d)
+				&& (finder.getCategory()==null || finder.getCategory()==0);
 
 		return result;
 	}
@@ -149,8 +149,6 @@ public class FinderService {
 		finder.setMinRange(null);
 		finder.setMaxRange(null);
 
-		finder.setOpeningDate(null);
-		finder.setEndDate(null);
 		finder.setCategory(null);
 		finder.setBetPools(null);
 
@@ -177,7 +175,6 @@ public class FinderService {
 	/*Don't declare finder parameter as final*/
 	public Finder filterBetPools(Finder finder){
 		String keyword;
-		Date openingDate, endDate;
 		Double minRange, maxRange;
 		Integer categoryId;
 
@@ -187,12 +184,10 @@ public class FinderService {
 
 		minRange = finder.getMinRange();
 		maxRange = finder.getMaxRange();
-		openingDate = finder.getOpeningDate();
-		endDate = finder.getEndDate();
 		categoryId = finder.getCategory();
 		System.out.println("Filter betpools " + keyword);
-		betPools = finderRepository.filterBetPools(keyword, maxRange, minRange, openingDate, endDate, categoryId);
-		System.out.println("Filter betpools " + betPools);
+		betPools = finderRepository.filterBetPools(keyword, maxRange, minRange, categoryId);
+		System.out.println("Filter betpools 2 " + betPools);
 		finder.setBetPools(betPools);
 		return finder;
 	}

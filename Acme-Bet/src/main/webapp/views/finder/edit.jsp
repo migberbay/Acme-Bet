@@ -62,16 +62,6 @@
 	<form:errors path="maxRange" cssClass="error" />
 	<br/>
 
-	<spring:message code = "finder.openingDate"/>: 
-	<input type= "datetime-local" name="openingDate" placeholder="YYYY-MM-DDTHH:mm">
-	<form:errors path="openingDate" cssClass="error" /><br>
-	
-	
-	<spring:message code = "finder.endDate"/>: 
-	<input type= "datetime-local" name="endDate" placeholder="YYYY-MM-DDTHH:mm">
-	<form:errors path="endDate" cssClass="error" /><br>
-
-	
 	<jstl:if test="${lan=='es'}">
 		<acme:select code="finder.category" path="category" items ="${categories}" itemLabel="spanishName"/>
 	</jstl:if>

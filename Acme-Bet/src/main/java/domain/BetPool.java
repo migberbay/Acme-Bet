@@ -163,7 +163,6 @@ public class BetPool extends DomainEntity {
 	private Bookmaker bookmaker;
 	private Warranty warranty;
 	private Category category;
-	private Collection<Finder> finders;
 	private Collection<HelpRequest> helpRequests;
 	private Collection<Bet> bets;
 
@@ -191,15 +190,6 @@ public class BetPool extends DomainEntity {
 	}
 	public void setCategory(Category category) {
 		this.category = category;
-	}
-	
-	@ManyToMany
-	@Valid
-	public Collection<Finder> getFinders() {
-		return finders;
-	}
-	public void setFinders(Collection<Finder> finders) {
-		this.finders = finders;
 	}
 	
 	@ElementCollection

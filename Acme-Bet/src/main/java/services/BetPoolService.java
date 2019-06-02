@@ -40,7 +40,6 @@ public class BetPoolService {
 	public BetPool create() {
 		BetPool res = new BetPool();
 		res.setBets(new ArrayList<Bet>());
-		res.setFinders(new ArrayList<Finder>());
 		res.setHelpRequests(new ArrayList<HelpRequest>());
 		res.setTicker(generateTicker());
 		res.setIsFinal(false);

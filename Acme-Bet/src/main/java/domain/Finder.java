@@ -20,8 +20,6 @@ public class Finder extends DomainEntity {
 	private String keyword;
 	private Double minRange;
 	private Double maxRange;
-	private Date openingDate;
-	private Date endDate;
 	private Integer category;//this should be a select
 
 
@@ -37,8 +35,8 @@ public class Finder extends DomainEntity {
 	}
 	
 	@Past
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getMoment() {
 		return moment;
 	}
@@ -61,26 +59,6 @@ public class Finder extends DomainEntity {
 
 	public void setMaxRange(Double maxRange) {
 		this.maxRange = maxRange;
-	}
-
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-	public Date getOpeningDate() {
-		return openingDate;
-	}
-
-	public void setOpeningDate(Date openingDate) {
-		this.openingDate = openingDate;
-	}
-
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
 	}
 
 	public Integer getCategory() {
@@ -109,7 +87,7 @@ public class Finder extends DomainEntity {
 	}
 
 	@Valid
-	@ManyToMany(mappedBy = "finders")
+	@ManyToMany
 	public Collection<BetPool> getBetPools() {
 		return betPools;
 	}

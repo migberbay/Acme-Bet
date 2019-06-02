@@ -54,7 +54,7 @@ public class FinderUserController extends AbstractController {
 			try {
 				System.out.println("filter " + finder.getMinRange());
 				Finder updatedFinder = finderService.save(finder);
-				System.out.println("Bet pools controller: " + updatedFinder.getBetPools() + " con keyword: ("+ updatedFinder.getMinRange()+")");
+				System.out.println("Bet pools controller: " + updatedFinder.getBetPools() + " con keyword: ("+ updatedFinder.getKeyword()+")");
 				result = createEditModelAndView(updatedFinder);
 			} catch (final Throwable oops) {
 				oops.printStackTrace();
@@ -96,7 +96,7 @@ public class FinderUserController extends AbstractController {
 		String cachedMessageCode = null;
 		Collection<Category> categories = categoryService.getPoolCategories();
 		res = new ModelAndView("finder/edit");
-		System.out.println("MOdelandview betpools " + finder.getBetPools() + " y min " + finder.getMinRange());
+		System.out.println("MOdelandview betpools " + finder.getBetPools() + " y kw " + finder.getKeyword());
 		if(finderService.findOne(finder.getId()).getMoment() == null
 				|| finderService.isVoid(finder)
 				|| finderService.isExpired(finder)){
@@ -117,7 +117,7 @@ public class FinderUserController extends AbstractController {
 		}
 		
 		List<Double> minRanges = new ArrayList<Double>();
-		minRanges.add(0d);minRanges.add(10d);minRanges.add(50d);minRanges.add(100d);minRanges.add(500d);
+		minRanges.add(10d);minRanges.add(50d);minRanges.add(100d);minRanges.add(500d);
 		List<Double> maxRanges = new ArrayList<Double>();
 		maxRanges.add(10d);maxRanges.add(50d);maxRanges.add(100d);maxRanges.add(10000d);
 		res.addObject("cachedMessage", cachedMessageCode);
