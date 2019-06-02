@@ -102,7 +102,7 @@
 	<jstl:if test="${highestAvgScoreCounselor==null}"><spring:message code="admin.empty"/></jstl:if>
 	<table style="width:'100%' border='0' align='center' ">
 		<tr>
-			<td><jstl:out value="${highestAvgScoreCounselor.name}"/></td>
+			<td><jstl:out value="${highestAvgScoreCounselor.name}"/> <jstl:out value="${highestAvgScoreCounselor.surnames}"/> (<a href="actor/show.do?actorId=${highestAvgScoreCounselor.id}"><jstl:out value="${highestAvgScoreCounselor.userAccount.username}"/>)</a></td>
 		</tr>			
 	</table>
 	

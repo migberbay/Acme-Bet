@@ -6,9 +6,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -124,15 +127,11 @@ public class MessageController extends AbstractController {
 	//Save-------------------------------------------------------------
 	
 	@RequestMapping(value="/edit", method=RequestMethod.POST, params="save")
-	public ModelAndView save(MessageForm form, BindingResult binding){
+	public ModelAndView save(@ModelAttribute("messageForm") MessageForm form, BindingResult binding){
 		ModelAndView res;
 		
-		if(binding.hasErrors()){
-			System.out.println(binding);
-			res = createEditModelAndView(form,form.getIsBroadcast());
-		}else{
 			try {
-				
+				System.out.println("controller " + form.getIsBroadcast());
 				Collection<Message> messages = messageService.reconstruct(form, binding);
 				for (Message m : messages) {
 					System.out.println(m.getRecipient());
@@ -140,11 +139,14 @@ public class MessageController extends AbstractController {
 					messageService.save(m);
 				}
 				res = new ModelAndView("redirect:list.do");
+			} catch (ValidationException oops) {
+				oops.printStackTrace();
+				res = this.createEditModelAndView(form, form.getIsBroadcast());
 			} catch (Throwable e) {
 				e.printStackTrace();
 				res = createEditModelAndView(form, form.getIsBroadcast(), "message.commit.error");
 			}
-		}
+
 		return res;
 	}
 	
@@ -179,7 +181,7 @@ public class MessageController extends AbstractController {
 	}
 	protected ModelAndView createEditModelAndView(MessageForm form, boolean isBroadcast, String messageCode){
 		ModelAndView res;
-		
+		System.out.println("Llega syso model");
 		res = new ModelAndView("message/edit");
 		res.addObject("messageForm", form);
 		res.addObject("actors", actorService.findAll());

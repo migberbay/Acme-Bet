@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
@@ -101,8 +103,10 @@ public class MessageService {
 		res.add(aux);
 		}
 		
-		if(binding != null){
-			validator.validate(form,binding);
+		validator.validate(form,binding);
+		if(binding.hasErrors()){
+			System.out.println(binding.getFieldErrors());
+			throw new ValidationException();
 		}
 		
 		

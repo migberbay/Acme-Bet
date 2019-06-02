@@ -28,6 +28,8 @@
 
 <form:form action="message/edit.do" modelAttribute="messageForm">
 
+	<form:hidden path="isBroadcast"/>
+
 	<jstl:if test="${isBroadcast==true}">
 		<form:hidden path="recipients"/>
 	</jstl:if>
@@ -42,8 +44,6 @@
 		<jstl:out value="${a.userAccount.username}, "/>
 	</jstl:forEach>
 	<br/>
-	
-	<form:hidden path="isBroadcast"/>
 	
 	<acme:textbox code="m.recipients" path="recipients" placeholder="useraccount1,useraccount2, useraccount3 "/>
 	<br />
