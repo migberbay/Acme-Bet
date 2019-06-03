@@ -32,6 +32,9 @@ public class MessageServiceTest extends AbstractTest {
 	@Autowired
 	private ActorService actorService;
 
+	//	F.R. 9.4: Manage his or her messages.
+	
+	//	Comprobar que se puedes crear y guardar mensajes.
 	@Test
 	public void testCreateAndSave() {
 		authenticate("bookmaker1");
@@ -51,6 +54,7 @@ public class MessageServiceTest extends AbstractTest {
 
 	}
 
+	//	Comprobar que se pueden eliminar mensajes.
 	@Test
 	public void testDelete() {
 		authenticate("bookmaker1");

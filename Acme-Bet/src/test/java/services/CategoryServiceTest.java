@@ -28,6 +28,9 @@ public class CategoryServiceTest extends AbstractTest {
 	@Autowired
 	private CategoryService categoryService;
 	
+	//	F.R. 12.3: Manage the categories of the system, which include listing, showing, creating, deleting and updating them.
+	
+	//	Se comprueba que los admins pueden crear categories.
 	@Test
 	public void driverCreateCategory(){
 		
@@ -66,6 +69,8 @@ public class CategoryServiceTest extends AbstractTest {
 //		unauthenticate();
 //	}
 	
+	//	Se comprueba que se pueden guardar categories, pero no se guardan si hay algun campo vacio,
+	//	o se trata de un actor distinto a los admins.
 	@Test
 	public void driverSaveCategory(){
 		
@@ -105,6 +110,8 @@ public class CategoryServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que se pueden actualizar categories, pero no se actualizan si hay algun campo vacio,
+	//	o se trata de un actor distinto a los admins.
 	@Test
 	public void driverUpdateCategory(){
 		
@@ -142,6 +149,7 @@ public class CategoryServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que los admins pueden eliminar las categories.
 	@Test
 	public void driverDeleteCategory(){
 		
@@ -168,6 +176,7 @@ public class CategoryServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que no se pueden eliminar las categories que pertenecen a una bet.
 	@Test(expected = DataIntegrityViolationException.class)
 	public void testDeleteCategoryOnBet(){
 		

@@ -29,6 +29,9 @@ public class SponsorshipServiceTest extends AbstractTest {
 	@Autowired
 	private SponsorshipService sponsorshipService;
 	
+	//	F.R. 44.1: Manage their sponsorships, which includes listing, showing, creating, updating, deleting and deactivate them.
+	
+	//	Se comprueba que los sponsors pueden crear sponsorships.
 	@Test
 	public void testCreate() {
 		
@@ -70,6 +73,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que los sponsors puedan guardar sponsorships.
 	@Test
 	public void testSave(){
 		
@@ -89,6 +93,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que no se pueden guardar sponsorships sin estar logeado.
 	@Test(expected = IllegalArgumentException.class)
 	public void testSaveNotAuthenticated(){
 		
@@ -108,6 +113,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que no se pueden guardar sponsorships con datos sin el formato correcto.
 	@Test(expected = javax.validation.ConstraintViolationException.class)
 	public void testSaveIncorrectData(){
 		
@@ -126,6 +132,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que los sponsors puedan actualizar sponsorships.
 	@Test
 	public void testUpdate(){
 		
@@ -141,6 +148,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que no se puedan actualizar sponsorships sin estar logeados.
 	@Test(expected = IllegalArgumentException.class)
 	public void testUpdateNotAuthenticated() {
 		
@@ -157,6 +165,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 		
 	}
 	
+	//	Se comprueba que no se puedan actualizar sponsorships con datos sin el formato correcto.
 	@Test(expected = javax.validation.ConstraintViolationException.class)
 	public void testUpdateIncorrectData() {
 		
@@ -173,6 +182,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 		
 	}
 	
+	//	Se comprueba que los sponsors pueden eliminar los sponsorships.
 	@Test
 	public void testDelete(){
 		
@@ -186,6 +196,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que no se pueden eliminar los sponsorships sin estar logeado.
 	@Test(expected = java.lang.IllegalArgumentException.class)
 	public void testDeleteNotAuthenticated(){
 		

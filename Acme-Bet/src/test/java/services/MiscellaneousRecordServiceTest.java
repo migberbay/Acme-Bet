@@ -34,6 +34,9 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 	@Autowired
 	private MiscellaneousRecordService miscellaneousRecordService;
 	
+	//	F.R. 32.3: Manage the records of their curricula, which includes listing, showing, creating, updating and deleting them.
+	
+	//	Se comprueba que los counselors pueden crear records.
 	@Test
 	public void testCreate() {
 		
@@ -74,6 +77,8 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que se pueden guardar records, pero no se guardan si hay algun campo vacio,
+	//	algún campo incorrecto o se trata de un actor distinto a los counselors.
 	@Test
 	public void testSave() {
 		
@@ -138,6 +143,8 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que se pueden actualizar records, pero no se actualizan si hay algun campo vacio,
+	//	algún campo incorrecto o se trata de un actor distinto a los counselors.
 	@Test 
 	public void testUpdate(){
 		
@@ -216,6 +223,7 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 		Assert.isTrue(!miscellaneousRecordService.findAll().contains(miscellaneousRecord));
 	}
 	
+	//	Se comprueba que se pueden eliminar records, pero no se  puede eliminar si se trata de un actor distinto a los counselors.
 	@Test
 	public void driverDeleteMiscellaneousRecord(){
 		

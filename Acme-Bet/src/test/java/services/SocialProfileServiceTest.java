@@ -26,6 +26,9 @@ public class SocialProfileServiceTest extends AbstractTest {
 	@Autowired
 	private SocialProfileService socialProfileService;
 	
+	//	R.F. 9.3: Manage his or her social profiles, which includes listing, showing, creating, updating, and deleting them.
+	
+	//	Comprobar que se crea correctamente el social profile con diferentes actores.
 	@Test
 	public void testCreate() {
 		SocialProfile socialProfile = socialProfileService.create();
@@ -71,6 +74,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Comprobar que se guarda correctamente el social profile
 	@Test
 	public void testSave() {
 		
@@ -89,6 +93,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Comprobar que no se guarda el social profile sin que un actor esté logeado
 	@Test(expected = IllegalArgumentException.class)
 	public void testSaveNotAuthenticated(){
 		authenticate(null);
@@ -105,6 +110,8 @@ public class SocialProfileServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Comprobar que se guarda para diferentes actores, y que no guarda cuando falta algún campo por rellenar, 
+	//	o cuando algún campo no está rellenado con el formato adecuado.
 	@Test
 	public void driverSaveSocialProfile(){
 		
@@ -140,6 +147,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Comprobar que se puede actualizar el social profile con cualquier actor.
 	@Test
 	public void testUpdate() {
 		
@@ -205,6 +213,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Comprobar que se puede eliminar un social profile,
 	@Test
 	public void testDelete() {
 		
@@ -225,6 +234,8 @@ public class SocialProfileServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Comprobar que no se puede borrar un social profile sin estar logeado o que un actor
+	//	no pueda borrar un social profile que no es el suyo.
 	@Test(expected = org.springframework.dao.DataIntegrityViolationException.class)
 	public void testDeleteIncorrectAuthenticated() {
 		

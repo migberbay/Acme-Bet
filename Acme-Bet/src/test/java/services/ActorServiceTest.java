@@ -2,9 +2,12 @@ package services;
 
 import java.util.Date;
 
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,10 +30,10 @@ import utilities.AbstractTest;
 @Transactional
 public class ActorServiceTest extends AbstractTest {
 
-	//	Coverage: 100.0%
-	//	Covered Instructions: 676 
-	//	Missed  Instructions: 0
-	//	Total   Instructions: 676
+	//	Coverage: 91.7%
+	//	Covered Instructions: 903 
+	//	Missed  Instructions: 82
+	//	Total   Instructions: 985
 	
 	@Autowired
 	private BookmakerService bookmakerService;
@@ -57,6 +60,7 @@ public class ActorServiceTest extends AbstractTest {
 	private ActorService actorService;
 	
 	
+	//	F.R. 12.1: Create user accounts for new administrators.
 	@Test
 	public void testRegisterAdmin(){
 		
@@ -95,6 +99,7 @@ public class ActorServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	F.R. 12.1: Create user accounts for new bookmakers.
 	@Test
 	public void testRegisterBookmaker(){
 		
@@ -133,6 +138,45 @@ public class ActorServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	@Test(expected = InvalidDataAccessApiUsageException.class)
+	public void testIncorrectRegisterBookmaker(){
+		
+		authenticate("admin");
+		
+		UserAccount userAccount = userAccountService.create();
+		Authority authority = new Authority();
+		authority.setAuthority(Authority.BOOKMAKER);
+		userAccount.getAuthorities().add(authority);
+		userAccount.setUsername("bookmaker10");
+		userAccount.setPassword("bookmaker10");		
+		Bookmaker bookmaker = bookmakerService.create(userAccount);
+		
+//		CreditCard credit = creditCardService.create();
+//		credit.setCVV(123);
+//		credit.setHolder("bookmaker");
+//		credit.setExpirationDate(new Date(System.currentTimeMillis()+623415234));
+//		credit.setMake("AMEX");
+//		credit.setNumber("2534746553427456");
+		
+		Date moment = new Date(System.currentTimeMillis() - 1000);
+		
+		bookmaker.setName("bookmakerName");
+		bookmaker.setSurnames("bookmakerSurname1 bookmakerSurname2");
+		bookmaker.setEmail("bookmaker@email.com");
+		bookmaker.setAddress("bookmakerAddress");
+		bookmaker.setPhoto("http://www.photo.com");
+		bookmaker.setPhone("612123456");
+//		bookmaker.setCreditCard(credit);
+		bookmaker.setMessagesLastSeen(moment);
+		
+		Bookmaker result = actorService.registerBookmaker(bookmaker);
+		
+		Assert.isTrue(bookmakerService.findAll().contains(result));
+		
+		unauthenticate();
+	}
+	
+	//	F.R. 8.1: Register to the system as a user.
 	@Test
 	public void testRegisterUser(){
 		
@@ -172,6 +216,7 @@ public class ActorServiceTest extends AbstractTest {
 		
 	}
 	
+	//	F.R. 30.1: Register to the system as counselor.
 	@Test
 	public void testRegisterCounselor(){
 		
@@ -207,6 +252,7 @@ public class ActorServiceTest extends AbstractTest {
 		
 	}
 	
+	//	F.R. 41.2: Register to the system as a sponsor.
 	@Test
 	public void testRegisterSponsor(){
 		
@@ -242,6 +288,42 @@ public class ActorServiceTest extends AbstractTest {
 		
 	}
 	
+	@Test(expected = ConstraintViolationException.class)
+	public void testIncorrectRegisterSponsor(){
+		
+		UserAccount userAccount = userAccountService.create();
+		Authority authority = new Authority();
+		authority.setAuthority(Authority.SPONSOR);
+		userAccount.getAuthorities().add(authority);
+		userAccount.setUsername("sponsor10");
+		userAccount.setPassword("sponsor10");		
+		Sponsor sponsor = sponsorService.create(userAccount);
+		
+		CreditCard credit = creditCardService.create();
+		credit.setCVV(123);
+		credit.setHolder("sponsor");
+		credit.setExpirationDate(new Date(System.currentTimeMillis()+623415234));
+		credit.setMake("AMEX");
+		credit.setNumber("2534746553427456");
+		
+		Date moment = new Date(System.currentTimeMillis() - 1000);
+		
+		sponsor.setName("sponsorName");
+		sponsor.setSurnames("sponsorSurname1 sponsorSurname2");
+		sponsor.setEmail("sponsoremail.com");
+		sponsor.setAddress("sponsorAddress");
+		sponsor.setPhoto("photo.com");
+		sponsor.setPhone("612123456");
+		sponsor.setCreditCard(credit);
+		sponsor.setMessagesLastSeen(moment);
+		
+		Sponsor result = actorService.registerSponsor(sponsor);
+		
+		Assert.isTrue(sponsorService.findAll().contains(result));
+		
+	}
+	
+	//	F.R. 9.2: Edit his or her personal data.
 	@Test
 	public void testEditAdmin(){
 		
@@ -262,6 +344,27 @@ public class ActorServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	@Test(expected = ConstraintViolationException.class)
+	public void testIncorrectEditAdmin(){
+		
+		authenticate("admin");
+		
+		Admin admin = adminService.findByPrincipal();
+		
+		admin.setName("adminUpdatedName");
+		admin.setSurnames("adminUpdatedSurname");
+		admin.setEmail("adminUpdated.email.com");
+		admin.setAddress("adminUpdatedAddress");
+		admin.setPhoto("photoUpdated.com");
+		
+		Admin result = adminService.save(admin);
+		
+		Assert.isTrue(adminService.findAll().contains(result));
+		
+		unauthenticate();
+	}
+	
+	//	F.R. 9.2: Edit his or her personal data.
 	@Test
 	public void testEditUser(){
 		
@@ -282,6 +385,24 @@ public class ActorServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	F.R. 10.2: Add funds to his account.
+	@Test
+	public void testAddFundsUser(){
+		
+		authenticate("user1");
+		
+		User user = userService.findByPrincipal();
+		
+		user.setFunds(225.50);		
+		
+		User result = userService.save(user);
+		
+		Assert.isTrue(userService.findAll().contains(result));
+		
+		unauthenticate();
+	}
+	
+	//	F.R. 9.2: Edit his or her personal data.
 	@Test
 	public void testEditCounselor(){
 		
@@ -302,6 +423,24 @@ public class ActorServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	@Test(expected = ConstraintViolationException.class)
+	public void testIncorrectEditCounselor(){
+		
+		authenticate("counselor1");
+		
+		Counselor counselor = counselorService.findByPrincipal();
+		
+		counselor.setName("");
+		counselor.setSurnames("");
+		
+		Counselor result = counselorService.save(counselor);
+		
+		Assert.isTrue(counselorService.findAll().contains(result));
+		
+		unauthenticate();
+	}
+	
+	//	F.R. 9.2: Edit his or her personal data.
 	@Test
 	public void testEditBookmaker(){
 		
@@ -322,6 +461,25 @@ public class ActorServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	@Test(expected = ConstraintViolationException.class)
+	public void testIncorrectEditBookmaker(){
+		
+		authenticate("bookmaker1");
+		
+		Bookmaker bookmaker = bookmakerService.findByPrincipal();
+		
+		bookmaker.setName("");
+		bookmaker.setSurnames("");
+		
+		Bookmaker result = bookmakerService.save(bookmaker);
+		
+		Assert.isTrue(bookmakerService.findAll().contains(result));
+		
+		unauthenticate();
+	}
+	
+	
+	//	F.R. 9.2: Edit his or her personal data.
 	@Test
 	public void testEditSponsor(){
 		
@@ -334,6 +492,23 @@ public class ActorServiceTest extends AbstractTest {
 		sponsor.setEmail("sponsorUpdated@email.com");
 		sponsor.setAddress("sponsorUpdatedAddress");
 		sponsor.setPhoto("http://www.photoUpdated.com");
+		
+		Sponsor result = sponsorService.save(sponsor);
+		
+		Assert.isTrue(sponsorService.findAll().contains(result));
+		
+		unauthenticate();
+	}
+	
+	@Test(expected = ConstraintViolationException.class)
+	public void testIncorrectEditSponsor(){
+		
+		authenticate("sponsor1");
+		
+		Sponsor sponsor = sponsorService.findByPrincipal();
+		
+		sponsor.setName("");
+		sponsor.setSurnames("");
 		
 		Sponsor result = sponsorService.save(sponsor);
 		

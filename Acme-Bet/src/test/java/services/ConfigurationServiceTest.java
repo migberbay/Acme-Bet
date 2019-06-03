@@ -87,7 +87,6 @@ public class ConfigurationServiceTest extends AbstractTest {
 
 	// RNF 14 - The system must be easy to customise at run time. Breaking
 	// business rule wrong format banner.
-	// Sentence coverage: 55.6%, Covered instructions 10, Missed instructions: 8
 	@Test(expected = ConstraintViolationException.class)
 	public void testUpdateWrongBanner() {
 
@@ -106,7 +105,6 @@ public class ConfigurationServiceTest extends AbstractTest {
 
 	// RNF 14 - The system must be easy to customise at run time. Breaking
 	// business rule empty banner.
-	// Sentence coverage: 55.6%, Covered instructions 10, Missed instructions: 8
 	@Test(expected = ConstraintViolationException.class)
 	public void testUpdateEmptyBanner() {
 

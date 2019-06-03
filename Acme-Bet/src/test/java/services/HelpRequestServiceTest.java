@@ -43,6 +43,9 @@ public class HelpRequestServiceTest extends AbstractTest {
 	@Autowired
 	private HelpRequestService helpRequestService;
 	
+	//	F.R. 33.1: Manage their help requests, which includes listing, showing, creating and updating its status.
+	
+	// Se comprueba que los users pueden crear help requests.
 	@Test
 	public void driverCreateHelpRequest(){
 		
@@ -69,6 +72,7 @@ public class HelpRequestServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	// Se comprueba que los users pueden guardar help requests.
 	@Test
 	public void testSave(){
 		
@@ -106,6 +110,7 @@ public class HelpRequestServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	// Se comprueba que no se pueden guardar help requests con campos vacios.
 	@Test(expected = ConstraintViolationException.class)
 	public void testSaveIncorrectData(){
 		
@@ -143,6 +148,7 @@ public class HelpRequestServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	// Se comprueba que no se pueden guardar help requests con fechas incorrectas.
 	@Test(expected = ConstraintViolationException.class)
 	public void testSaveIncorrectDate(){
 		
@@ -180,6 +186,8 @@ public class HelpRequestServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	// Se comprueba que los users pueden actualizar help requests,
+	// pero no se actualizan si los campos están vacios.
 	@Test
 	public void driverUpdateHelpRequest(){
 		
@@ -225,6 +233,7 @@ public class HelpRequestServiceTest extends AbstractTest {
 //		unauthenticate();
 //	}
 	
+	// Se comprueba que los users pueden eliminar las help requests.
 	@Test
 	public void driverDeleteHelpRequest(){
 		
@@ -252,5 +261,4 @@ public class HelpRequestServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 		super.unauthenticate();
 	}
-	
 }

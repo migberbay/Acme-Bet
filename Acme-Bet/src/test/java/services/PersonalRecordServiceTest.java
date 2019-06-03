@@ -21,10 +21,10 @@ import utilities.AbstractTest;
 @Transactional
 public class PersonalRecordServiceTest extends AbstractTest {
 
-	//	Coverage: 97.9%
+	//	Coverage: 97.5%
 	//	Covered Instructions: 1.072
-	//	Missed  Instructions: 23
-	//	Total   Instructions: 1.095
+	//	Missed  Instructions: 27
+	//	Total   Instructions: 1.099
 	
 	@Autowired
 	private CounselorService counselorService;
@@ -35,6 +35,9 @@ public class PersonalRecordServiceTest extends AbstractTest {
 	@Autowired
 	private PersonalRecordService personalRecordService;
 
+	//	F.R. 32.3: Manage the records of their curricula, which includes listing, showing, creating, updating and deleting them.
+	
+	//	Se comprueba que los counselors pueden crear records.
 	@Test
 	public void driverCreatePersonalRecord(){
 		
@@ -61,6 +64,8 @@ public class PersonalRecordServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que se pueden guardar records, pero no se guardan si hay algun campo vacio,
+	//	algún campo incorrecto o se trata de un actor distinto a los counselors.
 	@Test
 	public void testSave(){
 		
@@ -130,6 +135,8 @@ public class PersonalRecordServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que se pueden actualizar records, pero no se actualizan si hay algun campo vacio,
+	//	algún campo incorrecto o se trata de un actor distinto a los counselors.
 	@Test
 	public void driverUpdatePersonalRecord(){
 		
@@ -186,6 +193,7 @@ public class PersonalRecordServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que se pueden eliminar records, pero no se  puede eliminar si se trata de un actor distinto a los counselors.
 	@Test
 	public void driverDeletePersonalRecord(){
 		

@@ -41,6 +41,9 @@ public class ReviewServiceTest extends AbstractTest {
 	@Autowired
 	private CounselorService counselorService;
 	
+	//	F.R. 42.1: Manage their reviews about counselors, which include listing, showing, creating, updating and deleting them.
+	
+	//	Se comprueba que los  users pueden crear reviews.
 	@Test
 	public void driverCreateReview(){
 		
@@ -67,6 +70,7 @@ public class ReviewServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que los  users pueden guardar reviews.
 	@Test
 	public void testSave() {
 		
@@ -92,6 +96,7 @@ public class ReviewServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que no se puedan guardar reviews sin estar logeado.
 	@Test(expected = DataIntegrityViolationException.class)
 	public void testSaveNotAuthenticated() {
 		
@@ -115,6 +120,7 @@ public class ReviewServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que no se puedan guardar reviews con los campos vacios.
 	@Test(expected = ConstraintViolationException.class)
 	public void testSaveIncorrectData() {
 		
@@ -140,6 +146,7 @@ public class ReviewServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que no se puedan guardar reviews con fechas incorrectas.
 	@Test(expected = ConstraintViolationException.class)
 	public void testSaveIncorrectDate() {
 		
@@ -165,6 +172,7 @@ public class ReviewServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que los diferentes users pueden actualizar las reviews.
 	@Test
 	public void testUpdate(){
 		
@@ -182,6 +190,8 @@ public class ReviewServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que los diferentes users pueden actualizar las reviews, 
+	//	pero no se pueden actualizar con campos vacios o con una puntuación fuera del rango.
 	@Test
 	@SuppressWarnings("unchecked")
 	public void driverUpdateReview(){
@@ -224,6 +234,7 @@ public class ReviewServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que los users pueden borrar las reviews.
 	@Test
 	public void testDelete(){
 		

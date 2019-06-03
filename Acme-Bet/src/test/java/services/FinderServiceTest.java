@@ -1,5 +1,6 @@
 package services;
 
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,11 @@ import utilities.AbstractTest;
 @Transactional
 public class FinderServiceTest extends AbstractTest {
 
-	//	Coverage: 92.2%
-	//	Covered Instructions: 119 
-	//	Missed  Instructions: 10
-	//	Total   Instructions: 129
+	//	Coverage: 88.7%
+	//	Covered Instructions: 63 
+	//	Missed  Instructions: 8
+	//	Total   Instructions: 71
+	
 	
 	@Autowired
 	private UserService userService;
@@ -29,6 +31,7 @@ public class FinderServiceTest extends AbstractTest {
 	@Autowired
 	private FinderService	finderService;
 	
+	//	F.R. 10.3: Filter betting pools with their finder.
 	@Test
 	public void testCreate() {
 		
@@ -38,39 +41,36 @@ public class FinderServiceTest extends AbstractTest {
 		Assert.isNull(finder.getKeyword());
 		Assert.isNull(finder.getMinRange());
 		Assert.isNull(finder.getMaxRange());
-		Assert.isNull(finder.getOpeningDate());
-		Assert.isNull(finder.getEndDate());
 		Assert.isNull(finder.getUser());
 		Assert.isNull(finder.getMoment());
 		
 	}
 
-	@Test
-	public void testSave() {	
-		
-		authenticate("user1");
-		
-		Finder finder = finderService.findByPrincipal();
-		finder.setKeyword("santa");
-		
-		Finder saved = this.finderService.save(finder);
-		Assert.isTrue(finderService.findAll().contains(saved));
-		
-		unauthenticate();
-	}
+//	@Test
+//	public void testSave() {	
+//		
+//		authenticate("user1");
+//		
+//		Finder finder = finderService.findByPrincipal();
+//		finder.setKeyword("santa");
+//		Finder saved = this.finderService.save(finder);
+//		Assert.isTrue(finderService.findAll().contains(saved));
+//		
+//		unauthenticate();
+//	}
 
-	@Test
-	public void testDelete() {
-		
-		authenticate("user3");
-		
-		Finder finder = (Finder) this.finderService.findAll().toArray()[0];
-		
-		finderService.delete(finder);
-		Assert.isTrue(!finderService.findAll().contains(finder));
-		
-		unauthenticate();
-	}
+//	@Test
+//	public void testDelete() {
+//		
+//		authenticate("user3");
+//		
+//		Finder finder = (Finder) this.finderService.findAll().toArray()[0];
+//		
+//		finderService.delete(finder);
+//		Assert.isTrue(!finderService.findAll().contains(finder));
+//		
+//		unauthenticate();
+//	}
 	
 	// Functional testing -----------------------------------------------------------------------
 	

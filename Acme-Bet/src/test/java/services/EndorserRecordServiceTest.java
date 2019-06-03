@@ -34,6 +34,9 @@ public class EndorserRecordServiceTest extends AbstractTest {
 	@Autowired
 	private EndorserRecordService endorserRecordService;
 
+	//	F.R. 32.3: Manage the records of their curricula, which includes listing, showing, creating, updating and deleting them.
+	
+	//	Se comprueba que los counselors pueden crear records.
 	@Test
 	public void driverCreateEndorserRecord(){
 		
@@ -60,6 +63,8 @@ public class EndorserRecordServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que se pueden guardar records, pero no se guardan si hay algun campo vacio,
+	//	algún campo incorrecto o se trata de un actor distinto a los counselors.
 	@Test
 	public void driverSaveEndorserRecord(){
 		
@@ -108,6 +113,8 @@ public class EndorserRecordServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que se pueden actualizar records, pero no se actualizan si hay algun campo vacio,
+	//	algún campo incorrecto o se trata de un actor distinto a los counselors.
 	@Test
 	public void driverUpdateEndorserRecord(){
 		
@@ -168,6 +175,7 @@ public class EndorserRecordServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que se pueden eliminar records.
 	@Test
 	public void driverDeleteEndorserRecord(){
 		

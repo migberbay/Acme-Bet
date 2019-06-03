@@ -34,6 +34,9 @@ public class BetServiceTest extends AbstractTest {
 	@Autowired
 	private UserService userService;
 	
+	//	F.R. 10.1: Place an arbitrary number of bets, which includes listing showing and creating them.
+	
+	//	Se comprueba que los users pueden crear bets.
 	@Test
 	public void driverCreateBet(){
 		
@@ -63,6 +66,8 @@ public class BetServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que los users pueden guardar las bets, 
+	//	y que éstas no se pueden guardar con campos vacios o incorrectos.
 	@Test
 	public void driverSaveBet(){
 		
@@ -97,6 +102,8 @@ public class BetServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que los users pueden actualizar las bets, 
+	//	y que éstas no se pueden actualizar con campos vacios o incorrectos.
 	@Test
 	public void driverUpdateBet(){
 		

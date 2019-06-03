@@ -39,6 +39,9 @@ public class PetitionServiceTest extends AbstractTest {
 	@Autowired
 	private BetPoolService betPoolService;
 	
+	//	F.R. 11.2: Manage user petitions to bet in high stakes betting pools.
+	
+	//	Se comprueba que solo los bookmakers pueden crear las petitions.
 	@Test
 	public void driverCreatePetition(){
 		
@@ -65,6 +68,7 @@ public class PetitionServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que se pueden guardar las petitions.
 	@Test
 	public void testSave(){
 		
@@ -95,6 +99,7 @@ public class PetitionServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que no se guardan las petitions con campos vacios.
 	@Test(expected = ConstraintViolationException.class)
 	public void testSaveIncorrectData(){
 		
@@ -125,6 +130,8 @@ public class PetitionServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que los bookmakers pueden actualizar los petitions,
+	//	y que no se pueden actualizar con campos vacios.
 	@Test
 	public void driverUpdatePetition(){
 		
@@ -169,6 +176,7 @@ public class PetitionServiceTest extends AbstractTest {
 //		unauthenticate();
 //	}
 	
+	//	Se comprueba que solo los bookmakers pueden eliminar las petitions.
 	@Test
 	public void driverDeletePetition(){
 		

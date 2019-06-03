@@ -42,6 +42,9 @@ public class WarrantyServiceTest extends AbstractTest {
 		Assert.isTrue(warranty.getIsFinal().equals(false));
 	}
 	
+	//	F.R. 12.2: Manage the warranties of the system, which includes showing, creating, updating and deleting them.
+	
+	//	Se comprueba que los admins pueden crear warranties.
 	@Test
 	public void driverCreateWarranty(){
 		
@@ -66,6 +69,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 
+	//	Se comprueba que los admins pueden guardar los warranties.
 	@Test
 	public void testSave() {
 
@@ -91,7 +95,8 @@ public class WarrantyServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
-	
+	//	Se comprueba que los admins pueden guardar los warranties, pero no las guardan 
+	//	si se deja algún campo vacio o incorrecto.
 	@Test
 	@SuppressWarnings("unchecked")
 	public void driverSaveWarranty(){
@@ -153,6 +158,8 @@ public class WarrantyServiceTest extends AbstractTest {
 		
 	}
 	
+	//	Se comprueba que los admins pueden actualizar los warranties, pero no las guardan 
+	//	si se deja algún campo vacio o un actor que no es un admin.
 	@Test
 	public void driverUpdateWarranty(){
 		
@@ -196,6 +203,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 
+	//	Se comprueba que no se puede borrar una warranty en final mode.
 	@Test(expected = DataIntegrityViolationException.class)
 	public void testDelete() {
 
@@ -210,6 +218,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que los admins pueden borrar una warranty en draft mode.
 	@Test
 	public void driverDeleteWarranty(){
 		

@@ -42,6 +42,9 @@ public class BetPoolServiceTest extends AbstractTest {
 	@Autowired
 	private CategoryService categoryService;
 	
+	//	F.R. 11.1: Manage their betting pools, which includes listing, showing, creating, updating and deleting them.
+	
+	//	Se comprueba que solo los bookmaker pueden crear las betpools.
 	@Test
 	public void driverCreateBetPool(){
 		
@@ -68,6 +71,7 @@ public class BetPoolServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que los bookmakers pueden guardar las betpools.
 	@Test
 	public void testSave(){
 		
@@ -103,6 +107,7 @@ public class BetPoolServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que no se puede guardar con campos en blanco.
 	@Test(expected = IllegalArgumentException.class)
 	public void testSaveIncorrectData(){
 		
@@ -138,6 +143,7 @@ public class BetPoolServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que no se puede guardar con fechas incorrectas.
 	@Test(expected = ConstraintViolationException.class)
 	public void testSaveIncorrectDate(){
 		
@@ -173,6 +179,7 @@ public class BetPoolServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que los bookmakers pueden actualizar las betpools.
 	@Test
 	public void testUpdate(){
 		
@@ -190,6 +197,7 @@ public class BetPoolServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que no se puede actualizar con campos en blanco.
 	@Test(expected = ConstraintViolationException.class)
 	public void testUpdateIncorrectData(){
 		
@@ -207,6 +215,7 @@ public class BetPoolServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que no se puede eliminar sin estar logeado como bookmaker.
 	@Test(expected = DataIntegrityViolationException.class)
 	public void testDeleteNotAuthenticated(){
 		

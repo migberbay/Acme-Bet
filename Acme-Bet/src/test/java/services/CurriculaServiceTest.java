@@ -53,6 +53,9 @@ public class CurriculaServiceTest extends AbstractTest {
 //	@Autowired
 //	private MiscellaneousRecordService miscellaneousRecordService;
 	
+	//	F.R. 32.3: Manage the records of their curricula, which includes listing, showing, creating, updating and deleting them.
+	
+	//	Se comprueba que los counselors pueden crear curriculas.
 	@Test
 	public void driverCreateCurricula() {
 		Object testingData[][] = {{"counselor1", null},
@@ -78,6 +81,7 @@ public class CurriculaServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 	
+	//	Se comprueba que los counselors pueden guardar curriculas.
 	@Test
 	public void testSave(){
 		
@@ -128,6 +132,7 @@ public class CurriculaServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que no se pueden guardar curriculas sin estar logeado como conselour.
 	@Test(expected = IllegalArgumentException.class)
 	public void testSaveNotAuthenticated(){
 		
@@ -153,6 +158,7 @@ public class CurriculaServiceTest extends AbstractTest {
 		unauthenticate();
 	}
 	
+	//	Se comprueba que no se pueden eliminar curriculas sin estar logeado como conselour.
     @Test(expected = IllegalArgumentException.class)
     public void testDeleteNotAuthenticated(){
     	
@@ -168,6 +174,7 @@ public class CurriculaServiceTest extends AbstractTest {
     	unauthenticate();
     }
 	
+	//	Se comprueba que los counselors pueden eliminar curriculas.
     @Test
 	public void driverDeleteCurricula() {
 		Object testingData[][] = {{"counselor1", null},
