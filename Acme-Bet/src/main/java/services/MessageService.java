@@ -102,9 +102,6 @@ public class MessageService {
 	
 		aux.setTags(tags);
 		aux.setRecipient(a);
-		List<Word> n = (List<Word>) wordService.findAll();
-		logged.setIsSuspicious(this.hasSpam(n, aux));
-		actorService.save(logged);
 		res.add(aux);
 		}
 		

@@ -202,23 +202,16 @@ public class MessageController extends AbstractController {
 		Collection<Message> messages = new HashSet<Message>();
 		Authority adminAuth = new Authority();
 		adminAuth.setAuthority(Authority.ADMIN);
-		System.out.println("uwu1");
 		res = new ModelAndView("message/list");
 		
 		Actor principal = actorService.getByUserAccount(LoginService.getPrincipal());
-		System.out.println("uwu2 " + principal);
 		if(messageFinderForm.getKeyword() == null){
-			System.out.println("aver");
 			messages.addAll(messageService.findByRecipient(principal));
-			System.out.println("uwu2.1");
 		}else if(messageFinderForm.getKeyword().equals("")){
 			messages.addAll(messageService.findByRecipientAndEmptyTags(principal));
-			System.out.println("uwu2.2");
 		}else{
 			messages.addAll(messageService.findByRecipientAndTag(principal, messageFinderForm.getKeyword()));
-			System.out.println("uwu2.3");
 		}
-		System.out.println("uwu3");	
 		res.addObject("messageFinderForm", messageFinderForm);
 		res.addObject("messages", messages);
 		res.addObject("isAdmin",actorService.getByUserAccount(LoginService.getPrincipal()).getUserAccount().getAuthorities().contains(adminAuth));
