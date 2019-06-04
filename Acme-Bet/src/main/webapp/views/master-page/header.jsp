@@ -39,7 +39,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="category/admin/list.do"><spring:message code="master.page.category.list" /></a></li>
-					<li><a href="category/admin/edit.do"><spring:message code="master.page.category.create" /></a></li>
+					<li><a href="category/admin/create.do"><spring:message code="master.page.category.create" /></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv" href="warranty/admin/list.do"><spring:message code="master.page.warranty.list" /></a></li>

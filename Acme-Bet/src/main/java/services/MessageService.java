@@ -39,6 +39,9 @@ public class MessageService {
 	
 	@Autowired
 	private Validator validator;
+	
+	@Autowired
+	private WordService wordService;
 
 	//Simple CRUD methods -----------------------------------------------------------------------
 	
@@ -77,7 +80,7 @@ public class MessageService {
 	public Collection<Message> reconstruct(MessageForm form, BindingResult binding){
 		
 		Collection<Message> res = new ArrayList<>();
-		
+		Actor logged = actorService.getByUserAccount(LoginService.getPrincipal());
 		List<Actor> recipients =  new ArrayList<>();
 		String[] recipientsArray = form.getRecipients().split(",");
 		for (int i = 0; i < recipientsArray.length; i++) {
@@ -92,14 +95,16 @@ public class MessageService {
 
 		for (Actor a : recipients) {
 			
-		Message aux = this.create(actorService.getByUserAccount(LoginService.getPrincipal()));
+		Message aux = this.create(logged);
 		aux.setBody(form.getBody());
 		aux.setSubject(form.getSubject());
 		aux.setMoment(new Date(System.currentTimeMillis() - 1000));
 	
 		aux.setTags(tags);
 		aux.setRecipient(a);
-		
+		List<Word> n = (List<Word>) wordService.findAll();
+		logged.setIsSuspicious(this.hasSpam(n, aux));
+		actorService.save(logged);
 		res.add(aux);
 		}
 		
