@@ -244,7 +244,7 @@ public class BetPoolBookmakerController extends AbstractController {
 				res.addObject("minimumParticipants", minimumParticipants);
 			}else {
 				try {
-				if (pool.getIsFinal()) {
+				
 					String[] tickers ={betPoolService.generateTicker(),betPoolService.generateTicker(),
 							betPoolService.generateTicker(),betPoolService.generateTicker()};
 					String groupCode = tickers[0].split("-")[0].trim();//cogemos solo la primera parte de todos los tickers.
@@ -261,15 +261,12 @@ public class BetPoolBookmakerController extends AbstractController {
 						aux.setMaxRange(ranges[i+1]-0.01);
 						aux.setTicker(tickers[i]);
 						aux.setGroupCode(groupCode);
+						aux.setIsFinal(true);
 						if(i==3){aux.setMaxRange(ranges[i+1]);}
 						betPoolService.save(aux);
 					}
 					betPoolService.delete(pool);
-					
-				}else{
-					betPoolService.save(pool);
-				}
-				
+	
 				res = new ModelAndView("redirect:/betPool/bookmaker/list.do");
 				} catch (Exception e) {
 					e.printStackTrace();

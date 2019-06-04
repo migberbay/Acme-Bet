@@ -55,7 +55,7 @@ public class AdminWarrantyController extends AbstractController {
 			ModelAndView result;
 			Warranty warranty;
 			
-			warranty = warrantyService.findOne(warrantyId);
+			warranty = warrantyService.findOne(1439);
 			
 			result = new ModelAndView("warranty/show");
 			result.addObject("warranty",warranty);

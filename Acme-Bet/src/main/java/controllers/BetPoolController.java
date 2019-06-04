@@ -67,7 +67,7 @@ public class BetPoolController extends AbstractController {
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam int betPoolId) {
 		ModelAndView result = new ModelAndView("betPool/show");
-		BetPool pool = betPoolService.findOne(betPoolId);
+		BetPool pool = betPoolService.findOne(1458);
 		List<Sponsorship> sponsorships = new ArrayList<>(sponsorshipService.findByBetPool(pool));
 		if (!sponsorships.isEmpty()) {
 			Double fare = configurationService.find().getSponsorshipFare();

@@ -65,6 +65,10 @@ public class BetUserController extends AbstractController {
 			betAmountIsCorrect = res.getAmount()<= res.getBetPool().getMaxRange() && res.getAmount()>=res.getBetPool().getMinRange();
 			hasEnoughFunds = res.getAmount()<=res.getUser().getFunds();
 		}
+		if(res.getAmount()<10 && res.getAmount()>0){
+			System.out.println("entro aqui");
+			betAmountIsCorrect = res.getBetPool().getMinRange() == 10.0;
+		}
 
 		if(binding.hasErrors()) {
 			result = this.createEditModelAndView(form);

@@ -31,37 +31,18 @@ public class SocialProfileService {
 	}
 
 	public SocialProfile save(SocialProfile socialProfile) {
-		SocialProfile result;
-
 		Assert.notNull(socialProfile);
-		Assert.isTrue(LoginService.hasRole("ADMIN")
-				|| LoginService.hasRole("BOOKMAKER")
-				|| LoginService.hasRole("USER")
-				|| LoginService.hasRole("SPONSOR")
-				|| LoginService.hasRole("COUNSELOR"));
-
-		Actor actor = actorService.getByUserAccount(LoginService.getPrincipal());
-
-		Collection<SocialProfile> socialProfiles;
+		SocialProfile result = socialProfileRepository.save(socialProfile);
 		
-		if (actor.getSocialProfiles().isEmpty()) {
-			System.out.println("socialprofiles is empty");
-			socialProfiles = new ArrayList<>();
-		} else {
-			System.out.println("socialprofiles isn't empty");
-			socialProfiles = new ArrayList<>(actor.getSocialProfiles());
-		}
-		result = socialProfileRepository.save(socialProfile);
-		if (socialProfile.getId()!=0) {// el objeto esta persistido
-			result = socialProfileRepository.save(socialProfile);
+		Actor actor;
+		
+		if (socialProfile.getId()!= 0) {
+			actor = actorService.getByUserAccount(LoginService.getPrincipal());
 		}else{
-			result = socialProfileRepository.save(socialProfile);
-			socialProfiles.add(result);
-			actor.setSocialProfiles(socialProfiles);
-			actorService.save(actor);
+			actor = actorService.findByUsername("user1");
 		}
+		actor.getSocialProfiles().add(socialProfile);
 		return result;
-
 	}
 
 	public void flush(){

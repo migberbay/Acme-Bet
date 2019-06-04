@@ -400,15 +400,16 @@ public class ProfileActorController extends AbstractController {
 		ModelAndView res;
 		
 		try {
-			if (user.getFunds() > 0 && user.getFunds() <= 1000) {
+//			if (user.getFunds() > 0 && user.getFunds() <= 1000) {
 				res = new ModelAndView("redirect:show.do");
 				User u = userService.findByPrincipal();
 				u.setFunds(u.getFunds() + user.getFunds());
 				userService.save(u);
-			} else {
-				res = editFunds();
-				res.addObject("incorrectFunds", true);
-			}
+				
+//			} else {
+//				res = editFunds();
+//				res.addObject("incorrectFunds", true);
+//			}
 
 		} catch (Exception e) {
 			res = editFunds();

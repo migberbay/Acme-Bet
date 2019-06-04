@@ -86,10 +86,10 @@ public class SocialProfileActorController extends AbstractController {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
-			System.out.println(binding.getFieldErrors());
+			System.out.println(binding);
 			result = this.createEditModelAndView(socialProfile);
 		} else
-			try {
+			try {			
 
 				this.socialProfileService.save(socialProfile);
 				result = new ModelAndView("redirect:/actor/show.do");

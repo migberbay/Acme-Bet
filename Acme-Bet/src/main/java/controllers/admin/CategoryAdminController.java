@@ -124,6 +124,9 @@ public class CategoryAdminController extends AbstractController {
 		ModelAndView result;
 			
 		try {
+			if (category.getId()==0) {
+				category.setType("POOL");
+			}
 			categoryService.save(category);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
