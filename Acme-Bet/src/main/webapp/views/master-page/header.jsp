@@ -14,6 +14,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 
+Hola antuan soy el monstruo de las navidades pasadas.
 <div class="page-header" style="background: url(${banner}) center no-repeat; background-size: cover"  onclick="location.href=''">
 </div>
 
